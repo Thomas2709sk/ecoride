@@ -40,7 +40,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $photo = null;
 
     #[ORM\Column]
-    private ?int $credits = null;
+    private ?int $credits = 20;
 
     #[ORM\Column]
     private ?bool $isVerified = null;
