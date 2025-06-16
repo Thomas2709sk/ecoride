@@ -9,8 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
+#[UniqueEntity('pseudo', message: 'Ce pseudo est déjà utilisé')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'Il y à déjà un compte avec cet email')]
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
@@ -21,6 +23,10 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\NotBlank(message: 'L\'adresse e-mail est obligatoire')]
+    #[Assert\Email(
+        message: 'L\'adresse e-mail {{ value }} n\'est pas au bon format'
+    )]
     private ?string $email = null;
 
     /**
@@ -33,9 +39,25 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le mot de passe est obligatoire')]
+     #[Assert\Length(
+        min: 8,
+        minMessage: 'Minimum {{ limit }} caractères',
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\Regex(
+    pattern: '/^[a-zA-Z0-9_-]+$/',
+    message: 'Le pseudo ne doit contenir que des lettres, des chiffres, des tirets ou underscores.'
+    )]
+    #[Assert\NotBlank(message: 'Le pseudo est obligatoire')]
+    #[Assert\Length(
+        min: 3,
+        max: 30,
+        minMessage: 'Minimum {{ limit }} caractères',
+        maxMessage: 'Maximum {{ limit }} caractères'
+    )]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
