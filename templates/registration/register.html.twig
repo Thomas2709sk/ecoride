@@ -2,6 +2,10 @@
 
 {% block title %}Inscription{% endblock %}
 
+{% block importmap %}
+	{{ importmap(['app', 'register']) }}
+{% endblock %}
+
 {% block body %}
     <h1>Inscription</h1>
 
@@ -10,10 +14,19 @@
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.plainPassword) }}
+        <div>
+            {{ form_row(registrationForm.plainPassword) }}
+            {# Register.js #}
+						<div class="form-text mt-2">
+							Complexité du mot de passe :
+							<span id="entropy" class="fw-bold text-red">Très faible</span>
+							<br>
+							<small class="text-muted">(la complexité minimale acceptée est "Fort")</small>
+						</div>
+        </div>
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">M'inscrire</button>
+        <button type="submit" class="btn btn-primary"  id="submit-button" disabled>M'inscrire</button>
     {{ form_end(registrationForm) }}
         <p>Déjà inscrit ?<a href="">Me connecter</a></p>
 {% endblock %}

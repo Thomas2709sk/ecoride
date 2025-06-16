@@ -11854,4 +11854,13 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+.text-red {
+  color: red;
+}
+.text-orange {
+  color: orange;
+}
+.text-green {
+  color: green;
 }/*# sourceMappingURL=app.css.map */

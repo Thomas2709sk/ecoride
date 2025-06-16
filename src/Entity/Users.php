@@ -47,10 +47,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 30)]
-    #[Assert\Regex(
-    pattern: '/^[a-zA-Z0-9_-]+$/',
-    message: 'Le pseudo ne doit contenir que des lettres, des chiffres, des tirets ou underscores.'
-    )]
     #[Assert\NotBlank(message: 'Le pseudo est obligatoire')]
     #[Assert\Length(
         min: 3,
