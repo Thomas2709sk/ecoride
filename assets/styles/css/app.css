@@ -11863,4 +11863,8 @@ textarea.form-control-lg {
 }
 .text-green {
   color: green;
+}
+
+.preview {
+  display: none;
 }/*# sourceMappingURL=app.css.map */

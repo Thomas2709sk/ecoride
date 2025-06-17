@@ -2,6 +2,10 @@
 
 {% block title %}Votre compte{% endblock %}
 
+{% block importmap %}
+	{{ importmap(['app', 'addPhoto']) }}
+{% endblock %}
+
 {% block body %}
 <section>
     <h1>Votre Compte</h1>
@@ -11,8 +15,11 @@
         {{ form_row(accountForm.photo) }}
         {# addPhoto.js #}
         <div class="preview">
-            <img src="" class="rounded-circle" alt="" width="200">
+            <img src="" class="rounded-circle" alt="" width="50">
         </div>
+
+        {{ form_label(accountForm.role, 'Etes- vous :') }}
+				{{ form_widget(accountForm.role) }}
 {# 
         {{ form_label(accountForm.role, 'Etes- vous :') }}
         {{ form_widget(accountForm.role) }} #}
@@ -21,7 +28,7 @@
             <button class="btn btn-primary" type="submit">Modifier</button>
         </div>
     {{ form_end(accountForm) }}
-        <h2 class="ms-3 mt-3 pb-3 border-bottom border-dark">Vos crédits</h2>
+        <h2 class="ms-3 mt-3 pb-3 border-bottom border-dark">Crédits</h2>
         <div class="container">
             <b>Vos crédits :</b>
             {{ app.user.credits }}

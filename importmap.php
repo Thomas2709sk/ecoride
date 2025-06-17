@@ -24,6 +24,10 @@ return [
         'path' => './assets/js/login.js',
         'entrypoint' => true,
     ],
+    'addPhoto' => [
+        'path' => './assets/js/addPhoto.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

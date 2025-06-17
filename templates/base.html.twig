@@ -69,6 +69,23 @@
 							</ul>
 						</li>
 					</ul>
+					<div class="dropdown text-end ms-auto ">
+							<a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								{% if app.user %}
+									<div class="user-profile d-flex align-items-center">
+										{% if app.user.photo %}
+											<img src="{{ asset('uploads/users/mini/40x40-' ~ app.user.photo) }}" class="rounded-circle" alt="Photo de profil" class="profile-picture">
+										{% else %}
+											<i class="fa fa-user-circle fs-2"></i>
+										{% endif %}
+										<span class="ms-2">Bonjour,
+											{{ app.user.pseudo }}!</span>
+									</div>
+								{% else %}							
+									<i class="fa fa-user-circle fs-2"></i>
+								{% endif %}
+							</a>
+						</div>
 				</div>
 			</div>
 		</nav>

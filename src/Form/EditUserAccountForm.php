@@ -7,6 +7,7 @@ use App\Entity\Drivers;
 use App\Entity\Users;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,6 +31,18 @@ class EditUserAccountForm extends AbstractType
                         'accept' => 'image/png, image/jpeg, image/webp'       
                 ]
             ])
+
+             ->add('role', ChoiceType::class, [
+                'choices' => [
+                    'Passager' => 'passager',
+                    'Chauffeur' => 'chauffeur',
+                    'Chauffeur/Passager' => 'chauffeur/passager',
+                ],
+                'label' => 'Rôle',
+                'mapped' => false,
+                 // Pré-sélectionner 'guide' si l'utilisateur est un guide
+                //  'data' => $isGuide ? 'guide' : 'voyageur',
+            ]);
             // ->add('drivers', EntityType::class, [
             //     'class' => Drivers::class,
             //     'choice_label' => 'id',
