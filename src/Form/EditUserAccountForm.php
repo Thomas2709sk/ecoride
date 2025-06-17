@@ -22,7 +22,7 @@ class EditUserAccountForm extends AbstractType
             ->add('pseudo', TextType::class, [
                 'required' => false,
             ])
-            ->add('picture', FileType::class, [
+            ->add('photo', FileType::class, [
                 'required' => false,
                 'mapped' => false,
                 'label' => 'Photo de profil :',

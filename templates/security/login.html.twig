@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block importmap %}
-	{{ importmap(['app']) }}
+	{{ importmap(['app', 'login']) }}
 {% endblock %}
 
 {% block body %}
@@ -23,7 +23,7 @@
 
 		<h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
 		<label for="username">Email</label>
-		<input type="email" value="{{ last_username }}" name="_email" id="email" class="form-control" autocomplete="email" required autofocus>
+		<input type="email" value="{{ last_username }}" name="_username" id="email" class="form-control" autocomplete="email" required autofocus>
 		<label for="password">Mot de passe</label>
 		<input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
 		<input
@@ -39,7 +39,7 @@
 		            </div>
 		        #}
 
-		<button class="btn btn-lg btn-primary" id="login-button" type="submit">
+		<button class="btn btn-lg btn-primary" id="login-button" type="submit" disabled>
 			Connexion
 		</button>
 	</form>
