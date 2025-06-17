@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre compte{% endblock %}
+
+{% block body %}
+<section>
+    <h1>Votre Compte</h1>
+{# Edit account form #}
+    {{ form_start(accountForm) }}
+        {{ form_row(accountForm.pseudo) }}
+        {{ form_row(accountForm.photo) }}
+        {# addPhoto.js #}
+        <div class="preview">
+            <img src="" class="rounded-circle" alt="" width="200">
+        </div>
+{# 
+        {{ form_label(accountForm.role, 'Etes- vous :') }}
+        {{ form_widget(accountForm.role) }} #}
+
+        <div class="mt-3">
+            <button class="btn btn-primary" type="submit">Modifier</button>
+        </div>
+    {{ form_end(accountForm) }}
+        <h2 class="ms-3 mt-3 pb-3 border-bottom border-dark">Vos crédits</h2>
+        <div class="container">
+            <b>Vos crédits :</b>
+            {{ app.user.credits }}
+        </div>
+</section>
+{% endblock %}
