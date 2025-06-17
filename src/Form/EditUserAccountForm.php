@@ -36,7 +36,7 @@ class EditUserAccountForm extends AbstractType
                 'choices' => [
                     'Passager' => 'passager',
                     'Chauffeur' => 'chauffeur',
-                    'Chauffeur/Passager' => 'chauffeur/passager',
+                    'Chauffeur et Passager' => 'chauffeur/passager',
                 ],
                 'label' => 'Rôle',
                 'mapped' => false,

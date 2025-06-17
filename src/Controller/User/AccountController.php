@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 #[Route('/user/account', name: 'app_user_account_')]
 class AccountController extends AbstractController
@@ -20,7 +21,7 @@ class AccountController extends AbstractController
     public function index(Request $request, EntityManagerInterface $em, PictureService $pictureService): Response
     {
         // get User
-         /** @var Users $user */
+        /** @var Users $user */
         $user = $this->getUser();
 
         // Create form
@@ -30,36 +31,45 @@ class AccountController extends AbstractController
 
         // if form is valid
         if ($accountForm->isSubmitted() && $accountForm->isValid()) {
-            
-              // upload picture for user profile picture
+
+            // upload picture for user profile picture
             $featuredImage = $accountForm->get('photo')->getData();
 
             if ($featuredImage instanceof UploadedFile) {
-            // Use function square in Service -> PictureService
-            $image = $pictureService->square($featuredImage, 'users', 40);
+                // Use function square in Service -> PictureService
+                $image = $pictureService->square($featuredImage, 'users', 40);
 
-            $user->setPhoto($image);
+                $user->setPhoto($image);
             }
-              // Get user role
+            // Get user role
             $role = $accountForm->get('role')->getData();
 
-            if ($role === 'chauffeur') {
-                // if User choose guide in the account form
-                $driver = $em->getRepository(Drivers::class)->findOneBy(['user' => $user]);
-                if (!$driver) {
-                    // Create new object Drivers
-                    $driver = new Drivers();
-                    // User get a Driver ID
-                    $driver->setUser($user);
-                    $em->persist($driver);
-                }
+            if (in_array($role, ['chauffeur', 'chauffeur/passager']) && !in_array('ROLE_DRIVER', $user->getRoles(), true)) {
+
+                $em->flush();
+
+                return $this->redirectToRoute('app_driver_registration_preferences');
             } elseif ($role === 'passager') {
-                // If User is a driver and chosse 'passager'
+
                 $driver = $em->getRepository(Drivers::class)->findOneBy(['user' => $user]);
-                // Remove driver ID 
+                // Supprimer le driver si il existe
                 if ($driver) {
                     $em->remove($driver);
                 }
+
+                // Retirer le rôle DRIVER
+                $roles = $user->getRoles();
+                $roles = array_diff($roles, ['ROLE_DRIVER']);
+                $user->setRoles($roles);
+                $em->flush();
+
+                // Rafraîchir le token pour mettre à jour les rôles dans la session
+                $this->container->get('security.token_storage')->setToken(
+                    new UsernamePasswordToken($user, 'main', $user->getRoles())
+                );
+
+                $this->addFlash('success', "Vous êtes maintenant uniquement passager.");
+                return $this->redirectToRoute('app_user_account_index');
             }
 
             $em->persist($user);

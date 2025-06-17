@@ -21,7 +21,7 @@ class Drivers
     #[ORM\Column]
     private ?bool $smoking = null;
 
-    #[ORM\OneToOne(inversedBy: 'drivers', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'drivers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Users $user = null;
 
@@ -31,7 +31,7 @@ class Drivers
     /**
      * @var Collection<int, Cars>
      */
-    #[ORM\OneToMany(targetEntity: Cars::class, mappedBy: 'driver')]
+    #[ORM\OneToMany(targetEntity: Cars::class, mappedBy: 'driver',  cascade: ['persist', 'remove'])]
     private Collection $cars;
 
     /**
