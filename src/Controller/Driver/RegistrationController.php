@@ -35,20 +35,18 @@ class RegistrationController extends AbstractController
 
         $driver = $em->getRepository(Drivers::class)->findOneBy(['user' => $user]);
 
+        // Create new Drivers object, create driver_id and link it to the User
         if (!$driver) {
             $driver = new Drivers();
             $driver->setUser($user);
         }
 
 
-        // Create form
         $driverForm = $this->createForm(DriverPreferencesForm::class, $driver);
 
         $driverForm->handleRequest($request);
 
-        // if form is valid
         if ($driverForm->isSubmitted() && $driverForm->isValid()) {
-
 
             $em->persist($driver);
             $em->flush();
@@ -68,18 +66,16 @@ class RegistrationController extends AbstractController
         /** @var Users $user */
         $user = $this->getUser();
 
-        // Récupérer l'entité Drivers liée à l'utilisateur
+        // Get the driver link to the User
         $driver = $em->getRepository(Drivers::class)->findOneBy(['user' => $user]);
 
         if (!$driver) {
             throw $this->createNotFoundException('Profil chauffeur introuvable.');
         }
 
-        // Créer une nouvelle voiture et la lier au chauffeur
         $car = new Cars();
         $car->setDriver($driver);
 
-        // Créer le formulaire avec l'objet Cars
         $carForm = $this->createForm(DriverCarForm::class, $car);
 
         $carForm->handleRequest($request);
@@ -87,7 +83,7 @@ class RegistrationController extends AbstractController
         if ($carForm->isSubmitted() && $carForm->isValid()) {
             $em->persist($car);
 
-            // Ajout du rôle chauffeur à l'utilisateur si pas encore présent
+            // Add ["ROLE_DRIVER"] when User give all information needed
             $roles = $user->getRoles();
             if (!in_array('ROLE_DRIVER', $roles)) {
                 $roles[] = 'ROLE_DRIVER';

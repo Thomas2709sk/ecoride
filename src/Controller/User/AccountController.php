@@ -84,12 +84,14 @@ class AccountController extends AbstractController
 
         if ($role === 'chauffeur') {
 
+            // If User choose 'chauffeur'(driver), he can't make reservation for carpools
             $user->setIsPassenger(false);
 
             $this->addFlash('success', "Vous êtes maintenant uniquement chauffeur.");
 
             $em->flush();
 
+            // If User don't have ["ROLE_DRIVER"] redirect to form registration
             if (!in_array('ROLE_DRIVER', $userRoles, true)) {
                 return $this->redirectToRoute('app_driver_registration_preferences');
             }
@@ -108,6 +110,7 @@ class AccountController extends AbstractController
             }
 
             return $this->redirectToRoute('app_user_account_index');
+
         } elseif ($role === 'passager') {
 
             $driver = $em->getRepository(Drivers::class)->findOneBy(['user' => $user]);
@@ -121,7 +124,7 @@ class AccountController extends AbstractController
             $roles = array_diff($roles, ['ROLE_DRIVER']);
             $user->setRoles($roles);
 
-            // Can be a passenger again
+            // Can be a passenger again and make reservation for carpools
             $user->setIsPassenger(true);
 
 
