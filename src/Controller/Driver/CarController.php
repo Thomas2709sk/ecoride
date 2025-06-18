@@ -89,12 +89,13 @@ class CarController extends AbstractController
             throw $this->createNotFoundException('Véhicule non trouvé.');
         }
 
-        // Vérification des droits
+        // Vérify if the Driver is the owner
         if (!$authChecker->isGranted(CarsVoter::EDIT, $car)) {
             throw $this->createAccessDeniedException('Vous n\'avez pas le droit de modifier ce véhicule.');
         }
 
         $carForm = $this->createForm(DriverCarForm::class, $car);
+        
         $carForm->handleRequest($request);
 
         if ($carForm->isSubmitted() && $carForm->isValid()) {
