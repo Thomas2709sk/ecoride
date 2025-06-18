@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un véhicule{% endblock %}
+
+{% block body %}
+<section>
+    <h1>Ajouter un véhicule</h1>
+    {# Driver Car form #}
+   <div>
+		<div>
+		{{ form_start(carForm) }}
+
+        {{ form_row(carForm.brand) }}
+        {{ form_row(carForm.model) }}
+        {{ form_row(carForm.color) }}
+        {{ form_row(carForm.seats) }}
+        {{ form_row(carForm.plate_number) }}
+        {{ form_row(carForm.first_registration) }}
+
+		<div class="mt-3">
+			<button class="btn btn-primary" type="submit">Ajouter</button>
+		</div>
+		{{ form_end(carForm) }}
+	</div>
+
+</section>
+{% endblock %}

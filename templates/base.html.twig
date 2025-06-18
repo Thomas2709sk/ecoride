@@ -55,6 +55,11 @@
 								<li>
 									<a class="dropdown-item" href="{{ path('app_user_account_index') }}">Compte</a>
 								</li>
+								{% if is_granted('ROLE_DRIVER') %}
+								<li>
+									<a class="dropdown-item" href="{{ path('app_driver_account_index') }}">Compte chauffeur</a>
+								</li>
+								{% endif %}					
 								<li>
 									<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
 								</li>
@@ -85,6 +90,30 @@
 									<i class="fa fa-user-circle fs-2"></i>
 								{% endif %}
 							</a>
+							<ul class="dropdown-menu">
+							{% if app.user %}
+								<li>
+									<a class="dropdown-item" href="{{ path('app_user_account_index') }}">Compte</a>
+								</li>
+								{% if is_granted('ROLE_DRIVER') %}
+								<li>
+									<a class="dropdown-item" href="{{ path('app_driver_account_index') }}">Compte chauffeur</a>
+								</li>
+								{% endif %}					
+								<li>
+									<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+								</li>
+							{% else %}
+								<li>
+									<a class="dropdown-item" href="{{ path('app_register') }}">Inscription</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="{{ path('app_login') }}">Connexion</a>
+								</li>
+							{% endif %}
+							</ul>
+						</li>
+					</ul>
 						</div>
 				</div>
 			</div>

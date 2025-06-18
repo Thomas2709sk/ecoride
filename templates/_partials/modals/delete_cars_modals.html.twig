@@ -1,0 +1,25 @@
+<div class="modal fade" id="deleteModal-{{ car.id }}" tabindex="-1" aria-labelledby="deleteModalLabel-{{ car.id }}" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="cancelModalLabel">Supprimer véhicule</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>
+					<strong>Êtes-vous sûr de vouloir supprimer votre véhicule</strong>?</p>
+				<p>
+					<strong>marque :</strong>
+					{{ car.brand }}
+                </p>
+				<p>
+					<strong>Modèle :</strong>
+					{{ car.model }}</p>
+		</div>
+		<div class="modal-footer">
+			<form method="POST" action="{{ path('app_driver_car_delete', { id: car.id }) }}">
+				<button type="submit" class="btn btn-danger">Supprimer</button>
+			</form>
+		</div>
+	</div>
+</div></div>
