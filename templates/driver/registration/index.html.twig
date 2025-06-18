@@ -10,14 +10,14 @@
 
 	<div>
 		{{ form_start(driverForm) }}
-		<div class="mb-3">
+		<div class="mb-5">
 			<label class="form-label">Animaux autorisés :</label>
 			<div class="form-check">
 				{{ form_widget(driverForm.animals, {'attr': {'class': 'form-check-input'}}) }}
 			</div>
 		</div>
 
-		<div class="mb-3">
+		<div class="mb-5">
 			<label class="form-label">Fumeurs autorisés :</label>
 			<div class="form-check">
 				{{ form_widget(driverForm.smoking, {'attr': {'class': 'form-check-input'}}) }}
