@@ -69,3 +69,6 @@ CREATE TABLE IF NOT EXISTS reviews (
     CONSTRAINT fk_review_driver FOREIGN KEY (driver_id) REFERENCES drivers(driver_id),
     CONSTRAINT fk_review_carpool FOREIGN KEY (carpool_id) REFERENCES carpools(carpool_id)
 );
+
+ALTER TABLE Users
+ADD COLUMN is_passenger TINYINT(1) NOT NULL DEFAULT 1;

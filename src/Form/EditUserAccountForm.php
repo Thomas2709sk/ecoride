@@ -40,18 +40,7 @@ class EditUserAccountForm extends AbstractType
                 ],
                 'label' => 'Rôle',
                 'mapped' => false,
-                 // Pré-sélectionner 'guide' si l'utilisateur est un guide
-                //  'data' => $isGuide ? 'guide' : 'voyageur',
             ]);
-            // ->add('drivers', EntityType::class, [
-            //     'class' => Drivers::class,
-            //     'choice_label' => 'id',
-            // ])
-            // ->add('carpools', EntityType::class, [
-            //     'class' => Carpools::class,
-            //     'choice_label' => 'id',
-            //     'multiple' => true,
-            // ])
         ;
     }
 

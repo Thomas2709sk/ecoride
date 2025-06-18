@@ -64,6 +64,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $isVerified = false;
 
+    #[ORM\Column]
+    private ?bool $isPassenger = true;
+
     #[ORM\OneToOne(mappedBy: 'user')]
     private ?Drivers $drivers = null;
 
@@ -279,4 +282,32 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * Get the value of isPassenger
+     */ 
+    public function isPassenger()
+    {
+        return $this->isPassenger;
+    }
+
+    /**
+     * Set the value of isPassenger
+     *
+     * @return  self
+     */ 
+    public function setIsPassenger($isPassenger)
+    {
+        $this->isPassenger = $isPassenger;
+
+        return $this;
+    }
+
+    public function getDisplayedRole(): string
+{
+    if (in_array('ROLE_DRIVER', $this->getRoles(), true)) {
+        return $this->isPassenger() ? 'chauffeur/passager' : 'chauffeur';
+    }
+    return 'passager';
+}
 }
