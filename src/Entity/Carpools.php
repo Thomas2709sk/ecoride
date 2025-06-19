@@ -31,8 +31,6 @@ class Carpools
     #[ORM\Column(length: 255)]
     private ?string $address_end = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $day_end = null;
 
     #[ORM\Column]
     private ?int $places_available = null;
@@ -136,18 +134,6 @@ class Carpools
     public function setAddressEnd(string $address_end): static
     {
         $this->address_end = $address_end;
-
-        return $this;
-    }
-
-    public function getDayEnd(): ?\DateTime
-    {
-        return $this->day_end;
-    }
-
-    public function setDayEnd(\DateTime $day_end): static
-    {
-        $this->day_end = $day_end;
 
         return $this;
     }

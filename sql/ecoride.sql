@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS carpools (
     end TIME NOT NULL,
     address_start VARCHAR(255) NOT NULL,
     address_end VARCHAR(255) NOT NULL,
-    day_end DATE NOT NULL,
     price INT NOT NULL,
     status ENUM('A venir', 'En cours', 'Terminé', 'Confirmé', 'Vérification par la plateforme') NOT NULL DEFAULT 'A venir',
     carpool_number VARCHAR(255) NOT NULL,

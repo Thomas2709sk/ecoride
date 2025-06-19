@@ -28,6 +28,14 @@ return [
         'path' => './assets/js/addPhoto.js',
         'entrypoint' => true,
     ],
+    'showMap' => [
+        'path' => './assets/js/showMap.js',
+        'entrypoint' => true,
+    ],
+    'calculateTime' => [
+        'path' => './assets/js/calculateTime.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

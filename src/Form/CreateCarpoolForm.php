@@ -41,10 +41,6 @@ class CreateCarpoolForm extends AbstractType
             ->add('address_end', TextType::class, [
                 'label' => 'adresse d\'arrivée :',
             ])
-            ->add('day_end', DateType::class, [
-                'widget' => 'single_text',
-                'label' => 'Jour de fin :'
-            ])
             ->add('price', IntegerType::class, [
                 'label' => 'Prix',
                 'attr' => ['min' => 0],
