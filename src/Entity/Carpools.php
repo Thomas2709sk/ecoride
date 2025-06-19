@@ -60,6 +60,9 @@ class Carpools
     #[ORM\Column(length: 255)]
     private ?string $carpool_number = null;
 
+    #[ORM\Column]
+    private ?bool $isEcological = null;
+
     /**
      * @var Collection<int, Reviews>
      */
@@ -271,6 +274,26 @@ class Carpools
                 $review->setCarpool(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isEcological
+     */ 
+    public function getIsEcological()
+    {
+        return $this->isEcological;
+    }
+
+    /**
+     * Set the value of isEcological
+     *
+     * @return  self
+     */ 
+    public function setIsEcological($isEcological)
+    {
+        $this->isEcological = $isEcological;
 
         return $this;
     }

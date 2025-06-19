@@ -48,7 +48,7 @@ class CarController extends AbstractController
 
             $this->addFlash('success', 'Votre véhicule a été ajouté avec succès.');
 
-            return $this->redirectToRoute('app_driver_car_index');
+            return $this->redirectToRoute('app_driver_car_list');
         }
 
         return $this->render('driver/car/index.html.twig', [

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer covoiturages{% endblock %}
+
+{% block body %}
+
+<section>
+    <h1>Créer covoiturages</h1>
+
+    	<div>
+		{{ form_start(carpoolForm) }}
+
+        {{ form_row(carpoolForm.day) }}
+        {{ form_row(carpoolForm.begin) }}
+        {{ form_row(carpoolForm.end) }}
+        {{ form_row(carpoolForm.address_start) }}
+        {{ form_row(carpoolForm.address_end) }}
+        {{ form_row(carpoolForm.day_end) }}
+        <div>
+        {{ form_row(carpoolForm.price) }}
+        <p>2 crédits iront à la plateforme</p>
+        </div>
+        {{ form_row(carpoolForm.car) }}
+        {{ form_row(carpoolForm.isEcological) }}
+
+		<div class="mt-3">
+			<button class="btn btn-primary" type="submit">Ajouter</button>
+		</div>
+		{{ form_end(carpoolForm) }}
+	</div>
+</section> 
+{% endblock %}
