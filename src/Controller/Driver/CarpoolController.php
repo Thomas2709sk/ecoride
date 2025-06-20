@@ -26,7 +26,7 @@ class CarpoolController extends AbstractController
 
         $driver = $driversRepository->findOneBy(['user' => $user]);
         if (!$driver) {
-            $this->addFlash('error', 'Vous devez être un chauffeur pour voir vos covoiturages.');
+            $this->addFlash('error', 'Vous devez être un chauffeur pour voir les covoiturages.');
             return $this->redirectToRoute('app_user_account_index');
         }
 
