@@ -40,6 +40,10 @@ return [
         'path' => './assets/js/detailsCarpool.js',
         'entrypoint' => true,
     ],
+    'dateSearch' => [
+        'path' => './assets/js/dateSearch.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

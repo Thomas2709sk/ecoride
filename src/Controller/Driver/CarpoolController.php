@@ -3,7 +3,9 @@
 namespace App\Controller\Driver;
 
 use App\Entity\Carpools;
+use App\Entity\Cars;
 use App\Form\CreateCarpoolForm;
+use App\Form\DriverCarForm;
 use App\Repository\CarpoolsRepository;
 use App\Repository\DriversRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -42,9 +44,14 @@ class CarpoolController extends AbstractController
 
         $user = $this->getUser();
 
+        $car = new Cars();
+
+        $carForm = $this->createForm(DriverCarForm::class, $car);
+
+        $carForm->handleRequest($request);
+
         // Create new Carpool object
         $carpool = new Carpools();
-
 
         // get the driver ID associate with the user ID
         $driver = $driversRepository->findOneBy(['user' => $user]);
@@ -64,6 +71,18 @@ class CarpoolController extends AbstractController
         ]);
 
         $carpoolForm->handleRequest($request);
+
+        if ($carForm->isSubmitted() && $carForm->isValid()) {
+
+            $car->setDriver($driver);
+
+            $em->persist($car);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre véhicule a été ajouté avec succès.');
+
+            return $this->redirectToRoute('app_driver_carpool_create');
+        }
 
         if ($carpoolForm->isSubmitted() && $carpoolForm->isValid()) {
             
@@ -86,6 +105,7 @@ class CarpoolController extends AbstractController
 
         return $this->render('driver/carpool/create.html.twig', [
             'carpoolForm' => $carpoolForm->createView(),
+            'carForm' => $carForm->createView(),
         ]);
     }
 

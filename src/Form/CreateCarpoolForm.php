@@ -60,7 +60,7 @@ class CreateCarpoolForm extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'required' => true,
-                'label' => 'trajet écologique ?',
+                'label' => 'Trajet écologique ?',
             ])
         ;
     }
