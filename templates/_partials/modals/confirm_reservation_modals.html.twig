@@ -1,0 +1,37 @@
+	<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="confirmationModalLabel">Confirmation de réservation</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p>
+						<strong>Êtes-vous sûr de vouloir réserver ce covoiturage</strong>
+						?</p>
+					{% if app.user is defined and app.user %}
+						<p>
+							<strong>Vos crédits :</strong>
+							{{ app.user.credits }}</p>
+						<p>
+							<strong>Prix :</strong>
+							{{ carpool.price }}
+							crédits</p>
+						<p>
+							<strong>Places disponibles :</strong>
+							{{ carpool.PlacesAvailable}}</p>
+					{% else %}
+						<p>
+							<strong>Vous devez être connecté pour réserver.</strong>
+						</p>
+					{% endif %}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-bs-dismiss="modal">Annuler</button>
+					<form method="POST" action="">
+						<button type="submit" class="btn btn-success">Confirmer la réservation</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>

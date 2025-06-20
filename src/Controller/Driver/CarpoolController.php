@@ -113,30 +113,30 @@ class CarpoolController extends AbstractController
     }
 
     #[Route('/details/{id}', name: 'details')]
-public function details(int $id, DriversRepository $driversRepository, CarpoolsRepository $carpoolsRepository): Response
-{
-    /** @var Users $user */
-    $user = $this->getUser();
+    public function details(int $id, DriversRepository $driversRepository, CarpoolsRepository $carpoolsRepository): Response
+    {
+        /** @var Users $user */
+        $user = $this->getUser();
 
-    $driver = $driversRepository->findOneBy(['user' => $user]);
-    if (!$driver) {
-        $this->addFlash('error', 'Vous devez être un chauffeur pour voir vos covoiturages.');
-        return $this->redirectToRoute('app_user_account_index');
+        $driver = $driversRepository->findOneBy(['user' => $user]);
+        if (!$driver) {
+            $this->addFlash('error', 'Vous devez être un chauffeur pour voir vos covoiturages.');
+            return $this->redirectToRoute('app_user_account_index');
+        }
+
+        // Get the carpool associate with the driver
+        $carpool = $carpoolsRepository->find($id);
+        if (!$carpool || $carpool->getDriver() !== $driver) {
+            $this->addFlash('error', 'Ce covoiturage ne vous appartient pas.');
+            return $this->redirectToRoute('index');
+        }
+
+
+        $car = $driver->getCars();
+
+        return $this->render('driver/carpool/details.html.twig', [
+            'carpool' => $carpool,
+            'car' => $car
+        ]);
     }
-
-    // Get the carpool associate with the driver
-    $carpool = $carpoolsRepository->find($id);
-    if (!$carpool || $carpool->getDriver() !== $driver) {
-        $this->addFlash('error', 'Ce covoiturage ne vous appartient pas.');
-        return $this->redirectToRoute('index');
-    }
-
-
-    $car = $driver->getCars();
-
-    return $this->render('driver/carpool/details.html.twig', [
-        'carpool' => $carpool,
-        'car' => $car
-    ]);
-}
 }
