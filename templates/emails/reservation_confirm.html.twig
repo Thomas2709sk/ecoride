@@ -1,0 +1,35 @@
+<h1>Bonjour
+	{{ user.pseudo }}</h1>
+<p>Merci pour votre réservation !</p>
+<p>Voici les détails de votre covoiturage :</p>
+<div>
+    <div>
+        <h2>Information du trajet</h2>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Date :
+                {{ carpool.day|date('d/m/Y') }}</li>
+            <li class="list-group-item">Début :
+                {{ carpool.begin|date('H:i') }}</li>
+            <li class="list-group-item">Fin éstimé :
+                {{ carpool.end|date('H:i') }}</li>
+            <li class="list-group-item">Prix :
+                {{ carpool.price }}
+                Crédits</li>
+            <li class="list-group-item">Adresse de départ : {{ carpool.addressStart }}</li>
+            <li class="list-group-item">Adresse d'arrivée : {{ carpool.addressEnd }}</li>
+        </ul>
+    </div>
+    <div>
+        <h2>Chauffeur et sa voiture</h2>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Nom du chauffeur :
+                {{ carpool.driver.user.pseudo }}</li>  
+            <div>Voiture :
+            <li class="list-group-item">{{ carpool.car.brand}}</li>    
+            <li class="list-group-item">{{ carpool.car.model}}</li>
+            <li class="list-group-item">{{ carpool.car.color}}</li>        
+            </div>
+        </ul>
+    </div>
+</div>
+<p>Merci , l'équipe Ecoride</p>

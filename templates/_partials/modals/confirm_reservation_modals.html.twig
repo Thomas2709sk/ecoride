@@ -28,7 +28,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-warning" data-bs-dismiss="modal">Annuler</button>
-					<form method="POST" action="">
+					<form method="POST" action="{{ path('app_user_carpool_book', { id: carpool.id }) }}">
 						<button type="submit" class="btn btn-success">Confirmer la réservation</button>
 					</form>
 				</div>
