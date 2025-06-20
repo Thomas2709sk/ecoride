@@ -46,6 +46,7 @@ class CarpoolController extends AbstractController
 
         $car = new Cars();
 
+        // For the driver to add another Car in the create Carpool page
         $carForm = $this->createForm(DriverCarForm::class, $car);
 
         $carForm->handleRequest($request);
@@ -72,6 +73,7 @@ class CarpoolController extends AbstractController
 
         $carpoolForm->handleRequest($request);
 
+        // For the carForm
         if ($carForm->isSubmitted() && $carForm->isValid()) {
 
             $car->setDriver($driver);
@@ -83,7 +85,7 @@ class CarpoolController extends AbstractController
 
             return $this->redirectToRoute('app_driver_carpool_create');
         }
-
+        //  For the carpoolForm
         if ($carpoolForm->isSubmitted() && $carpoolForm->isValid()) {
             
             // Associate the driver to the carpool
@@ -94,6 +96,7 @@ class CarpoolController extends AbstractController
             // set 'PlacesAvailable' for the carpool depending of 'seats' of the car driver choose
             $carpool->setPlacesAvailable($car->getSeats() ?? 0);
 
+            // The Carpool will have a random number who not follow
             $carpool->setCarpoolNumber('COV#' . bin2hex(random_bytes(4)));
           
             $em->persist($carpool);

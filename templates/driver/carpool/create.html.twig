@@ -29,8 +29,10 @@
 		<h1>Créer covoiturages</h1>
 
 		<div class="container mb-3">
+            <!-- CreateCarpool Form -->
 			{{ form_start(carpoolForm) }}
 
+            <!-- dateSearch.js -->
 			{{ form_row(carpoolForm.day) }}
 			{{ form_row(carpoolForm.address_start) }}
 			{{ form_row(carpoolForm.address_end) }}
@@ -60,6 +62,7 @@
         </div>
 		<div class="container col-lg-8 mb-5">
 			<h2>Apercu du trajet</h2>
+            <!-- ShowMap.js -->
 			<div id="map" style="height: 500px;"></div>
 		</div>
 	</section>
