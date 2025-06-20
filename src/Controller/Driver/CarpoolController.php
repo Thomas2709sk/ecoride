@@ -4,6 +4,7 @@ namespace App\Controller\Driver;
 
 use App\Entity\Carpools;
 use App\Form\CreateCarpoolForm;
+use App\Repository\CarpoolsRepository;
 use App\Repository\DriversRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,11 +16,24 @@ use Symfony\Component\Routing\Attribute\Route;
 class CarpoolController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
+    public function index(DriversRepository $driversRepository): Response
     {
-        // Afficher covoiturages
 
-        return $this->render('driver/carpool/index.html.twig', []);
+         /** @var Users $user */
+        $user = $this->getUser();
+
+        $driver = $driversRepository->findOneBy(['user' => $user]);
+        if (!$driver) {
+            $this->addFlash('error', 'Vous devez être un chauffeur pour voir vos covoiturages.');
+            return $this->redirectToRoute('app_user_account_index');
+        }
+
+        // get the carpools of the User
+        $carpools = $driver->getCarpools();
+
+        return $this->render('driver/carpool/index.html.twig', [
+            'carpools' => $carpools,
+        ]);
     }
 
     #[Route('/create', name: 'create')]
@@ -74,4 +88,32 @@ class CarpoolController extends AbstractController
             'carpoolForm' => $carpoolForm->createView(),
         ]);
     }
+
+    #[Route('/details/{id}', name: 'details')]
+public function details(int $id, DriversRepository $driversRepository, CarpoolsRepository $carpoolsRepository): Response
+{
+    /** @var Users $user */
+    $user = $this->getUser();
+
+    $driver = $driversRepository->findOneBy(['user' => $user]);
+    if (!$driver) {
+        $this->addFlash('error', 'Vous devez être un chauffeur pour voir vos covoiturages.');
+        return $this->redirectToRoute('app_user_account_index');
+    }
+
+    // Get the carpool associate with the driver
+    $carpool = $carpoolsRepository->find($id);
+    if (!$carpool || $carpool->getDriver() !== $driver) {
+        $this->addFlash('error', 'Ce covoiturage ne vous appartient pas.');
+        return $this->redirectToRoute('index');
+    }
+
+
+    $car = $driver->getCars();
+
+    return $this->render('driver/carpool/details.html.twig', [
+        'carpool' => $carpool,
+        'car' => $car
+    ]);
+}
 }

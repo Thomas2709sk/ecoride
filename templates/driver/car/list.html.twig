@@ -15,6 +15,7 @@
                 <th>Places</th>
                 <th>Plaque</th>
                 <th>Date Immat.</th>
+                <th>Energie</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -26,6 +27,7 @@
                     <td>{{ car.seats }}</td>
                     <td>{{ car.plateNumber}}</td>
                     <td>{{ car.firstRegistration|date('d/m/Y') }}</td>
+                    <td>{{ car.energy }}</td>
                     <td>
                         <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ car.id }}">Supprimer</button>
                         <button class="btn btn-warning btn-sm"><a href="{{ path('app_driver_car_edit', {id: car.id}) }}">Modifier</a></button>

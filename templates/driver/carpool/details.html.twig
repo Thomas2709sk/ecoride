@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails covoiturages
+{% endblock %}
+
+
+{% block stylesheets %}
+	{# base.html.twig styles block #}
+	{{ parent() }}
+	<!-- Leaflet CSS -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+{% endblock %}
+
+{% block javascripts %}
+	{# base.html.twig JS block #}
+	{{ parent() }}
+</script>
+<!-- Leaflet script -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>{% endblock %}{% block importmap %}
+{{ importmap(['app', 'detailsCarpool']) }}{% endblock %}{% block body %}
+
+<section>
+	<h1>Détails du covoiturage {{ carpool.carpoolNumber }}</h1>
+    <div class="container">
+        <h2>Votre véhicule</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-success">
+                <thead>
+                    <tr>
+                        <th>Marque</th>
+                        <th>Modèle</th>
+                        <th>Couleur</th>
+                        <th>Places</th>
+                        <th>Plaque</th>
+                        <th>Energie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ carpool.car.brand }}</td>
+                        <td>{{ carpool.car.model }}</td>
+                        <td>{{ carpool.car.color }}</td>
+                        <td>{{ carpool.car.seats }}</td>
+                        <td>{{ carpool.car.PlateNumber }}</td>
+                        <td>{{ carpool.car.energy }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+	<div class="container">
+        <h2>Passagers inscrit</h2>
+		<p class="">Nom passager(s) :
+			{% if carpool.user|length > 0 %}
+				{% for user in carpool.user %}
+					<span>{{ user.pseudo }}</span>
+				{% endfor %}
+			{% else %}
+				<span>Aucun passager pour le moment</span>
+			{% endif %}
+		</p>
+	</div>
+    <div class="container">
+        <h2>Informations</h2>
+        <p>Jour : {{ carpool.day|date('d/m/Y') }}</p>
+        <p>Heure de départ : {{ carpool.begin|date('H:i') }}</p>
+        <p>Heure d'arrivée : {{ carpool.end|date('H:i') }}</p>
+        <p>Prix : {{ carpool.price }} Crédits</p>
+    </div>
+	<div class="container mb-5">
+		<h2>Aperçu du trajet</h2>
+		<div class="d-flex">
+			<p class="fw-bold me-2">Départ :</p>
+			<span class="me-3">
+				{{ carpool.AddressStart}}</span>
+			<p class="fw-bold me-2">Arrivé :</p>
+			<span>
+				{{ carpool.AddressEnd }}</span>
+		</div>
+		<div id="map" class="col-lg-8" style="height: 500px;" data-address-start="{{ carpool.addressStart|e('html_attr') }}" data-address-end="{{ carpool.addressEnd|e('html_attr') }}"></div>
+	</div>
+</section>
+<style>
+	.leaflet-routing-container .leaflet-routing-alt table {
+		display: none !important;
+	}
+
+	.leaflet-routing-container .leaflet-routing-alt h2 {
+		display: none !important;
+	}
+</style>{% endblock %}

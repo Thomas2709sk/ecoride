@@ -36,6 +36,10 @@ return [
         'path' => './assets/js/calculateTime.js',
         'entrypoint' => true,
     ],
+    'detailsCarpool' => [
+        'path' => './assets/js/detailsCarpool.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

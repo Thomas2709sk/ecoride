@@ -34,6 +34,9 @@ class Cars
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $first_registration = null;
 
+    #[ORM\Column(type: 'string', length: 15)]
+    private ?string $energy = null;
+
     #[ORM\ManyToOne(inversedBy: 'cars')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Drivers $driver = null;
@@ -172,4 +175,24 @@ class Cars
 {
     return $this->getBrand() . ' ' . $this->getModel();
 }
+
+    /**
+     * Get the value of energy
+     */ 
+    public function getEnergy()
+    {
+        return $this->energy;
+    }
+
+    /**
+     * Set the value of energy
+     *
+     * @return  self
+     */ 
+    public function setEnergy($energy)
+    {
+        $this->energy = $energy;
+
+        return $this;
+    }
 }
