@@ -49,13 +49,17 @@
 										<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ carpool.id }}">Annuler</button>
 									</td>
 									<td>
-										<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-}">Début</button>
+										<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#startModal-{{ carpool.id }}">Début</button>
 									</td>
 								</tr>
 							{% else %}
 								<p>Pas encore de covoiturages</p>
 							{% endif %}
-							{% include "_partials/modals/driver_cancel_carpools_modals.html.twig" %}
+							<!-- Modals -->
+								<!-- Confirm start -->
+							{% include "_partials/modals/driver/driver_confirm_start_modals.html.twig" %}
+								<!-- cancel carpools -->
+							{% include "_partials/modals/driver/driver_cancel_carpools_modals.html.twig" %}
 						{% endfor %}
 					</tbody>
 				</table>
@@ -67,7 +71,7 @@
 				<table class="table table-striped table-success">
 					<thead>
 						<tr>
-							<th>Heure de fin</th>
+							<th>Heure d'arrivée</th>
 							<th>Adresse d'arrivée</th>
 							<th>Statut</th>
 							<th>Détails</th>
@@ -94,10 +98,13 @@
 											<a href="{{ path('app_driver_carpool_details', {id: carpool.id}) }}" class="btn btn-info btn-sm">Détails</a>
 										</td>
 										<td>
-											<a href="" class="btn btn-warning btn-sm">Arriver</a>
-										</td>
+										<button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#endModal-{{ carpool.id }}">Terminer</button>
+									</td>
 									</tr>
 								{% endif %}
+								<!-- Modals -->
+								<!-- Confirm end -->
+							{% include "_partials/modals/driver/driver_confirm_end_modals.html.twig" %}
 							{% endfor %}
 						{% else %}
 							<tr>

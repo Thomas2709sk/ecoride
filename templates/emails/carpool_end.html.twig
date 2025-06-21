@@ -1,0 +1,24 @@
+<p>Bonjour {{ user.pseudo }},</p>
+
+<p>Votre covoiturage est maintenant terminée.</p>
+<p>Nous espérons que tout s'est bien passé.</p>
+
+<p>Rendez-vous dès maintenant sur votre compte pour valider que votre covoiturage s’est bien déroulée.</p>
+<p><a href="{{ url('app_user_carpool_index') }}">Vos covoiturages</a></p>
+<div>
+  <p><strong>Rappel de votre covoiturage :</strong></p>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Réservation n° : {{ carpool.carpoolNumber }}</li>
+    <li class="list-group-item">Date : {{ carpool.day|date('d/m/Y') }}</li>
+    <li class="list-group-item"> Adresse de départ : {{ carpool.addressStart }}</li>
+    <li class="list-group-item"> Adresse d'arrivée : {{ carpool.addressEnd }}</li>
+    <li class="list-group-item">Nom du chauffeur : {{ carpool.driver.user.pseudo }}</li>
+    <li class="list-group-item">Prix : {{ carpool.price }} Crédits</li>
+  </ul>
+</div>
+
+<p>N’hésitez pas à laisser un avis sur votre chauffeur.</p>
+
+<p>Merci,</p>
+<p>L’équipe Ecoride</p>
+

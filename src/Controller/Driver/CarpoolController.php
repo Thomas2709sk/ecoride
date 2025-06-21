@@ -186,4 +186,67 @@ class CarpoolController extends AbstractController
 
         return $this->redirectToRoute('app_driver_carpool_index');
     }
+
+    #[Route('/start/{id}', name: 'start', methods: ['POST'])]
+    public function startReservation(Carpools $carpool, EntityManagerInterface $em): Response
+    {
+        // check if the guide is the owner of the carpool
+        if ($this->getUser() !== $carpool->getDriver()->getUser()) {
+            throw $this->createAccessDeniedException('Vous ne pouvez pas démarrer ce covoiturage.');
+        }
+    
+        // Check carpool status
+        if ($carpool->getStatus() !== 'A venir') {
+            $this->addFlash('error', 'Ce covoiturage ne peut pas être démarrée.');
+            return $this->redirectToRoute('app_guide_account_index');
+        }
+
+    
+        // Update status when driver start carpool
+        $carpool->setStatus('En cours');
+        $em->persist($carpool);
+        $em->flush();
+    
+        $this->addFlash('success', 'Le covoiturage a été démarrée avec succès.');
+    
+        return $this->redirectToRoute('app_driver_carpool_index');
+    }
+
+    #[Route('/end/{id}', name: 'end', methods: ['POST'])]
+    public function endReservation(Carpools $carpool, EntityManagerInterface $em,  SendEmailService $mail): Response
+    {
+        // check if the driver is the owner of the carpool
+        if ($this->getUser() !== $carpool->getDriver()->getUser()) {
+            throw $this->createAccessDeniedException('Vous ne pouvez pas finir ce covoiturage.');
+        }
+    
+        // Check carpool sstatus
+        if ($carpool->getStatus() !== 'En cours') {
+            $this->addFlash('error', 'Ce covoiturage ne peut pas être terminée.');
+            return $this->redirectToRoute('app_driver_carpool_index');
+        }
+
+         // Get all the Users from the reservations
+         $users = $carpool->getUser(); 
+
+         // send mail to each users
+         foreach ($users as $user) {
+            $mail->send(
+                'no-reply@ecoride.fr',
+                $user->getEmail(),
+                'Fin de votre covoiturage',
+                'carpool_end',
+                compact('user', 'carpool') // ['user'=> $user, 'reservation' => $reservation]
+            );
+        }
+    
+        // Update status
+        $carpool->setStatus('Terminé');
+        $em->persist($carpool);
+        $em->flush();
+    
+        $this->addFlash('success', 'Le covoiturage a été terminée avec succès.');
+    
+        return $this->redirectToRoute('app_driver_carpool_index');
+    }
 }
