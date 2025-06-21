@@ -13,9 +13,7 @@ class CarpoolsVoter extends Voter
 {
     public const CANCEL = 'CARPOOL_CANCEL';
 
-    public function __construct(private readonly Security $security)
-    {
-    }
+    public function __construct(private readonly Security $security) {}
 
     protected function supports(string $attribute, mixed $subject): bool
     {
@@ -37,12 +35,27 @@ class CarpoolsVoter extends Voter
         /** @var Carpools $carpool */
         $carpool = $subject;
 
-        switch ($attribute) {
+          switch ($attribute) {
             case self::CANCEL:
-
-                return $carpool->getUser()->contains($user);
+                if ($this->isOwner($carpool, $user)) {
+                    return true;
+                }
+               if ($this->isPassenger($carpool, $user)) {
+                    return true;
+                }
         }
-
         return false;
     }
+private function isOwner(Carpools $carpool, $user): bool
+{
+    $driver = $carpool->getDriver();
+    if (!$driver || !$driver->getUser()) return false;
+    return $driver->getUser()->getId() === $user->getId();
+}
+
+    private function isPassenger(Carpools $carpool, $user): bool
+{
+    
+    return $carpool->getUser()->contains($user);
+}
 }

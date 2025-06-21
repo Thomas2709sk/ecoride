@@ -46,16 +46,16 @@
 										</button>
 									</td>
 									<td>
-										<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-">Annuler</button>
+										<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ carpool.id }}">Annuler</button>
 									</td>
 									<td>
-										<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-">Début</button>
+										<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-}">Début</button>
 									</td>
 								</tr>
 							{% else %}
 								<p>Pas encore de covoiturages</p>
 							{% endif %}
-							{# {% include "_partials/modals/delete_carpools_modals.html.twig" %} #}
+							{% include "_partials/modals/driver_cancel_carpools_modals.html.twig" %}
 						{% endfor %}
 					</tbody>
 				</table>

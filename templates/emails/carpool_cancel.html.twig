@@ -1,0 +1,21 @@
+<p>Bonjour
+	{{ user.pseudo }}</p>
+<p>Votre covoiturage à été annuler par  votre chauffeur</p>
+<p>Voici le rappel du covoiturage concerner :</p>
+<div>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item list-group-item-primary">Date :
+			{{ carpool.day|date('d/m/Y') }}</li>
+		<li class="list-group-item">Début :
+			{{ carpool.begin|date('H:i') }}</li>
+		<li class="list-group-item list-group-item-primary">Fin :
+			{{ carpool.end|date('H:i') }}</li>
+		<li class="list-group-item">Nom du chauffeur :
+			{{ carpool.driver.user.pseudo }}</li>
+		<li class="list-group-item list-group-item-primary">Prix :
+			{{ carpool.price }}
+			Crédits</li>
+	</ul>
+<p>Vos crédits vous seront rendus dans les plus brefs délais.</p>
+</div>
+<p>Nous nous excusons pour la gêne occasionnée. L'équipe Ecoride.</p>

@@ -1,0 +1,38 @@
+<div class="modal fade" id="deleteModal-{{ carpool.id }}" tabindex="-1" aria-labelledby="deleteModalLabel-{{ carpool.id }}" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="cancelModalLabel">Annulation de covoiturage-{{ carpool.carpoolNumber }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>
+					<strong>Êtes-vous sûr de vouloir annuler votre covoiturage</strong>?</p>
+				<p>
+					<strong>Prix :</strong>
+					{{ carpool.price }}
+					crédits</p>
+				<p>
+					<strong>Date :</strong>
+					{{ carpool.day|date('d/m/Y') }}</p>
+				<p>
+					<strong>Place restante(s):</strong>
+					{{ carpool.placesAvailable }}</p>
+				<p></p>
+				<p>
+					<strong>Nom voyageur(s) :</strong>
+					{% for user in carpool.user %}
+						<span>{{ user.pseudo }}</span>
+					{% else %}
+						<span>Aucune réservation</span>
+					{% endfor %}
+				</p>
+			</p>
+		</div>
+		<div class="modal-footer">
+			<form method="POST" action="{{ path('app_driver_carpool_cancel', { id: carpool.id }) }}">
+				<button type="submit" class="btn btn-danger">Annuler réservation</button>
+			</form>
+		</div>
+	</div>
+</div></div>

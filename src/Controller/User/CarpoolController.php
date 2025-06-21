@@ -30,6 +30,22 @@ class CarpoolController extends AbstractController
         ]);
     }
 
+    #[Route('/details/{id}', name: 'details')]
+    public function details($id, CarpoolsRepository $carpoolsRepository): Response
+    {
+        // search the carpools by its ID
+        $carpool = $carpoolsRepository->findOneBy(['id' => $id]);
+
+        // if carpools don't exist
+        if (!$carpool) {
+            throw $this->createNotFoundException('Ce covoiturage n\'existe pas');
+        }
+
+        return $this->render('user/carpool/details.html.twig', [
+            'carpool' => $carpool,
+        ]);
+    }
+
     #[Route('/book/{id}', name: 'book')]
     public function book(Carpools $carpool, EntityManagerInterface $em, SendEmailService $mail): Response
     {

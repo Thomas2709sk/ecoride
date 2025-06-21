@@ -16,8 +16,9 @@
 					<strong>Date :</strong>
 					{{ carpool.day|date('d/m/Y') }}</p>
 				<p>
-					<strong>Nom du guide :</strong>
+					<strong>Nom du chauffeur :</strong>
 					{{ carpool.driver.user.pseudo }}</p>
+				<p>Vos crédits vous seront rendus</p>
 			</div>
 			<div class="modal-footer">
 				<form method="POST" action="{{ path('app_user_carpool_cancel', {'id': carpool.id}) }}">
