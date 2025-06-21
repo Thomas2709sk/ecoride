@@ -67,10 +67,17 @@ class Carpools
     #[ORM\OneToMany(targetEntity: Reviews::class, mappedBy: 'carpool', orphanRemoval: true)]
     private Collection $reviews;
 
+    /**
+     * @var Collection<int, CarpoolsUsers>
+     */
+    #[ORM\OneToMany(targetEntity: CarpoolsUsers::class, mappedBy: 'carpool', orphanRemoval: true)]
+    private Collection $carpoolsUsers;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->carpoolsUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -280,6 +287,36 @@ class Carpools
     public function setIsEcological($isEcological)
     {
         $this->isEcological = $isEcological;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CarpoolsUsers>
+     */
+    public function getCarpoolsUsers(): Collection
+    {
+        return $this->carpoolsUsers;
+    }
+
+    public function addCarpoolsUser(CarpoolsUsers $carpoolsUser): static
+    {
+        if (!$this->carpoolsUsers->contains($carpoolsUser)) {
+            $this->carpoolsUsers->add($carpoolsUser);
+            $carpoolsUser->setCarpool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCarpoolsUser(CarpoolsUsers $carpoolsUser): static
+    {
+        if ($this->carpoolsUsers->removeElement($carpoolsUser)) {
+            // set the owning side to null (unless already changed)
+            if ($carpoolsUser->getCarpool() === $this) {
+                $carpoolsUser->setCarpool(null);
+            }
+        }
 
         return $this;
     }

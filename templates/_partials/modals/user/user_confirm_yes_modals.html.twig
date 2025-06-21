@@ -1,0 +1,27 @@
+<div class="modal fade" id="user-endModal-{{ carpool.id }}" tabindex="-1" aria-labelledby="user-endModalLabel-{{ carpool.id }}" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="user-endModalLabel">Finir la réservation-{{ carpool.carpoolNumber }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>
+					<strong>Veuillez confirmer que tout s’est bien passé.</strong></p>
+
+					<strong>Date :</strong>
+					{{ carpool.day|date('d/m/Y') }}</p>
+
+				<p>
+					<strong>Nom du chauffeur :</strong>
+					{{ carpool.driver.user.pseudo }}
+				</p>
+			</p>
+		</div>
+		<div class="d-flex justify-content-between modal-footer">
+			<form method="POST" action="{{ path('app_user_carpool_confirm', { id: carpool.id }) }}">
+				<button type="submit" class="btn btn-info">Confirmer</button>
+			</form>
+		</div>
+	</div>
+</div></div>

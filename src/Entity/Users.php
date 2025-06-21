@@ -82,10 +82,17 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Reviews::class, mappedBy: 'user')]
     private Collection $reviews;
 
+    /**
+     * @var Collection<int, CarpoolsUsers>
+     */
+    #[ORM\OneToMany(targetEntity: CarpoolsUsers::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $carpoolsUsers;
+
     public function __construct()
     {
         $this->carpools = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->carpoolsUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -310,4 +317,34 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     }
     return 'passager';
 }
+
+    /**
+     * @return Collection<int, CarpoolsUsers>
+     */
+    public function getCarpoolsUsers(): Collection
+    {
+        return $this->carpoolsUsers;
+    }
+
+    public function addCarpoolsUser(CarpoolsUsers $carpoolsUser): static
+    {
+        if (!$this->carpoolsUsers->contains($carpoolsUser)) {
+            $this->carpoolsUsers->add($carpoolsUser);
+            $carpoolsUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCarpoolsUser(CarpoolsUsers $carpoolsUser): static
+    {
+        if ($this->carpoolsUsers->removeElement($carpoolsUser)) {
+            // set the owning side to null (unless already changed)
+            if ($carpoolsUser->getUser() === $this) {
+                $carpoolsUser->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Controller\User;
 
 use App\Entity\Users;
 use App\Entity\Carpools;
+use App\Entity\CarpoolsUsers;
 use App\Repository\CarpoolsRepository;
 use App\Service\SendEmailService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,11 +20,11 @@ class CarpoolController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(): Response
     {
-         /** @var Users $user */
+        /** @var Users $user */
         $user = $this->getUser();
 
-         // get the reservation of the User
-         $carpools = $user->getCarpools();
+        // get the reservation of the User
+        $carpools = $user->getCarpools();
 
         return $this->render('user/carpool/index.html.twig', [
             'carpools' => $carpools,
@@ -51,7 +52,7 @@ class CarpoolController extends AbstractController
     {
         // look if user is logged and have 'ROLE_USER'
         $this->denyAccessUnlessGranted('ROLE_USER');
-        
+
         // get User
         /** @var Users $user */
         $user = $this->getUser();
@@ -73,7 +74,7 @@ class CarpoolController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-         // Send mail to the user
+        // Send mail to the user
         $mail->send(
             'no-reply@ecoride.fr',
             $user->getEmail(),
@@ -90,10 +91,10 @@ class CarpoolController extends AbstractController
     #[Route('cancel/{id}', name: 'cancel', methods: ['POST'])]
     public function cancel(
         $id,
-        CarpoolsRepository $carpoolsRepository, 
+        CarpoolsRepository $carpoolsRepository,
         EntityManagerInterface $em,
-        AuthorizationCheckerInterface $authChecker,): Response
-    {
+        AuthorizationCheckerInterface $authChecker,
+    ): Response {
         /** @var Users $user */
         $user = $this->getUser();
 
@@ -122,6 +123,88 @@ class CarpoolController extends AbstractController
 
         $this->addFlash('success', 'Votre réservation a été annulée avec succès.');
 
+        return $this->redirectToRoute('app_user_carpool_index');
+    }
+
+    // if passenger finish the carpool with OUI (YES)
+    #[Route('/confirm/{id}', name: 'confirm')]
+    public function confirm(
+        $id,
+        Carpools $carpool,
+        EntityManagerInterface $em) 
+    {
+        $user = $this->getUser();
+
+        // search the reservation with its ID
+        $carpoolUser = $em->getRepository(CarpoolsUsers::class)->findOneBy([
+            'user' => $user,
+            'carpool' => $carpool,
+        ]);
+
+        // if User is part of the carpool
+        if (!$carpool->getUser()->contains($user)) {
+            $this->addFlash('error', 'Réservation invalide ou non autorisée.');
+            return $this->redirectToRoute('app_user_carpool_index');
+        }
+
+
+        if ($carpoolUser->isConfirmed()) {
+            $this->addFlash('info', 'Vous avez déjà confirmé ce covoiturage.');
+            return $this->redirectToRoute('app_user_carpool_index');
+        }
+
+        // if user can confirm the end of the reservation
+        if ($carpool->getStatus() !== 'Terminé') {
+            $this->addFlash('error', 'Cette réservation ne peut pas être confirmée.');
+            return $this->redirectToRoute('app_user_carpool_index');
+        }
+
+        // update the carpools_user for each user after confirm
+        $carpoolUser->setIsConfirmed(true);
+        $em->persist($carpoolUser);
+
+        // Count credits for driver and admin
+        $price = $carpool->getPrice();
+        $platformPrice = 2;
+        $driverCredits = $price - $platformPrice;
+
+        $driver = $carpool->getDriver();
+
+        // find admin by its id and if 'ROLE_ADMIN'
+        $admin = $em->getRepository(Users::class)->find(1);
+
+        if (!$admin || !in_array('ROLE_ADMIN', $admin->getRoles(), true)) {
+            throw new \Exception('L\'utilisateur avec l\'ID 1 n\'est pas un administrateur.');
+        }
+
+        // get the guide by its user id
+        $carpoolDriver = $driver->getUser();
+
+        // Send credits (uniquement maintenant que l'on sait que ce n'est pas déjà confirmé)
+        $carpoolDriver->setCredits($carpoolDriver->getCredits() + $driverCredits);
+        $admin->setCredits($admin->getCredits() + $platformPrice);
+
+        // if all passenger of the carpool isConfirmed = true
+        $allPassengerConfirmed = true;
+        foreach ($carpool->getCarpoolsUsers() as $carpoolUsers) {
+            if (!$carpoolUsers->isConfirmed()) {
+                $allPassengerConfirmed = false;
+                break;
+            }
+        }
+
+        // Change carpool status as Confirmé
+        if ($allPassengerConfirmed) {
+            $carpool->setStatus('Confirmé');
+            $em->persist($carpool);
+        }
+
+        // Save to DB
+        $em->persist($driver);
+        $em->persist($admin);
+        $em->flush();
+
+        $this->addFlash('success', 'Merci de votre confirmation, vous pouvez laisser un avis à votre chauffeur ! !');
         return $this->redirectToRoute('app_user_carpool_index');
     }
 }

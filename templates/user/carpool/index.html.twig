@@ -118,27 +118,38 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% set ended = false %}
-						{% for carpool in carpools %}
-							{% if carpool.status in ['Terminé', 'Confirmé', 'Vérification par la plateforme'] %}
-								{% set ended = true %}
-							{% endif %}
-						{% endfor %}
+						{% set filteredCarpools = carpools|filter(carpool => carpool.status in ['Terminé', 'Confirmé', 'Vérification par la plateforme']) %}
+						{% if filteredCarpools|length > 0 %}
+							{% for carpool in filteredCarpools %}
+								{% set carpoolUser = null %}
+								{% for cu in carpool.carpoolsUsers %}
+									{% if cu.user.id == app.user.id %}
+										{% set carpoolUser = cu %}
+									{% endif %}
+								{% endfor %}
 
-						{% if ended %}
-							{% for carpool in carpools %}
-								{% if carpool.status in ['Terminé', 'Confirmé', 'Vérification par la plateforme'] %}
-									<tr>
-										<td>{{ carpool.day|date('d/m/Y') }}</td>
-										<td>{{ carpool.end|date('H:i') }}</td>
-										<td>{{ carpool.AddressEnd }}</td>
-										<td>{{ carpool.status }}</td>
+								<tr>
+									<td>{{ carpool.day|date('d/m/Y') }}</td>
+									<td>{{ carpool.end|date('H:i') }}</td>
+									<td>{{ carpool.AddressEnd }}</td>
+									<td>{{ carpool.status }}</td>
+									<td>
+										<a href="{{ path('app_user_carpool_details', {id: carpool.id}) }}" class="btn btn-info btn-sm">Détails</a>
+									</td>
+
+									{% if carpoolUser and carpoolUser.isConfirmed == false %}
 										<td>
-											<a href="{{ path('app_user_carpool_details', {id: carpool.id}) }}" class="btn btn-info btn-sm">Détails</a>
+											<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#user-endModal-{{ carpool.id }}">Oui</button>
+											<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#user-endModal-{{ carpool.id }}">Non</button>
 										</td>
-										<td></td>
-									</tr>
-								{% endif %}
+									{% else %}
+										<td>
+											<a href="#" class="btn btn-info">Laisser un avis</a>
+										</td>
+									{% endif %}
+								</tr>
+								<!-- Modals -->
+								{% include "_partials/modals/user/user_confirm_yes_modals.html.twig" %}
 							{% endfor %}
 						{% else %}
 							<tr>
