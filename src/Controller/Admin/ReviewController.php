@@ -4,11 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Reviews;
 use App\Repository\ReviewsRepository;
+use App\Security\Voter\ReviewsVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 #[Route('/admin/review', name: 'app_admin_review_')]
 class ReviewController extends AbstractController
@@ -31,11 +33,11 @@ class ReviewController extends AbstractController
 
      // Confirm good review
     #[Route('/confirm/{id}', name: 'confirm', methods: ['POST'])]
-    public function confirmGoodReview(Reviews $reviews, EntityManagerInterface $em, Security $security): Response
+    public function confirmGoodReview(Reviews $reviews, EntityManagerInterface $em, AuthorizationCheckerInterface $authChecker): Response
     {
         // check if User have 'ROLE_ADMIN'
-        if (!$security->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('Seul un administrateur peut valider cet avis.');
+        if (!$authChecker->isGranted(ReviewsVoter::VALID, $reviews)) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas le droit de valider cet avis.');
         }
 
         // set Validate to true
@@ -55,7 +57,7 @@ class ReviewController extends AbstractController
     public function removeReviews(int $id, ReviewsRepository $reviewsRepository, EntityManagerInterface $em): Response
     {
 
-        // check if User have 'ROLE_ADMIN'
+        // check if User have 'ROLE_ADMIN' or 'ROLE_STAFF'
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         // get the review to delete by its ID
