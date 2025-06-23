@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Avis à valider
+{% endblock %}
+
+{% block body %}
+	<h1>Avis à valider</h1>
+	<section class="col-12 col-lg-10 col-md-9 pe-4 ps-3 border border-light bg-light p-2">
+		<div class="ms-3">
+			<h2>Avis</h2>
+			<p class="border-bottom border-dark pb-3">Consultez et gérez vos avis ici.</p>
+		</div>
+		<div id="confirmReviews">
+			<div id="reviewsList">
+				<h3>Avis supérieur à 3 étoiles</h3>
+				<div>
+					{% set goodReviews = false %}
+					{% for review in reviews %}
+						{% if review.rate >= 3 and not review.validate %}
+							{% set goodReviews = true %}
+							<div class="col-lg-6 p-3 mb-3 border rounded bg-info text-white">
+								<div class="d-flex justify-content-between">
+									<h5 class="mb-1">
+										{% if review.carpool.user|length > 0 %}
+											{% for user in review.carpool.user %}
+												<span>{{ review.user.pseudo }}</span>
+											{% endfor %}
+										{% else %}
+											<span>Aucun nom</span>
+										{% endif %}
+									</h5>
+									<span>Guide :
+										{{ review.carpool.driver.user.pseudo }}</span>
+									<span class="">Publié le :
+										{{ review.carpool.day|date('d/m/Y') }}</span>
+								</div>
+								<div class="d-flex align-items-center">
+									<span class="text-warning">
+										<i class="fa-solid fa-star star fs-4"></i>
+									</span>
+									<span class="ms-2 fs-5">{{ review.rate }}/5</span>
+								</div>
+								<p class="mt-2">{{ review.commentary }}</p>
+								<div class="text-end">
+									<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmModal-">Valider</button>
+									<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#removeModal-">-ejeter</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					{# {% include "cards/good_reviews_card.html.twig" %} #}
+				{% endif %}
+				{# Confirm reviews modal #}
+			{# {% include "modals/admin_confirm_reviews_modal.html.twig" %} #}
+				{# Cancel review modal #}
+				{# {% include "modals/admin_remove_review_modal.html.twig" %} #}
+			{% endfor %}
+			{% if not goodReviews %}
+				<p>Pas d'avis à valider</p>
+			{% endif %}
+		</div>
+	</div>
+	<div class="mt-4">
+		<h3>Avis inférieur à 3 étoiles</h3>
+		<div class="row">
+			{% set badReviews = false %}
+			{% for review in reviews %}
+				{% if review.rate < 3 and not review.validate %}
+					{% set badReviews = true %}
+                    <div class="col-lg-5 p-3 mb-3 border rounded bg-info text-white">
+						<div class="d-flex justify-content-between">
+							<h5 class="mb-1">
+								{% if review.carpool.user|length > 0 %}
+									{% for user in review.carpool.user %}
+										<span>{{ review.user.pseudo }}</span>
+									{% endfor %}
+								{% else %}
+									<span>Aucun nom</span>
+								{% endif %}
+							</h5>
+							<span>Guide :
+								{{ review.carpool.driver.user.pseudo }}</span>
+							<span>Publié le :
+								{{ review.carpool.day|date('d/m/Y') }}</span>
+						</div>
+						<div class="d-flex align-items-center mt-2">
+							<span class="text-warning">
+								<i class="fa-solid fa-star star fs-4"></i>
+							</span>
+							<span class="ms-2 fs-5">{{ review.rate }}/5</span>
+						</div>
+						<p class="mt-2">{{ review.commentary }}</p>
+						<div class="text-end">
+							<button class="btn btn-warning btn-sm">Afficher</button>
+							<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmBadModal-{{ review.id }}">Valider</button>
+							<button class="btn btn-danger btn-sm">Rejeter</button>
+						</div>
+						<hr class="my-3">
+						<div>
+							<b>Numéro de réservation:</b>
+							<span>{{ review.carpool.carpoolNumber }}</span>
+						</div>
+						<div>
+							<b>Le :</b>
+							<span>{{ review.carpool.day|date('d/m/Y') }}</span><br>
+							<b>Départ :</b>
+							<span>{{ review.carpool.addressStart }}</span>
+						</div>
+						<div>
+							<b>Utilisateur:</b>
+							<span>{{ review.user.pseudo }}</span><br>
+							<b>Email Utilisateur:</b>
+							<span>{{ review.user.email }}</span>
+						</div>
+						<div>
+							<b>Guide:</b>
+							<span>{{ review.carpool.driver.user.pseudo }}</span><br>
+							<b>Email Guide:</b>
+							<span>{{ review.carpool.driver.user.email }}</span>
+						</div>
+					</div>
+					{# {% include "cards/bad_reviews_card.html.twig" %} #}
+				{% endif %}
+				{# Confirm bad review modal #}
+			{# {% include "modals/admin_confirm_bad_reviews_modal.html.twig" %} #}
+				{# Cancel bad review modal#}
+			{% endfor %}
+			{% if not badReviews %}
+				<p>Pas d'avis à valider</p>
+			{% endif %}
+		</div>
+	</div>
+</div></section></div></section>{% endblock %}
