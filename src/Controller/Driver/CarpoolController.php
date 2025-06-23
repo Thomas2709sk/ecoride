@@ -115,8 +115,8 @@ class CarpoolController extends AbstractController
         ]);
     }
 
-    #[Route('/details/{id}', name: 'details')]
-    public function details(int $id, DriversRepository $driversRepository, CarpoolsRepository $carpoolsRepository): Response
+    #[Route('/details/{carpoolNumber}', name: 'details')]
+    public function details($carpoolNumber, DriversRepository $driversRepository, CarpoolsRepository $carpoolsRepository): Response
     {
         /** @var Users $user */
         $user = $this->getUser();
@@ -128,7 +128,7 @@ class CarpoolController extends AbstractController
         }
 
         // Get the carpool associate with the driver
-        $carpool = $carpoolsRepository->find($id);
+        $carpool = $carpoolsRepository->findOneBy(['carpool_number' => $carpoolNumber]);
         if (!$carpool || $carpool->getDriver() !== $driver) {
             $this->addFlash('error', 'Ce covoiturage ne vous appartient pas.');
             return $this->redirectToRoute('index');

@@ -7,62 +7,64 @@
 	<section>
 		<h1>Covoiturages/recherche</h1>
 		<div class="container">
-        <p>Cliquer sur le covoiturage pour voir les détails</p>
+			<p>Cliquer sur le covoiturage pour voir les détails</p>
 			{% for carpool in carpools %}
-				<div class=" mt-5 col-lg-8 col-md-9 col-sm-10">
-					<div class="card shadow-lg card-guide">
-						<a href="{{ path('app_carpool_details', {id: carpool.id}) }}" target="_blank">
-							<div class="card-body">
-								<div class="row mb-2 border-bottom pb-2">
-									<div class="col-lg-4">
-										<strong>Date :</strong>
-										{{ carpool.day.format('d/m/Y') }}
-									</div>
-									<div class="col-lg-4">
-										<strong>Départ :</strong>
-										<span>{{ carpool.begin|date('H:i') }}</span>
-									</div>
-									<div class="col-lg-4">
-										<strong>Fin :</strong>
-										<span>{{ carpool.end|date('H:i') }}</span>
-									</div>
-									<div class="col-lg-4">
-										<strong>Ecologique :</strong>
-										{% if carpool.isEcological %}
-											Oui
-										{% else %}
-											Non
-										{% endif %}
-									</div>
-									<div class="col-lg-4">
-										<strong>Place restante(s) :</strong>
-										{{ carpool.PlacesAvailable}}
+				{% if carpool.status == 'A venir' and carpool.placesAvailable > 0 %}
+					<div class=" mt-5 col-lg-8 col-md-9 col-sm-10">
+						<div class="card shadow-lg card-guide">
+							<a href="{{ path('app_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" target="_blank">
+								<div class="card-body">
+									<div class="row mb-2 border-bottom pb-2">
+										<div class="col-lg-4">
+											<strong>Date :</strong>
+											{{ carpool.day.format('d/m/Y') }}
+										</div>
+										<div class="col-lg-4">
+											<strong>Départ :</strong>
+											<span>{{ carpool.begin|date('H:i') }}</span>
+										</div>
+										<div class="col-lg-4">
+											<strong>Fin :</strong>
+											<span>{{ carpool.end|date('H:i') }}</span>
+										</div>
+										<div class="col-lg-4">
+											<strong>Ecologique :</strong>
+											{% if carpool.isEcological %}
+												Oui
+											{% else %}
+												Non
+											{% endif %}
+										</div>
+										<div class="col-lg-4">
+											<strong>Place restante(s) :</strong>
+											{{ carpool.PlacesAvailable}}
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="mb-2 d-flex align-items-center">
-								<div
-									class="ms-3">
-									{# if no user pictures #}
-									<img src="{{ carpool.driver.user.photo ? asset('uploads/users/mini/40x40-' ~ carpool.driver.user.photo) : asset('/images/favicon.png') }}" class="rounded-circle" alt="Photo de profil de {{ carpool.driver.user.pseudo }}"/>
+								<div class="mb-2 d-flex align-items-center">
+									<div
+										class="ms-3">
+										{# if no user pictures #}
+										<img src="{{ carpool.driver.user.photo ? asset('uploads/users/mini/40x40-' ~ carpool.driver.user.photo) : asset('/images/favicon.png') }}" class="rounded-circle" alt="Photo de profil de {{ carpool.driver.user.pseudo }}"/>
+									</div>
+									<div class="ms-1">
+										<strong>{{ carpool.driver.user.pseudo }}</strong>
+									</div>
+									<div class="ms-2">
+										<span class="fw-bold me-2" id="guide-note">
+											-/5
+										</span>
+									</div>
+									<div class="ms-3">
+										<strong>Prix :</strong>
+										{{ carpool.price }}
+										Crédits
+									</div>
 								</div>
-								<div class="ms-1">
-									<strong>{{ carpool.driver.user.pseudo }}</strong>
-								</div>
-								<div class="ms-2">
-									<span class="fw-bold me-2" id="guide-note">
-										-/5
-									</span>
-								</div>
-								<div class="ms-3">
-									<strong>Prix :</strong>
-									{{ carpool.price }}
-									Crédits
-								</div>
-							</div>
-						</a>
+							</a>
+						</div>
 					</div>
-				</div>
+				{% endif %}
 			{% endfor %}
 		</div>
 	</section>

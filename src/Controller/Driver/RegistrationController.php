@@ -100,7 +100,7 @@ class RegistrationController extends AbstractController
             );
 
 
-            return $this->redirectToRoute('app_user_account_index');
+            return $this->redirectToRoute('app_driver_account_index');
         }
 
         return $this->render('driver/registration/car.html.twig', [

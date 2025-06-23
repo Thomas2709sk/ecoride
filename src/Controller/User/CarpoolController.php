@@ -25,17 +25,18 @@ class CarpoolController extends AbstractController
 
         // get the reservation of the User
         $carpools = $user->getCarpools();
+        
 
         return $this->render('user/carpool/index.html.twig', [
             'carpools' => $carpools,
         ]);
     }
 
-    #[Route('/details/{id}', name: 'details')]
-    public function details($id, CarpoolsRepository $carpoolsRepository): Response
+    #[Route('/details/{carpoolNumber}', name: 'details')]
+    public function details($carpoolNumber, CarpoolsRepository $carpoolsRepository): Response
     {
         // search the carpools by its ID
-        $carpool = $carpoolsRepository->findOneBy(['id' => $id]);
+        $carpool = $carpoolsRepository->findOneBy(['carpool_number' => $carpoolNumber]);
 
         // if carpools don't exist
         if (!$carpool) {

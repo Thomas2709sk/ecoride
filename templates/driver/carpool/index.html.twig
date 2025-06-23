@@ -42,7 +42,7 @@
 									<td>{{ carpool.status }}</td>
 									<td>
 										<button class="btn btn-info btn-sm">
-											<a class="text-white" href="{{ path('app_driver_carpool_details', {id: carpool.id}) }}">Détails</a>
+											<a class="text-white" href="{{ path('app_driver_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}">Détails</a>
 										</button>
 									</td>
 									<td>
@@ -95,7 +95,7 @@
 										<td>{{ carpool.AddressEnd }}</td>
 										<td>{{ carpool.status }}</td>
 										<td>
-											<a href="{{ path('app_driver_carpool_details', {id: carpool.id}) }}" class="btn btn-info btn-sm">Détails</a>
+											<a href="{{ path('app_driver_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm">Détails</a>
 										</td>
 										<td>
 										<button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#endModal-{{ carpool.id }}">Terminer</button>
@@ -145,7 +145,7 @@
 										<td>{{ carpool.AddressEnd }}</td>
 										<td>{{ carpool.status }}</td>
 										<td>
-											<a href="{{ path('app_driver_carpool_details', {id: carpool.id}) }}" class="btn btn-info btn-sm">Détails</a>
+											<a href="{{ path('app_driver_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm">Détails</a>
 										</td>
 									</tr>
 								{% endif %}

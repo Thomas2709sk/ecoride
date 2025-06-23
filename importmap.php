@@ -44,6 +44,10 @@ return [
         'path' => './assets/js/dateSearch.js',
         'entrypoint' => true,
     ],
+    'reviewStar' => [
+        'path' => './assets/js/reviewStar.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

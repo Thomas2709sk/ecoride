@@ -41,7 +41,7 @@
 									<td>{{ carpool.status }}</td>
 									<td>
 										<button class="btn btn-info btn-sm">
-											<a class="text-white" href="{{ path('app_user_carpool_details', {id: carpool.id}) }}">Détails</a>
+											<a class="text-white" href="{{ path('app_user_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}">Détails</a>
 										</button>
 									</td>
 									<td>
@@ -89,7 +89,7 @@
 										<td>{{ carpool.AddressEnd }}</td>
 										<td>{{ carpool.status }}</td>
 										<td>
-											<a href="{{ path('app_user_carpool_details', {id: carpool.id}) }}" class="btn btn-info btn-sm">Détails</a>
+											<a href="{{ path('app_user_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm">Détails</a>
 										</td>
 									</tr>
 								{% endif %}
@@ -134,7 +134,7 @@
 									<td>{{ carpool.AddressEnd }}</td>
 									<td>{{ carpool.status }}</td>
 									<td>
-										<a href="{{ path('app_user_carpool_details', {id: carpool.id}) }}" class="btn btn-info btn-sm">Détails</a>
+										<a href="{{ path('app_user_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm">Détails</a>
 									</td>
 
 									{% if carpoolUser and carpoolUser.isConfirmed == false %}
@@ -144,7 +144,7 @@
 										</td>
 									{% else %}
 										<td>
-											<a href="#" class="btn btn-info">Laisser un avis</a>
+											<a href="{{ path('app_user_review_send', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-success">Laisser un avis</a>
 										</td>
 									{% endif %}
 								</tr>

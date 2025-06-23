@@ -21,7 +21,7 @@ class Reviews
     private ?string $commentary = null;
 
     #[ORM\Column]
-    private ?bool $validate = null;
+    private ?bool $validate = false;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
