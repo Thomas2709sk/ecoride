@@ -25,7 +25,7 @@ class CarpoolController extends AbstractController
 
         // get the reservation of the User
         $carpools = $user->getCarpools();
-        
+
 
         return $this->render('user/carpool/index.html.twig', [
             'carpools' => $carpools,
@@ -132,8 +132,8 @@ class CarpoolController extends AbstractController
     public function confirm(
         $id,
         Carpools $carpool,
-        EntityManagerInterface $em) 
-    {
+        EntityManagerInterface $em
+    ) {
         $user = $this->getUser();
 
         // search the reservation with its ID
@@ -161,6 +161,7 @@ class CarpoolController extends AbstractController
         }
 
         // update the carpools_user for each user after confirm
+        $carpoolUser->setIsEnded(true);
         $carpoolUser->setIsConfirmed(true);
         $em->persist($carpoolUser);
 
@@ -181,9 +182,12 @@ class CarpoolController extends AbstractController
         // get the guide by its user id
         $carpoolDriver = $driver->getUser();
 
-        // Send credits (uniquement maintenant que l'on sait que ce n'est pas déjà confirmé)
-        $carpoolDriver->setCredits($carpoolDriver->getCredits() + $driverCredits);
-        $admin->setCredits($admin->getCredits() + $platformPrice);
+        // Send credits 
+        if ($carpoolUser->isConfirmed()) {
+
+            $carpoolDriver->setCredits($carpoolDriver->getCredits() + $driverCredits);
+            $admin->setCredits($admin->getCredits() + $platformPrice);
+        }
 
         // if all passenger of the carpool isConfirmed = true
         $allPassengerConfirmed = true;
@@ -207,5 +211,50 @@ class CarpoolController extends AbstractController
 
         $this->addFlash('success', 'Merci de votre confirmation, vous pouvez laisser un avis à votre chauffeur ! !');
         return $this->redirectToRoute('app_user_carpool_index');
+    }
+
+    // if passenger finish the carpool with NON(NO)
+    #[Route('/bad/{carpoolNumber}', name: 'bad', methods: ['POST'])]
+    public function createBad(
+        $carpoolNumber,
+        EntityManagerInterface $em
+    ): Response {
+        // get User
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté.');
+        }
+
+
+
+        // find carpool
+        $carpool = $em->getRepository(Carpools::class)->findOneBy(['carpool_number' => $carpoolNumber]);
+        if (!$carpool) {
+            $this->addFlash('error', 'Le covoiturage est introuvable.');
+            return $this->redirectToRoute('app_user_carpool_index');
+        }
+
+        // search if user is part of the carpool
+        if (!$carpool->getUser()->contains($user)) {
+            $this->addFlash('error', 'Vous ne pouvez pas modifier ce covoiturage');
+            return $this->redirectToRoute('app_user_carpool_index');
+        }
+
+        $carpoolUser = $em->getRepository(CarpoolsUsers::class)->findOneBy([
+            'user' => $user,
+            'carpool' => $carpool,
+        ]);
+
+        $carpoolUser->setIsEnded(true);
+        $em->persist($carpoolUser);
+
+
+        $em->flush();
+
+        $this->addFlash('success', 'Veuillez laisser un avis.');
+
+        return $this->redirectToRoute('app_user_review_bad', [
+            'carpoolNumber' => $carpool->getCarpoolNumber(),
+        ]);
     }
 }

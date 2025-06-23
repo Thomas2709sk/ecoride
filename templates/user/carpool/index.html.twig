@@ -137,25 +137,30 @@
 										<a href="{{ path('app_user_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm">Détails</a>
 									</td>
 
-									{% if carpoolUser and carpoolUser.isConfirmed == false %}
+									{% if carpoolUser and not carpoolUser.isEnded %}
 										<td>
 											<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#user-endModal-{{ carpool.id }}">Oui</button>
-											<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#user-endModal-{{ carpool.id }}">Non</button>
+											<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#user-endNoModal-{{ carpool.id }}">Non</button>
 										</td>
 									{% else %}
 										<td>
-											<a href="{{ path('app_user_review_send', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-success">Laisser un avis</a>
+											{% if carpoolUser and not carpoolUser.isAnswered %}
+												<a href="{{ path('app_user_review_send', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-success">Laisser un avis</a>
+											{% else %}
+												<span class="text-muted">Avis déjà envoyé</span>
+											{% endif %}
 										</td>
 									{% endif %}
+									<!-- Modals -->
+									{% include "_partials/modals/user/user_confirm_yes_modals.html.twig" %}
+									{% include "_partials/modals/user/user_confirm_no_modals.html.twig" %}
+								{% endfor %}
+							{% else %}
+								<tr>
+									<td colspan="6" class="text-center">Pas de covoiturages terminés</td>
 								</tr>
-								<!-- Modals -->
-								{% include "_partials/modals/user/user_confirm_yes_modals.html.twig" %}
-							{% endfor %}
-						{% else %}
-							<tr>
-								<td colspan="6" class="text-center">Pas de covoiturages terminés</td>
-							</tr>
-						{% endif %}
+							{% endif %}
+						</tbody>
 					</tbody>
 				</table>
 			</div>

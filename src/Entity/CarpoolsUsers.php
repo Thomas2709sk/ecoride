@@ -22,6 +22,12 @@ class CarpoolsUsers
     #[ORM\Column(type: "boolean", options: ["default" => false])]
     private ?bool $isConfirmed = false;
 
+    #[ORM\Column]
+    private ?bool $isEnded = false;
+
+    #[ORM\Column]
+    private ?bool $isAnswered = false;
+
     public function getUser(): ?Users
     {
         return $this->user;
@@ -52,6 +58,30 @@ class CarpoolsUsers
     public function setIsConfirmed(bool $isConfirmed): static
     {
         $this->isConfirmed = $isConfirmed;
+        return $this;
+    }
+
+    public function isEnded(): ?bool
+    {
+        return $this->isEnded;
+    }
+
+    public function setIsEnded(bool $isEnded): static
+    {
+        $this->isEnded = $isEnded;
+
+        return $this;
+    }
+
+    public function isAnswered(): ?bool
+    {
+        return $this->isAnswered;
+    }
+
+    public function setIsAnswered(bool $isAnswered): static
+    {
+        $this->isAnswered = $isAnswered;
+
         return $this;
     }
 }
