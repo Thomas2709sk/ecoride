@@ -42,8 +42,8 @@
 								</div>
 								<p class="mt-2">{{ review.commentary }}</p>
 								<div class="text-end">
-									<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmModal-">Valider</button>
-									<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#removeModal-">-ejeter</button>
+									<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmModal-{{ review.id }}">Valider</button>
+									<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#removeModal-{{ review.id }}">Rejeter</button>
 								</div>
 							</div>
 						</div>
@@ -51,9 +51,9 @@
 					{# {% include "cards/good_reviews_card.html.twig" %} #}
 				{% endif %}
 				{# Confirm reviews modal #}
-			{# {% include "modals/admin_confirm_reviews_modal.html.twig" %} #}
+			    {% include "_partials/modals/admin/admin_confirm_reviews_modals.html.twig" %}
 				{# Cancel review modal #}
-				{# {% include "modals/admin_remove_review_modal.html.twig" %} #}
+				 {% include "_partials/modals/admin/admin_remove_reviews_modals.html.twig" %}
 			{% endfor %}
 			{% if not goodReviews %}
 				<p>Pas d'avis à valider</p>
