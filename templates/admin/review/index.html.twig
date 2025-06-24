@@ -29,7 +29,7 @@
 											<span>Aucun nom</span>
 										{% endif %}
 									</h5>
-									<span>Guide :
+									<span>Chauffeur :
 										{{ review.carpool.driver.user.pseudo }}</span>
 									<span class="">Publié le :
 										{{ review.carpool.day|date('d/m/Y') }}</span>
@@ -78,7 +78,7 @@
 									<span>Aucun nom</span>
 								{% endif %}
 							</h5>
-							<span>Guide :
+							<span>Chauffeur :
 								{{ review.carpool.driver.user.pseudo }}</span>
 							<span>Publié le :
 								{{ review.carpool.day|date('d/m/Y') }}</span>
@@ -91,7 +91,6 @@
 						</div>
 						<p class="mt-2">{{ review.commentary }}</p>
 						<div class="text-end">
-							<button class="btn btn-warning btn-sm">Afficher</button>
 							<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmBadModal-{{ review.id }}">Valider</button>
 							<button class="btn btn-danger btn-sm">Rejeter</button>
 						</div>
@@ -104,26 +103,29 @@
 							<b>Le :</b>
 							<span>{{ review.carpool.day|date('d/m/Y') }}</span><br>
 							<b>Départ :</b>
-							<span>{{ review.carpool.addressStart }}</span>
+							<span>{{ review.carpool.addressStart }}</span><br>
+							<b>Arrivée :</b>
+							<span>{{ review.carpool.addressEnd }}</span>
 						</div>
 						<div>
 							<b>Utilisateur:</b>
 							<span>{{ review.user.pseudo }}</span><br>
 							<b>Email Utilisateur:</b>
-							<span>{{ review.user.email }}</span>
+							<span><a href="mailto:{{ review.user.email }}?subject=Demande de renseignement suite àvotre covoiturage">{{ review.user.email }}</a></span>
 						</div>
 						<div>
-							<b>Guide:</b>
+							<b>Chauffeur:</b>
 							<span>{{ review.carpool.driver.user.pseudo }}</span><br>
-							<b>Email Guide:</b>
-							<span>{{ review.carpool.driver.user.email }}</span>
+							<b>Email Chauffeur:</b>
+							<span><a href="mailto:{{ review.driver.user.email }}?subject=Demande de renseignement suite àvotre covoiturage">{{ review.carpool.driver.user.email }}</a></span>
 						</div>
 					</div>
 					{# {% include "cards/bad_reviews_card.html.twig" %} #}
 				{% endif %}
 				{# Confirm bad review modal #}
-			{# {% include "modals/admin_confirm_bad_reviews_modal.html.twig" %} #}
+			 {% include "_partials/modals/admin/admin_confirm_bad_reviews_modals.html.twig" %}
 				{# Cancel bad review modal#}
+			 {% include "_partials/modals/admin/admin_remove_reviews_modals.html.twig" %}
 			{% endfor %}
 			{% if not badReviews %}
 				<p>Pas d'avis à valider</p>
