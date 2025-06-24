@@ -16,6 +16,48 @@ class ReviewsRepository extends ServiceEntityRepository
         parent::__construct($registry, Reviews::class);
     }
 
+    public function driverAverageRating(int $driverId): ?float
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->select('AVG(r.rate) as avgRate')
+            ->where('r.driver = :driverId')
+            ->setParameter('driverId', $driverId)
+            ->andWhere('r.validate = true');
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+        public function countDriverReviews(int $driverId): int
+{
+    $qb = $this->createQueryBuilder('r')
+        ->select('COUNT(r.id)')
+        ->where('r.driver = :driverId')
+        ->andWhere('r.validate = true')
+        ->setParameter('driverId', $driverId);
+
+    return (int) $qb->getQuery()->getSingleScalarResult();
+}
+
+public function countTotalReviewsByNote(int $driverId): array
+{
+    $qb = $this->createQueryBuilder('r')
+        ->select('r.rate, COUNT(r.id) as reviewCount')
+        ->where('r.driver = :driverId')
+        ->andWhere('r.validate = true')
+        ->setParameter('driverId', $driverId)
+        ->groupBy('r.rate');
+
+    $result = $qb->getQuery()->getResult();
+
+    // Préparer un tableau avec des clés de 1 à 5 pour s'assurer que toutes les notes sont couvertes
+    $ratingCount = array_fill(1, 5, 0);
+    foreach ($result as $row) {
+        $ratingCount[$row['rate']] = (int) $row['reviewCount'];
+    }
+
+    return $ratingCount;
+}
+
     //    /**
     //     * @return Reviews[] Returns an array of Reviews objects
     //     */

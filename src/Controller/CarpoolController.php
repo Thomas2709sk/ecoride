@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CarpoolsRepository;
+use App\Repository\ReviewsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,10 +24,19 @@ class CarpoolController extends AbstractController
     }
 
     #[Route('/details/{carpoolNumber}', name: 'details')]
-    public function details($carpoolNumber, CarpoolsRepository $carpoolsRepository): Response
+    public function details($carpoolNumber, CarpoolsRepository $carpoolsRepository, ReviewsRepository $reviewsRepository): Response
     {
         // search the carpools by its ID
         $carpool = $carpoolsRepository->findOneBy(['carpool_number' => $carpoolNumber]);
+
+        // search the guide associate with the reservation
+        $driver = $carpool->getDriver();
+
+        // Use 'driverAverageRating' in the Repository to calculate the Average rating of each driver
+        $averageRating = $reviewsRepository->driverAverageRating($driver->getId());
+
+        // get total reviews
+        $totalReviews = $reviewsRepository->countDriverReviews($driver->getId());
 
         // if carpools don't exist
         if (!$carpool) {
@@ -35,6 +45,8 @@ class CarpoolController extends AbstractController
 
         return $this->render('carpool/details.html.twig', [
             'carpool' => $carpool,
+            'averageRating' => $averageRating,
+            'totalReviews' => $totalReviews,
         ]);
     }
 }
