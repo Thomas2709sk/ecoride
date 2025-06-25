@@ -73,6 +73,18 @@ class Carpools
     #[ORM\OneToMany(targetEntity: CarpoolsUsers::class, mappedBy: 'carpool', orphanRemoval: true)]
     private Collection $carpoolsUsers;
 
+    #[ORM\Column(name: 'startLat', type: 'float', nullable: true)]
+    private ?float $startLat = null;
+
+    #[ORM\Column(name: 'startLon', type: 'float', nullable: true)]
+    private ?float $startLon = null;
+
+    #[ORM\Column(name: 'endLat', type: 'float', nullable: true)]
+    private ?float $endLat = null;
+
+    #[ORM\Column(name: 'endLon', type: 'float', nullable: true)]
+    private ?float $endLon = null;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -317,6 +329,54 @@ class Carpools
                 $carpoolsUser->setCarpool(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStartLat(): ?float
+    {
+        return $this->startLat;
+    }
+
+    public function setStartLat(float $startLat): static
+    {
+        $this->startLat = $startLat;
+
+        return $this;
+    }
+
+    public function getStartLon(): ?float
+    {
+        return $this->startLon;
+    }
+
+    public function setStartLon(float $startLon): static
+    {
+        $this->startLon = $startLon;
+
+        return $this;
+    }
+
+    public function getEndLat(): ?float
+    {
+        return $this->endLat;
+    }
+
+    public function setEndLat(float $endLat): static
+    {
+        $this->endLat = $endLat;
+
+        return $this;
+    }
+
+    public function getEndLon(): ?float
+    {
+        return $this->endLon;
+    }
+
+    public function setEndLon(float $endLon): static
+    {
+        $this->endLon = $endLon;
 
         return $this;
     }
