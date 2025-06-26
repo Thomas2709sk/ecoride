@@ -48,6 +48,10 @@ return [
         'path' => './assets/js/reviewStar.js',
         'entrypoint' => true,
     ],
+    'addStaff' => [
+        'path' => './assets/js/addStaff.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

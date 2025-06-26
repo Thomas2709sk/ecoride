@@ -10,14 +10,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UsersVoter extends Voter
 {
-
     public const DELETE = 'USER_DELETE';
 
     public function __construct(private readonly Security $security) {}
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return in_array($attribute, [ self::DELETE]) && $subject instanceof Users;
+        return in_array($attribute, [self::DELETE]) && $subject instanceof Users;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -28,13 +27,16 @@ class UsersVoter extends Voter
             return false;
         }
 
-        // ROLE_ADMIN and STAFF can confirm or delete even if it's not the owner
+        // Interdire la suppression d'un ADMIN (même par un autre admin)
+        if (in_array('ROLE_ADMIN', $subject->getRoles(), true)) {
+            return false;
+        }
+
+        // ROLE_ADMIN peut supprimer qui il veut (hors ADMIN)
         if ($this->security->isGranted('ROLE_ADMIN')) {
             return true;
         }
 
-
         return false;
     }
-
 }

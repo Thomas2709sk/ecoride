@@ -33,6 +33,29 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         $this->getEntityManager()->flush();
     }
 
+    public function showStaffAndAdmins(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.roles LIKE :staff OR u.roles LIKE :admin')
+            ->setParameter('staff', '%ROLE_STAFF%')
+            ->setParameter('admin', '%ROLE_ADMIN%')
+            ->orderBy('u.pseudo', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function showMembers(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.roles NOT LIKE :admin')
+            ->andWhere('u.roles NOT LIKE :staff')
+            ->setParameter('admin', '%ROLE_ADMIN%')
+            ->setParameter('staff', '%ROLE_STAFF%')
+            ->orderBy('u.pseudo', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Users[] Returns an array of Users objects
     //     */

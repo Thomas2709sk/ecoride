@@ -62,6 +62,10 @@
 									<li>
 									<a class="dropdown-item" href="{{ path('app_admin_account') }}">Administrateur</a>
 								</li>
+								{% elseif is_granted('ROLE_STAFF') %}
+									<li>
+									<a class="dropdown-item" href="{{ path('app_staff_account') }}">Compte employé</a>
+								</li>
 								{% endif %}					
 								<li>
 									<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>

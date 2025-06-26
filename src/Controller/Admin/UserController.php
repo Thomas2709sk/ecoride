@@ -23,7 +23,8 @@ class UserController extends AbstractController
         }
 
          // get all users by their ID
-        $users = $usersRepository->findBy([], ['id' => 'ASC']);
+        $users = $usersRepository->showMembers();
+
 
         return $this->render('admin/user/index.html.twig', [
             'users' => $users

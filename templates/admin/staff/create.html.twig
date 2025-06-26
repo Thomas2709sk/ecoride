@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription
+{% endblock %}
+
+{% block importmap %}
+	{{ importmap(['app', 'addStaff']) }}
+{% endblock %}
+
+{% block body %}
+<main>
+	<div class="container-fluid">
+		<div class="row">
+			{# {% include "_partials/_adminav.html.twig" %} #}
+
+			{# Burger offcanvas mobile #}
+			<div class="col-12 d-flex d-md-none align-items-center bg-dark py-2">
+				<button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas" aria-controls="adminOffcanvas">
+					<i class="fa fa-bars fs-4"></i>
+				</button>
+				<span class="text-white ms-3 fs-5">Menu admin</span>
+			</div>
+
+			{# Offcanvas menu mobile #}
+			{# {% include "_partials/_offcanvas_adminav.html.twig" %} #}
+			<section class="col-12 col-lg-10 col-md-9 pe-4 ps-3 border border-light bg-light p-2">
+				<h1>Ajouter employés</h1>
+				{# AddStaff form #}
+				{{ form_errors(staffForm) }}
+				<section class="ms-3 me-2">
+					{{ form_start(staffForm) }}
+					<div>
+						{{ form_label(staffForm.pseudo, null, { 'attr': { 'class': 'form-label' } }) }}
+						{{ form_widget(staffForm.pseudo, { 'attr': { 'class': 'form-control  border-dark' } }) }}
+					</div>
+					<div>
+						{{ form_label(staffForm.email, null, { 'attr': { 'class': 'form-label' } }) }}
+						{{ form_widget(staffForm.email, { 'attr': { 'class': 'form-control  border-dark' } }) }}
+					</div>
+					<div>
+						{{ form_label(staffForm.plainPassword, 'Mot de passe', { 'attr': { 'class': 'form-label' } }) }}
+						{{ form_widget(staffForm.plainPassword, { 'attr': { 'class': 'form-control  border-dark' } }) }}
+						{# AddStaff.js #}
+						<div>
+							<p>Complexité du mot de passe :
+								<span id="entropy" class="text-red">Très faible</span>
+								(la complexité minimale acceptée est "Fort")</p>
+						</div>
+						<div>
+							{{ form_label(staffForm.roles, null, { 'attr': { 'class': 'form-label' } }) }}
+							{{ form_widget(staffForm.roles, { 'attr': { 'class': 'form-control  border-dark' } }) }}
+						</div>
+					</div>
+
+					<button type="submit" class="btn btn-primary mt-2 mb-2" id="submit-button" disabled>M'inscrire</button>
+					{{ form_end(staffForm) }}
+				</section>
+			</section>
+		</div>
+	</div>
+</main>
+{% endblock %}
