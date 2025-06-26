@@ -45,18 +45,18 @@ class CreditsGraphController extends AbstractController
         $credits = $carpoolsUsersRepository->totalCredits();
 
         // get the credits by day and month
-        $aggregatedData = $this->aggregateCreditsByMonth($credits);
+        $aggregatedData = $this->CreditsByMonth($credits);
 
         // get the formated data for the front
-        $data = $this->formatAggregatedData($aggregatedData);
+        $data = $this->formatData($aggregatedData);
 
         return new JsonResponse($data);
     }
 
     /**
-     * Agrège les crédits par mois et jour.
+     * Credits per month and day
      */
-    private function aggregateCreditsByMonth(array $credits): array
+    private function CreditsByMonth(array $credits): array
     {
         $aggregatedData = [];
         foreach ($credits as $credit) {
@@ -67,7 +67,7 @@ class CreditsGraphController extends AbstractController
             $monthYear = $credit['date']->format('Y-m');
             $day = $credit['date']->format('d'); 
 
-            // Initialisation si le mois n'existe pas encore
+            // If month don't exist
             if (!isset($aggregatedData[$monthYear])) {
                 $aggregatedData[$monthYear] = [];
             }
@@ -78,25 +78,20 @@ class CreditsGraphController extends AbstractController
         return $aggregatedData;
     }
 
-    /**
-     * Formate les données agrégées pour le frontend.
-     */
-    private function formatAggregatedData(array $aggregatedData): array
+    private function formatData(array $aggregatedData): array
     {
         $data = [];
         foreach ($aggregatedData as $monthYear => $days) {
-            // Vérifier s'il y a au moins un jour avec des crédits pour ce mois
+            // if at least 1 day have more than 0 credits
             if (array_sum($days) === 0) {
                 continue;
             }
 
-            $date = new \DateTime($monthYear . '-01'); // Crée une date pour déterminer les jours du mois
+            $date = new \DateTime($monthYear . '-01');
             $daysInMonth = $date->format('t');
 
-            // Utiliser IntlDateFormatter pour obtenir le mois en français
-            $monthFrench = $this->formatMonthInFrench($date);
+            $monthFrench = $this->frenchFormat($date);
 
-            // Créer les labels et counts pour chaque jour du mois
             [$labels, $counts] = $this->createLabelsAndCounts($days, $daysInMonth);
 
             $data[] = [
@@ -110,9 +105,9 @@ class CreditsGraphController extends AbstractController
     }
 
     /**
-     * Formate un mois en français
+     * Use French format for date
      */
-    private function formatMonthInFrench(\DateTime $date): string
+    private function frenchFormat(\DateTime $date): string
     {
         $formatter = new \IntlDateFormatter(
             'fr_FR',
@@ -127,7 +122,7 @@ class CreditsGraphController extends AbstractController
     }
 
     /**
-     * Crée les labels (jours) et les counts (crédits) pour un mois donné.
+     * Create labels for each month
      */
     private function createLabelsAndCounts(array $days, int $daysInMonth): array
     {

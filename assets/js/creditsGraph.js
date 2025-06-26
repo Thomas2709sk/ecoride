@@ -1,4 +1,4 @@
-// Fonction pour afficher le graphique des crédits
+
 window.renderCreditsGraph = function ({ labels, counts, month }) {
     if (!labels || !counts || !month) {
         console.error('Données invalides pour renderCreditsGraph :', { labels, counts, month });
@@ -12,18 +12,16 @@ window.renderCreditsGraph = function ({ labels, counts, month }) {
         return;
     }
 
-    // Effacer tout contenu précédent
     while (chartsContainer.firstChild) {
         chartsContainer.removeChild(chartsContainer.firstChild);
     }
 
-    // Filtrer les valeurs non nulles (ignorer les 0)
     const filteredCounts = counts.filter(count => count > 0);
 
-    // Vérifier si toutes les valeurs non nulles sont identiques
+
     const allSame = filteredCounts.every(count => count === filteredCounts[0]);
 
-    // Générer les couleurs dynamiques pour les barres
+
     let barColors;
     if (allSame || filteredCounts.length === 0) {
         barColors = counts.map(() => 'rgba(128, 128, 128, 0.8)');
@@ -33,16 +31,16 @@ window.renderCreditsGraph = function ({ labels, counts, month }) {
 
         barColors = counts.map(count => {
             if (count === minCredits && count > 0) {
-                return 'rgba(255, 99, 132, 0.8)'; // Couleur pour le minimum
+                return 'rgba(255, 99, 132, 0.8)';
             } else if (count === maxCredits) {
-                return 'rgba(144, 238, 144, 0.8)'; // Couleur pour le maximum
+                return 'rgba(144, 238, 144, 0.8)';
             } else {
-                return 'rgba(54, 162, 235, 0.8)'; // Couleur par défaut
+                return 'rgba(54, 162, 235, 0.8)';
             }
         });
     }
 
-    // Créer un conteneur pour le graphique
+
     const canvasContainer = document.createElement('div');
     canvasContainer.classList.add('chart-container');
 
@@ -87,7 +85,6 @@ window.renderCreditsGraph = function ({ labels, counts, month }) {
     });
 };
 
-// Charger les données des crédits
 function loadCreditsData() {
     fetch('/admin/credits/graph/credits')
         .then(response => {
@@ -102,7 +99,7 @@ function loadCreditsData() {
                 return;
             }
 
-            // Charger le graphique pour le premier mois par défaut
+
             if (data[0]) {
                 renderCreditsGraph(data[0]);
             }
