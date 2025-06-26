@@ -7,7 +7,7 @@
 			</div>
 			<div class="modal-body">
 				<p>
-					<strong>Êtes-vous sûr de vouloir annuler votre réservation</strong>?</p>
+					<strong>Êtes-vous sûr de vouloir annuler la réservation</strong>?</p>
 				<p>
 					<strong>Prix :</strong>
 					{{ carpool.price }}
@@ -18,7 +18,7 @@
 				<p>
 					<strong>Nom du chauffeur :</strong>
 					{{ carpool.driver.user.pseudo }}</p>
-				<p>Vos crédits vous seront rendus</p>
+				<p>Les crédits seront rendus</p>
 			</div>
 			<div class="modal-footer">
 				<form method="POST" action="{{ path('app_user_carpool_cancel', {'id': carpool.id}) }}">

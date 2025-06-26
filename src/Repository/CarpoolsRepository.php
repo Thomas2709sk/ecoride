@@ -16,6 +16,16 @@ class CarpoolsRepository extends ServiceEntityRepository
         parent::__construct($registry, Carpools::class);
     }
 
+    public function showNextCarpools(): array
+{
+    return $this->createQueryBuilder('c')
+        ->where('c.status = :status')
+        ->setParameter('status', 'A venir')
+        ->orderBy('c.day', 'ASC') // ou tout autre champ pertinent
+        ->getQuery()
+        ->getResult();
+}
+
 //    /**
 //     * @return Carpools[] Returns an array of Carpools objects
 //     */

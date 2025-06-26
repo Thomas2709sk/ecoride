@@ -48,7 +48,7 @@ class CreateCarpoolForm extends AbstractType
             ->add('car', EntityType::class, [
                 'class' => Cars::class,
                 'label' => 'Véhicule :',
-                'choices' => $driverCar,
+                'choices' => $options['driver_car'],
                 'placeholder' => 'Choisissez un véhicule',
                 'required' => true,
             ])

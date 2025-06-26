@@ -34,8 +34,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+    access_control:
          - { path: ^/admin/review/, roles: [ROLE_ADMIN, ROLE_STAFF] }
          - { path: ^/admin, roles: ROLE_ADMIN }
+
             
         # Exception for ROLE_USER for first registration as driver
          - { path: ^/driver/registration, roles: ROLE_USER }

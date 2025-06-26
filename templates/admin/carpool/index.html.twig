@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Covoiturage à venir
+{% endblock %}
+
+{% block body %}
+	<main>
+		<h1>Covoiturages à venir</h1>
+		<div class="container">
+			<div class="table-responsive">
+				<table class="table table-striped table-success">
+					<thead>
+						<tr>
+							<th>Jour</th>
+							<th>Heure</th>
+							<th>Départ</th>
+							<th>Statut</th>
+							<th>Détails</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% set upcoming = false %}
+						{% for carpool in carpools %}
+							{% if carpool.status == 'A venir' %}
+								{% set upcoming = true %}
+								<tr>
+									<td>{{ carpool.day|date('d/m/Y') }}</td>
+									<td>{{ carpool.begin|date('H:i') }}</td>
+									<td>
+										{% if carpool.day|date('U') > "now"|date('U') %}
+											<span>Dans
+												{{ (carpool.day|date('U') - "now"|date('U'))//86400 }}
+												jours</span>
+										{% else %}
+											<span class="text-danger">Aujourd'hui</span>
+										{% endif %}
+									</td>
+									<td>{{ carpool.status }}</td>
+									<td>
+										<button class="btn btn-info btn-sm">
+											<a class="text-white" href="{{ path('app_user_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}">Détails</a>
+										</button>
+									</td>
+									<td>
+										<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancelModal-{{ carpool.id }}">Annuler</button>
+                                        <button class="btn btn-warning btn-sm">
+											<a class="text-white" href="{{ path('app_admin_carpool_edit', {carpoolNumber: carpool.carpoolNumber}) }}">Modifier</a>
+										</button>
+									</td>
+								</tr>
+								{% include "_partials/modals/user/cancel_reservation_modals.html.twig" %}
+							{% endif %}
+						{% endfor %}
+						{% if not upcoming %}
+							<tr>
+								<td colspan="6" class="text-center">Pas encore de covoiturages</td>
+							</tr>
+						{% endif %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</main>
+{% endblock %}

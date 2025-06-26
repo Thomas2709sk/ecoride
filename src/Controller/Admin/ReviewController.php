@@ -20,7 +20,7 @@ class ReviewController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(ReviewsRepository $reviewsRepository, Security $security): Response
     {
-        // check if User have 'ROLE_ADMIN'
+        // check if User have 'ROLE_ADMIN' or 'ROLE_STAFF'
         if (
             !$security->isGranted('ROLE_ADMIN')
             && !$security->isGranted('ROLE_STAFF')

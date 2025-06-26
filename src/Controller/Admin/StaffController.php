@@ -17,8 +17,13 @@ use Symfony\Component\Routing\Attribute\Route;
 class StaffController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(UsersRepository $usersRepository): Response
+    public function index(UsersRepository $usersRepository, Security $security): Response
     {
+        // check if User have 'ROLE_ADMIN'
+        if (!$security->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('Seul un administrateur peut accéder aux avis.');
+        }
+
         $users = $usersRepository->showStaffAndAdmins();
 
         return $this->render('admin/staff/index.html.twig', [
