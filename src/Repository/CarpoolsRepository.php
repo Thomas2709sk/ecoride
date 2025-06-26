@@ -26,6 +26,21 @@ class CarpoolsRepository extends ServiceEntityRepository
         ->getResult();
 }
 
+  public function totalCarpools(): array
+    {
+
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT r.day AS date, COUNT(r.id) AS count
+             FROM App\Entity\Carpools r
+             GROUP BY r.day
+             ORDER BY r.day ASC'
+        );
+
+        return $query->getResult();   
+    }
+
 //    /**
 //     * @return Carpools[] Returns an array of Carpools objects
 //     */
