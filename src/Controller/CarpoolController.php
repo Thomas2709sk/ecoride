@@ -122,7 +122,7 @@ public function results(
     ]);
     $filtersForm->handleRequest($request);
 
-    // Récupère tous les filtres
+
     $filters = [
         'date' => $day ? new \DateTime($day) : null,
         'address_start' => $addressStart,
@@ -140,7 +140,7 @@ public function results(
     // Géocodage DEPART
     $userLat = null;
     $userLon = null;
-    $radiusKm = 10; // rayon du point de départ (modifiable)
+    $radiusKm = 10; 
 
     if ($filters['address_start']) {
         $addressEncoded = urlencode($filters['address_start']);
@@ -166,7 +166,7 @@ public function results(
     // Géocodage ARRIVEE
     $userArrLat = null;
     $userArrLon = null;
-    $arrivalRadiusKm = 10; // rayon du point d'arrivée (modifiable)
+    $arrivalRadiusKm = 10;
 
     if ($filters['address_end']) {
         $addressEncoded = urlencode($filters['address_end']);
@@ -194,7 +194,6 @@ public function results(
         return $this->redirectToRoute('index');
     }
 
-    // Appel du repository avec tous les filtres attendus
     $carpools = $carpoolsRepository->carpoolDriverReviews(
         $filters['date'] ? $filters['date']->format('Y-m-d') : null,
         $userLat,
@@ -211,11 +210,32 @@ public function results(
         ) : null
     );
 
+
+$nearestDay = null;
+if (empty($carpools) && $day) {
+    $nearestDay = $carpoolsRepository->findNearestCarpoolDay(
+        $day,
+        $userLat,
+        $userLon,
+        $radiusKm,
+        $userArrLat,
+        $userArrLon,
+        $arrivalRadiusKm,
+        $filters['price'] !== null ? (float)$filters['price'] : null,
+        $filters['isEcological'] !== null ? (bool)$filters['isEcological'] : null,
+        $filters['rate'] !== null ? (float)$filters['rate'] : null,
+        $filters['begin'] !== null ? (
+            $filters['begin'] instanceof \DateTimeInterface ? $filters['begin'] : new \DateTime($filters['begin'])
+        ) : null
+    );
+}
+
     return $this->render('carpool/results.html.twig', [
         'filtersForm' => $filtersForm->createView(),
         'carpools' => $carpools,
         'address_start' => $addressStart,
         'address_end' => $addressEnd,
+        'nearestDay' => $nearestDay
     ]);
 }
 }

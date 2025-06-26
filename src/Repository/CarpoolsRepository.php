@@ -167,6 +167,73 @@ class CarpoolsRepository extends ServiceEntityRepository
         return $carpools;
     }
 
+     public function findNearestCarpoolDay(
+        string $desiredDay,
+        float $userLat,
+        float $userLon,
+        float $radiusKm,
+        float $userArrLat,
+        float $userArrLon,
+        float $arrivalRadiusKm,
+        ?float $price = null,
+        ?bool $isEcological = null,
+        ?float $rate = null,
+        ?\DateTime $begin = null
+    ): ?string {
+        $params = [
+            'userLat' => $userLat,
+            'userLon' => $userLon,
+            'radiusKm' => $radiusKm,
+            'userArrLat' => $userArrLat,
+            'userArrLon' => $userArrLon,
+            'arrivalRadiusKm' => $arrivalRadiusKm,
+            'desiredDay' => $desiredDay,
+        ];
+
+        $sql = "
+            SELECT r.day,
+                ABS(DATEDIFF(r.day, :desiredDay)) AS dayDiff,
+                (6371 * acos(
+                    cos(radians(:userLat)) * cos(radians(r.startLat)) *
+                    cos(radians(r.startLon) - radians(:userLon)) +
+                    sin(radians(:userLat)) * sin(radians(r.startLat))
+                )) AS distanceDeparture,
+                (6371 * acos(
+                    cos(radians(:userArrLat)) * cos(radians(r.endLat)) *
+                    cos(radians(r.endLon) - radians(:userArrLon)) +
+                    sin(radians(:userArrLat)) * sin(radians(r.endLat))
+                )) AS distanceArrival
+            FROM carpools r
+            WHERE r.startLat IS NOT NULL
+              AND r.startLon IS NOT NULL
+              AND r.endLat IS NOT NULL
+              AND r.endLon IS NOT NULL
+        ";
+
+        if ($price !== null) {
+            $sql .= " AND r.price <= :price";
+            $params['price'] = $price;
+        }
+        if ($isEcological !== null) {
+            $sql .= " AND r.is_ecological = :is_ecological";
+            $params['is_ecological'] = $isEcological;
+        }
+        if ($begin !== null) {
+            $sql .= " AND r.begin <= :begin";
+            $params['begin'] = $begin->format('H:i:s');
+        }
+
+        $sql .= " HAVING distanceDeparture < :radiusKm AND distanceArrival < :arrivalRadiusKm";
+        $sql .= " ORDER BY dayDiff ASC LIMIT 1";
+
+        $conn = $this->getEntityManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->executeQuery($params);
+        $row = $result->fetchAssociative();
+
+        return $row ? $row['day'] : null;
+    }
+
     // **
     //  * Recherche des covoiturages selon critères principaux et filtres optionnels.
     //  *
