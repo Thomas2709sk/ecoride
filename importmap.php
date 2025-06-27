@@ -48,6 +48,10 @@ return [
         'path' => './assets/js/reviewStar.js',
         'entrypoint' => true,
     ],
+    'reviewWebStar' => [
+        'path' => './assets/js/reviewWebStar.js',
+        'entrypoint' => true,
+    ],
     'addStaff' => [
         'path' => './assets/js/addStaff.js',
         'entrypoint' => true,
