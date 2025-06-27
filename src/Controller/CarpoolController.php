@@ -49,6 +49,7 @@ class CarpoolController extends AbstractController
             'carpool' => $carpool,
             'averageRating' => $averageRating,
             'totalReviews' => $totalReviews,
+               'google_maps_api_key' => $_SERVER['GOOGLE_MAPS_API_KEY'] ?? $_ENV['GOOGLE_MAPS_API_KEY'] ?? null,
         ]);
     }
 

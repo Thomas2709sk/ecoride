@@ -1,36 +1,57 @@
-document.addEventListener('DOMContentLoaded', async () => {
+window.initMap = runRealInitMap;
+
+
+function runRealInitMap() {
     const mapDiv = document.getElementById('map');
-    const start = mapDiv.getAttribute('data-address-start');
-    const end = mapDiv.getAttribute('data-address-end');
-
-    async function geocode(address) {
-        const res = await fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address));
-        const data = await res.json();
-        if (data.length > 0) return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
-        return null;
-    }
-
-    const startCoord = await geocode(start);
-    const endCoord = await geocode(end);
-
-    if (!startCoord || !endCoord) {
-        mapDiv.innerHTML = "Adresse introuvable.";
+    if (!mapDiv) {
+        alert("DIV #map manquant !");
         return;
     }
 
-    const map = L.map('map').setView(startCoord, 10);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: "© OpenStreetMap"
-    }).addTo(map);
+    const startAddress = mapDiv.getAttribute('data-address-start');
+    const endAddress = mapDiv.getAttribute('data-address-end');
 
-    L.Routing.control({
-        waypoints: [
-            L.latLng(startCoord[0], startCoord[1]),
-            L.latLng(endCoord[0], endCoord[1])
-        ],
-        routeWhileDragging: false,
-        draggableWaypoints: false,
-        addWaypoints: false,
-        show: false
-    }).addTo(map);
-});
+    if (!startAddress || !endAddress) {
+        alert("L'adresse de départ ou d'arrivée est manquante !");
+        return;
+    }
+
+    const map = new google.maps.Map(mapDiv, {
+        zoom: 6,
+        center: { lat: 46.603354, lng: 1.888334 },
+    });
+
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map);
+
+    directionsService.route(
+        {
+            origin: startAddress,
+            destination: endAddress,
+            travelMode: google.maps.TravelMode.DRIVING,
+        },
+        (response, status) => {
+            if (status === "OK") {
+                directionsRenderer.setDirections(response);
+                // Récupère la distance et la durée du trajet
+                const route = response.routes[0].legs[0];
+                const distance = route.distance.text;
+                const duration = route.duration.text;
+                // Affiche la distance et la durée dans le bloc dédié
+                const infoDiv = document.getElementById('route-info');
+                if (infoDiv) {
+                    infoDiv.innerHTML = `<strong>Distance :</strong> ${distance}<br><strong>Durée :</strong> ${duration}`;
+                }
+            } else {
+                alert("Impossible de calculer l'itinéraire : " + status);
+            }
+        }
+    );
+}
+
+window.initMap = runRealInitMap;
+
+if (window.google && window.google.maps) {
+    window.initMap();
+}
