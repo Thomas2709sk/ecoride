@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Document\Review;
+use App\Form\ReviewsWebsiteForm;
 use App\Repository\DriversRepository;
 use App\Repository\ReviewsRepository;
 use App\Repository\UsersRepository;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -13,9 +17,28 @@ use Symfony\Component\Routing\Attribute\Route;
 class ReviewController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
+    public function index(Request $request, DocumentManager $dm): Response
     {
-        return $this->render('review/index.html.twig', []);
+           // Create new Review object in MongoDB
+     $review = new Review();
+    //  Add day and time automatically for CreatedAt
+     $review->setCreatedAt(new \DateTime());
+
+    //  Create form and link with Document review
+    $reviewWebForm = $this->createForm(ReviewsWebsiteForm::class, $review);
+    $reviewWebForm->handleRequest($request);
+
+    if ($reviewWebForm->isSubmitted() && $reviewWebForm->isValid()) {
+        $dm->persist($review);
+        $dm->flush();
+
+        $this->addFlash('success', 'Votre avis a été envoyé avec succès.');
+        return $this->redirectToRoute('app_review_index');
+    }
+
+    return $this->render('review/index.html.twig', [
+        'reviewWebForm' => $reviewWebForm->createView(),
+    ]);
     }
 
     #[Route('/{pseudo}/details', name: 'details')]

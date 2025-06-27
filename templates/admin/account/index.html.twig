@@ -6,8 +6,27 @@
 <section>
     <h1>Administration</h1>
     <div>
+        <h2>Employés</h2>
+        <a href="{{ path('app_admin_staff_index') }}">Liste des employés</a>
+         <a href="{{ path('app_admin_staff_create') }}">Créer employés</a>
+    </div>
+    </div>
+    <div>
+        <h2>Utilisateurs</h2>
+        <a href="{{ path('app_admin_user_index') }}">Liste des utilisateurs</a>
+    </div>
+        <div>
+        <h2>Covoiturages</h2>
+        <a href="{{ path('app_admin_carpool_index') }}">Liste des covoiturages</a>
+    </div>
+    <div>
         <h2>Avis</h2>
         <a href="{{ path('app_admin_review_index') }}">Avis à valider</a>
+    </div>
+    <div>
+        <h2>Graphique</h2>
+        <a href="{{ path('app_admin_graph_index') }}">Total covoiturages</a>
+        <a href="{{ path('app_admin_credits_graph_index') }}">Total crédits</a>
     </div>
 </section>
 {% endblock %}

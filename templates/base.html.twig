@@ -43,7 +43,10 @@
 							<a class="nav-link" href="{{ path('app_carpool_index') }}">Covoiturage</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">Contact</a>
+							<a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_review_index') }}">Votre avis</a>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,6 +64,10 @@
 								{% elseif is_granted('ROLE_ADMIN') %}
 									<li>
 									<a class="dropdown-item" href="{{ path('app_admin_account') }}">Administrateur</a>
+								</li>
+								{% elseif is_granted('ROLE_STAFF') %}
+									<li>
+									<a class="dropdown-item" href="{{ path('app_staff_account') }}">Compte employé</a>
 								</li>
 								{% endif %}					
 								<li>

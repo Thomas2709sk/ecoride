@@ -20,9 +20,12 @@ class ReviewController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(ReviewsRepository $reviewsRepository, Security $security): Response
     {
-        // check if User have 'ROLE_ADMIN'
-        if (!$security->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('Seul un administrateur peut accéder aux avis.');
+        // check if User have 'ROLE_ADMIN' or 'ROLE_STAFF'
+        if (
+            !$security->isGranted('ROLE_ADMIN')
+            && !$security->isGranted('ROLE_STAFF')
+        ) {
+            throw $this->createAccessDeniedException('Seuls un administrateur ou un employé peuvent accéder aux avis.');
         }
 
         // get All the reviews

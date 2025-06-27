@@ -48,6 +48,30 @@ return [
         'path' => './assets/js/reviewStar.js',
         'entrypoint' => true,
     ],
+    'reviewWebStar' => [
+        'path' => './assets/js/reviewWebStar.js',
+        'entrypoint' => true,
+    ],
+    'addStaff' => [
+        'path' => './assets/js/addStaff.js',
+        'entrypoint' => true,
+    ],
+    'carpoolsGraphSelect' => [
+        'path' => './assets/js/carpoolsGraphSelect.js',
+        'entrypoint' => true,
+    ],
+    'creditsGraphSelect' => [
+        'path' => './assets/js/creditsGraphSelect.js',
+        'entrypoint' => true,
+    ],
+    'carpoolsGraph' => [
+        'path' => './assets/js/carpoolsGraph.js',
+        'entrypoint' => true,
+    ],
+    'creditsGraph' => [
+        'path' => './assets/js/creditsGraph.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

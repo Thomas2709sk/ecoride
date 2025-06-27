@@ -16,6 +16,22 @@ class CarpoolsUsersRepository extends ServiceEntityRepository
         parent::__construct($registry, CarpoolsUsers::class);
     }
 
+    public function totalCredits(): array
+{
+    $entityManager = $this->getEntityManager();
+
+    $query = $entityManager->createQuery(
+        'SELECT c.day AS date, SUM(2) AS count
+         FROM App\Entity\CarpoolsUsers cu
+         JOIN cu.carpool c
+         WHERE cu.isConfirmed = true
+         GROUP BY c.day
+         ORDER BY c.day ASC'
+    );
+
+    return $query->getResult();
+}
+
     //    /**
     //     * @return CarpoolsUsers[] Returns an array of CarpoolsUsers objects
     //     */

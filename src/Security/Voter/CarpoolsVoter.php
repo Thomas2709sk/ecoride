@@ -13,11 +13,14 @@ class CarpoolsVoter extends Voter
 {
     public const CANCEL = 'CARPOOL_CANCEL';
 
+    public const EDIT = 'CARPOOL_EDIT';
+
     public function __construct(private readonly Security $security) {}
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return $attribute === self::CANCEL && $subject instanceof Carpools;
+        return in_array($attribute, [self::CANCEL, self::EDIT], true)
+            && $subject instanceof Carpools;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -35,27 +38,29 @@ class CarpoolsVoter extends Voter
         /** @var Carpools $carpool */
         $carpool = $subject;
 
-          switch ($attribute) {
+        switch ($attribute) {
             case self::CANCEL:
                 if ($this->isOwner($carpool, $user)) {
                     return true;
                 }
-               if ($this->isPassenger($carpool, $user)) {
+                if ($this->isPassenger($carpool, $user)) {
                     return true;
                 }
+            case self::EDIT:
+                return false;
         }
         return false;
     }
-private function isOwner(Carpools $carpool, $user): bool
-{
-    $driver = $carpool->getDriver();
-    if (!$driver || !$driver->getUser()) return false;
-    return $driver->getUser()->getId() === $user->getId();
-}
+    private function isOwner(Carpools $carpool, $user): bool
+    {
+        $driver = $carpool->getDriver();
+        if (!$driver || !$driver->getUser()) return false;
+        return $driver->getUser()->getId() === $user->getId();
+    }
 
     private function isPassenger(Carpools $carpool, $user): bool
-{
-    
-    return $carpool->getUser()->contains($user);
-}
+    {
+
+        return $carpool->getUser()->contains($user);
+    }
 }
