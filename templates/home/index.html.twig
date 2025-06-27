@@ -9,6 +9,25 @@
 	<div>
 		<h1>Accueil</h1>
 	</div>
+    	<section>
+    <div>
+      <h2>Rechercher covoiturage</h2>
+    </div>
+		{{ form_start(searchForm) }}
+		<div>
+			{{ form_row(searchForm.date) }}
+		</div>
+		<div>
+			{{ form_row(searchForm.address_start) }}
+      		<button onclick="getLocation()">Obtenir la localisation</button>
+		</div>
+		<div>
+			{{ form_row(searchForm.address_end) }}
+		</div>
+		<button type="submit" class="btn btn-primary">Rechercher</button>
+		{{ form_end(searchForm) }}
+	</section>
+	<div id="geo-output"></div>
 
 {# Reviews website section #}
 <section class="review-section border border-warning border-2 container-fluid mt-0 p-4">
@@ -64,4 +83,40 @@
 		</div>
 	</div>
 </section>
+<script>
+let x = document.getElementById("geo-output");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, error);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function success(position) {
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
+
+  // Appel à l'API Nominatim pour obtenir l'adresse
+  fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
+    .then(response => response.json())
+    .then(data => {
+      if (data && data.display_name) {
+        // Met l'adresse dans l'input
+        document.getElementById("search_carpool_form_address_start").value = data.display_name;
+        x.innerHTML = ""; // efface le message
+      } else {
+        x.innerHTML = "Impossible de trouver une adresse.";
+      }
+    })
+    .catch(() => {
+      x.innerHTML = "Erreur lors de la récupération de l'adresse.";
+    });
+}
+
+function error() {
+  alert("Désolé, aucune position disponible.");
+}
+</script>
 {% endblock %}

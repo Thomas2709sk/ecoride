@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const startInput = document.getElementById('create_carpool_form_address_start');
     const endInput = document.getElementById('create_carpool_form_address_end');
+    const startLat = document.getElementById('create_carpool_form_startLat');
+    const startLon = document.getElementById('create_carpool_form_startLon');
+    const endLat = document.getElementById('create_carpool_form_endLat');
+    const endLon = document.getElementById('create_carpool_form_endLon');
 
     if (!startInput || !endInput) {
         console.error("Champs d'adresses introuvables !");
@@ -24,10 +28,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function showRoute() {
         const start = startInput.value;
         const end = endInput.value;
+
+        // Reset fields before new search
+        if (startLat) startLat.value = '';
+        if (startLon) startLon.value = '';
+        if (endLat) endLat.value = '';
+        if (endLon) endLon.value = '';
+
         if (start && end) {
             const startCoord = await geocode(start);
             const endCoord = await geocode(end);
             if (startCoord && endCoord) {
+                // MAJ des champs coordonnées
+                if (startLat) startLat.value = startCoord[0];
+                if (startLon) startLon.value = startCoord[1];
+                if (endLat) endLat.value = endCoord[0];
+                if (endLon) endLon.value = endCoord[1];
+
                 if (routingControl) map.removeControl(routingControl);
                 routingControl = L.Routing.control({
                     waypoints: [
@@ -38,6 +55,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     draggableWaypoints: false,
                     addWaypoints: false
                 }).addTo(map);
+            }
+        } else {
+            if (routingControl) {
+                map.removeControl(routingControl);
+                routingControl = null;
             }
         }
     }
