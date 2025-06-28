@@ -61,6 +61,9 @@ class Carpools
     #[ORM\Column]
     private ?bool $isEcological = null;
 
+    #[ORM\Column]
+    private ?int $duration = null;
+
     /**
      * @var Collection<int, Reviews>
      */
@@ -377,6 +380,26 @@ class Carpools
     public function setEndLon(float $endLon): static
     {
         $this->endLon = $endLon;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of duration
+     */ 
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * Set the value of duration
+     *
+     * @return  self
+     */ 
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
 
         return $this;
     }

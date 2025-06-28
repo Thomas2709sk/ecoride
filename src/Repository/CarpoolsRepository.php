@@ -84,6 +84,13 @@ class CarpoolsRepository extends ServiceEntityRepository
             $qb->having('averageRating >= :rate')
                 ->setParameter('rate', $filters['rate']);
         }
+        if (!empty($filters['duration'])) {
+            if ($filters['duration'] === 'plus_court') {
+                $qb->orderBy('r.duration', 'ASC');
+            } elseif ($filters['duration'] === 'plus_long') {
+                $qb->orderBy('r.duration', 'DESC');
+            }
+        }
 
         $results = $qb->getQuery()->getResult();
 
@@ -97,27 +104,26 @@ class CarpoolsRepository extends ServiceEntityRepository
         return $carpools;
     }
 
-public function NearestCarpool(
-    string $day,
-    float $userLat,
-    float $userLon,
-    float $userArrLat,
-    float $userArrLon,
-    int $radiusKm = 10,
-    int $arrivalRadiusKm = 10
-): ?string
-{
-    $params = [
-        'userLat'         => $userLat,
-        'userLon'         => $userLon,
-        'radiusKm'        => $radiusKm,
-        'userArrLat'      => $userArrLat,
-        'userArrLon'      => $userArrLon,
-        'arrivalRadiusKm' => $arrivalRadiusKm,
-        'desiredDay'      => $day,
-    ];
+    public function NearestCarpool(
+        string $day,
+        float $userLat,
+        float $userLon,
+        float $userArrLat,
+        float $userArrLon,
+        int $radiusKm = 10,
+        int $arrivalRadiusKm = 10
+    ): ?string {
+        $params = [
+            'userLat'         => $userLat,
+            'userLon'         => $userLon,
+            'radiusKm'        => $radiusKm,
+            'userArrLat'      => $userArrLat,
+            'userArrLon'      => $userArrLon,
+            'arrivalRadiusKm' => $arrivalRadiusKm,
+            'desiredDay'      => $day,
+        ];
 
-    $sql = "
+        $sql = "
         SELECT r.day,
             ABS(DATEDIFF(r.day, :desiredDay)) AS dayDiff,
             (6371 * acos(
@@ -140,21 +146,21 @@ public function NearestCarpool(
         LIMIT 1
     ";
 
-    $conn = $this->getEntityManager()->getConnection();
-    $stmt = $conn->prepare($sql);
-    $result = $stmt->executeQuery($params);
-    $row = $result->fetchAssociative();
+        $conn = $this->getEntityManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->executeQuery($params);
+        $row = $result->fetchAssociative();
 
-    if (empty($row) || empty($row['day'])) {
-        return null;
-    }
+        if (empty($row) || empty($row['day'])) {
+            return null;
+        }
 
-    $day = $row['day'];
-    if ($day instanceof \DateTimeInterface) {
-        $day = $day->format('Y-m-d');
+        $day = $row['day'];
+        if ($day instanceof \DateTimeInterface) {
+            $day = $day->format('Y-m-d');
+        }
+        return (string)$day;
     }
-    return (string)$day;
-}
 
     // Admin function
     public function showNextCarpools(): array

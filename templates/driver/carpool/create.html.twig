@@ -17,6 +17,7 @@
 {% block javascripts %}
 	{# base.html.twig JS block #}
 	{{ parent() }}
+	<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap&loading=async" async></script>
 	<!-- Leaflet script -->
 	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 	<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
@@ -42,6 +43,7 @@
 			{{ form_row(carpoolForm.endLon) }}
 			{{ form_row(carpoolForm.begin) }}
 			{{ form_row(carpoolForm.end) }}
+			{{ form_row(carpoolForm.duration) }}
 			<div>
 				{{ form_row(carpoolForm.price) }}
 				<p>2 crédits iront à la plateforme</p>
@@ -68,6 +70,7 @@
 			<h2>Apercu du trajet</h2>
             <!-- ShowMap.js -->
 			<div id="map" style="height: 500px;"></div>
+			<div id="route-info"></div>
 		</div>
 	</section>
 	<style>

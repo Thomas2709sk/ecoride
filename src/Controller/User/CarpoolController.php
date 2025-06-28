@@ -45,6 +45,7 @@ class CarpoolController extends AbstractController
 
         return $this->render('user/carpool/details.html.twig', [
             'carpool' => $carpool,
+            'google_maps_api_key' => $_SERVER['GOOGLE_MAPS_API_KEY'] ?? $_ENV['GOOGLE_MAPS_API_KEY'] ?? null,
         ]);
     }
 

@@ -112,6 +112,7 @@ class CarpoolController extends AbstractController
         return $this->render('driver/carpool/create.html.twig', [
             'carpoolForm' => $carpoolForm->createView(),
             'carForm' => $carForm->createView(),
+            'google_maps_api_key' => $_SERVER['GOOGLE_MAPS_API_KEY'] ?? $_ENV['GOOGLE_MAPS_API_KEY'] ?? null,
         ]);
     }
 
@@ -139,7 +140,8 @@ class CarpoolController extends AbstractController
 
         return $this->render('driver/carpool/details.html.twig', [
             'carpool' => $carpool,
-            'car' => $car
+            'car' => $car,
+            'google_maps_api_key' => $_SERVER['GOOGLE_MAPS_API_KEY'] ?? $_ENV['GOOGLE_MAPS_API_KEY'] ?? null,
         ]);
     }
 

@@ -65,6 +65,17 @@ class SearchFiltersForm extends AbstractType
                 'required' => false,
                 'widget' => 'single_text',
             ])
+            ->add('duration', ChoiceType::class, [
+                'label' => 'Durée',
+                'required' => false,
+                'choices' => [
+                    'Plus court' => 'plus_court',
+                    'Plus long' => 'plus_long',
+
+                ],
+                'placeholder' => 'Trier par : (plus court / plus long)',
+                'required' => false,
+            ])
         ;
     }
 

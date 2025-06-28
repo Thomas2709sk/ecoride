@@ -92,3 +92,6 @@ ALTER TABLE carpools
     ADD COLUMN startLon FLOAT NULL,
     ADD COLUMN endLat FLOAT NULL,
     ADD COLUMN endLon FLOAT NULL;
+
+ALTER TABLE carpools
+ADD COLUMN duration INT NULL;

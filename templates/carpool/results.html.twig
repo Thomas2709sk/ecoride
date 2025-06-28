@@ -59,6 +59,19 @@
 														<strong>Place restante(s) :</strong>
 														{{ carpool.placesAvailable }}
 													</div>
+													<div class="col-lg-4">
+														<b>Durée :</b>
+														{% if carpool.duration is not null %}
+															{% set hours = (carpool.duration / 3600)|round(0, 'floor') %}
+															{% set minutes = ((carpool.duration % 3600) / 60)|round(0, 'floor') %}
+															{% if hours > 0 %}
+																{{ hours }}h
+															{% endif %}
+															{{ minutes }}min
+														{% else %}
+															non renseigné
+														{% endif %}
+													</div>
 												</div>
 											</div>
 											<div class=" ms-2 mb-2 d-flex align-items-center">
