@@ -9,3 +9,14 @@
 
 // Pages
 @import "./scss/pages/_account";
+@import "./scss/pages/_home";
+
+// Components
+@import "./scss/components/_header";
+@import "./scss/components/_hero";
+
+// Layout
+@import "./scss/layout/_flux";
+
+// Mixins personnalisés
+@import "./scss/_mixins";

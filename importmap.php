@@ -28,6 +28,10 @@ return [
         'path' => './assets/js/addPhoto.js',
         'entrypoint' => true,
     ],
+    'getGeolocation' => [
+        'path' => './assets/js/getGeolocation.js',
+        'entrypoint' => true,
+    ],
     'showMap' => [
         'path' => './assets/js/showMap.js',
         'entrypoint' => true,

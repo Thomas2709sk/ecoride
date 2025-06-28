@@ -27,10 +27,11 @@
 		{% endblock %}
 	</head>
 	<body>
-		
+	<header class="header">
 		<nav class="navbar navbar-expand-lg bg-body-primary bg-primary">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="{{ path('index') }}">Ecoride</a>
+				<a class="navbar-brand" href="{{ path('index') }}"></a>
+										<img src="{{ asset('/images/Ecoride.png') }}" class="me-2" width="70" alt="logo du site"></a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -45,14 +46,24 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{ path('app_review_index') }}">Votre avis</a>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Mon compte
+					</ul>
+					<div class="dropdown text-end ms-auto ">
+							<a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								{% if app.user %}
+									<div class="user-profile d-flex align-items-center">
+										{% if app.user.photo %}
+											<img src="{{ asset('uploads/users/mini/40x40-' ~ app.user.photo) }}" class="rounded-circle" alt="Photo de profil" class="profile-picture">
+										{% else %}
+											<i class="fa fa-user-circle fs-2"></i>
+										{% endif %}
+										<span class="ms-2">Bonjour,
+											{{ app.user.pseudo }}!</span>
+									</div>
+								{% else %}							
+									<i class="fa fa-user-circle fs-2"></i>
+								{% endif %}
 							</a>
-							<ul class="dropdown-menu">
+							<ul class="dropdown-menu dropdown-menu-lg-end">
 							{% if app.user %}
 								<li>
 									<a class="dropdown-item" href="{{ path('app_user_account_index') }}">Compte</a>
@@ -84,57 +95,32 @@
 							</ul>
 						</li>
 					</ul>
-					<div class="dropdown text-end ms-auto ">
-							<a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								{% if app.user %}
-									<div class="user-profile d-flex align-items-center">
-										{% if app.user.photo %}
-											<img src="{{ asset('uploads/users/mini/40x40-' ~ app.user.photo) }}" class="rounded-circle" alt="Photo de profil" class="profile-picture">
-										{% else %}
-											<i class="fa fa-user-circle fs-2"></i>
-										{% endif %}
-										<span class="ms-2">Bonjour,
-											{{ app.user.pseudo }}!</span>
-									</div>
-								{% else %}							
-									<i class="fa fa-user-circle fs-2"></i>
-								{% endif %}
-							</a>
-							<ul class="dropdown-menu">
-							{% if app.user %}
-								<li>
-									<a class="dropdown-item" href="{{ path('app_user_account_index') }}">Compte</a>
-								</li>
-								{% if is_granted('ROLE_DRIVER') %}
-								<li>
-									<a class="dropdown-item" href="{{ path('app_driver_account_index') }}">Compte chauffeur</a>
-								</li>
-								{% elseif is_granted('ROLE_ADMIN') %}
-									<li>
-									<a class="dropdown-item" href="{{ path('app_admin_account') }}">Administrateur</a>
-								</li>
-								{% endif %}					
-								<li>
-									<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
-								</li>
-							{% else %}
-								<li>
-									<a class="dropdown-item" href="{{ path('app_register') }}">Inscription</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="{{ path('app_login') }}">Connexion</a>
-								</li>
-							{% endif %}
-							</ul>
-						</li>
-					</ul>
 						</div>
 				</div>
 			</div>
 		</nav>
-
+	</header>		
 		{% include "flash_messages.html.twig" %}
 
 		{% block body %}{% endblock %}
+	<footer class="bg-primary fs-5">
+		<div class="container-fluid py-3">
+			<div class="row align-items-center" style="min-height: 110px;">
+				<div class="col-12 col-md-4 text-center text-md-start mb-2 mb-md-0">
+					<div>Mentions légales</div>
+					<div><a class="nav-link" href="{{ path('app_review_index') }}">Votre avis</a></div>
+					<div><a class="nav-link" href="{{ path('index') }}">Accueil</a></div>
+				</div>
+				<div class="col-12 col-md-4 text-center mb-2 mb-md-0">
+					<div>Ecoride</div>
+					<div>Nous contacter</div>
+					<div><a href="mailto:contact@ecoride.fr" class="text-dark">contact@ecoride.fr</a></div>
+				</div>
+				<div class="col-12 col-md-4 d-flex justify-content-md-end justify-content-center align-items-center" style="height:100%;">
+					<span>© 2025 Ecoride</span>
+				</div>
+				</div>
+			</div>
+		</footer>
 	</body>
 </html>

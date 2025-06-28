@@ -36,7 +36,8 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'searchForm' => $searchForm->createView(),
-            'reviews' => $reviews
+            'reviews' => $reviews,
+            'google_maps_api_key' => $_SERVER['GOOGLE_MAPS_API_KEY'] ?? $_ENV['GOOGLE_MAPS_API_KEY'] ?? null,
         ]);
     }
 }
