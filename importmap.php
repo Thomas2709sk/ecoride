@@ -32,6 +32,10 @@ return [
         'path' => './assets/js/showMap.js',
         'entrypoint' => true,
     ],
+    'listMap' => [
+        'path' => './assets/js/listMap.js',
+        'entrypoint' => true,
+    ],
     'calculateTime' => [
         'path' => './assets/js/calculateTime.js',
         'entrypoint' => true,

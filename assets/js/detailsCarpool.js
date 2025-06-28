@@ -1,10 +1,7 @@
-window.initMap = runRealInitMap;
-
-
 function runRealInitMap() {
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
-        alert("DIV #map manquant !");
+        document.body.innerHTML = "<div class='alert alert-danger text-center my-4'>Carte indisponible : élément #map manquant.</div>";
         return;
     }
 
@@ -12,7 +9,7 @@ function runRealInitMap() {
     const endAddress = mapDiv.getAttribute('data-address-end');
 
     if (!startAddress || !endAddress) {
-        alert("L'adresse de départ ou d'arrivée est manquante !");
+        mapDiv.innerHTML = "<div class='alert alert-warning text-center my-4'>Adresse de départ ou d'arrivée manquante.</div>";
         return;
     }
 
@@ -34,17 +31,15 @@ function runRealInitMap() {
         (response, status) => {
             if (status === "OK") {
                 directionsRenderer.setDirections(response);
-                // Récupère la distance et la durée du trajet
                 const route = response.routes[0].legs[0];
                 const distance = route.distance.text;
                 const duration = route.duration.text;
-                // Affiche la distance et la durée dans le bloc dédié
                 const infoDiv = document.getElementById('route-info');
                 if (infoDiv) {
                     infoDiv.innerHTML = `<strong>Distance :</strong> ${distance}<br><strong>Durée :</strong> ${duration}`;
                 }
             } else {
-                alert("Impossible de calculer l'itinéraire : " + status);
+                mapDiv.innerHTML = `<div class="alert alert-danger text-center my-4">Impossible de calculer l'itinéraire : ${status}</div>`;
             }
         }
     );

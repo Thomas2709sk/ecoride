@@ -156,7 +156,8 @@ class CarpoolController extends AbstractController
             'carpools'      => $carpools,
             'address_start' => $addressStart,
             'address_end'   => $addressEnd,
-            'nearestDay'    => $nearestDay
+            'nearestDay'    => $nearestDay,
+             'google_maps_api_key' => $_SERVER['GOOGLE_MAPS_API_KEY'] ?? $_ENV['GOOGLE_MAPS_API_KEY'] ?? null,
         ]);
     }
 }

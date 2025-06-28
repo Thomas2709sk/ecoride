@@ -7,20 +7,11 @@
 	{{ importmap(['app', 'showMap', 'calculateTime', 'dateSearch' ]) }}
 {% endblock %}
 
-{% block stylesheets %}
-	{# base.html.twig styles block #}
-	{{ parent() }}
-	<!-- Leaflet CSS -->
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-{% endblock %}
 
 {% block javascripts %}
 	{# base.html.twig JS block #}
 	{{ parent() }}
 	<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap&loading=async" async></script>
-	<!-- Leaflet script -->
-	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-	<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 {% endblock %}
 
 
@@ -34,6 +25,7 @@
 			{{ form_start(carpoolForm) }}
 
             <!-- dateSearch.js -->
+			<!-- calculateTime.js -->
 			{{ form_row(carpoolForm.day) }}
 			{{ form_row(carpoolForm.address_start) }}
 			{{ form_row(carpoolForm.startLat) }}
@@ -73,12 +65,4 @@
 			<div id="route-info"></div>
 		</div>
 	</section>
-	<style>
-		.leaflet-routing-container .leaflet-routing-alt table {
-			display: none !important;
-		}
-		.leaflet-routing-container .leaflet-routing-alt h2 {
-			display: none !important;
-		}
-	</style>
 {% endblock %}

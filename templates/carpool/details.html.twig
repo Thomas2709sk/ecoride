@@ -142,7 +142,7 @@
 							<span>
 								<b>Ptéférences :</b>
 							</span>
-							<span id="guide-preferences">{{ carpool.driver.preferences }}</span>
+							<span>{{ carpool.driver.preferences }}</span>
 						</div>
 					</div>
 				</div>
@@ -158,6 +158,7 @@
 				<span>
 					{{ carpool.AddressEnd }}</span>
 			</div>
+			<!-- detailsCarpools.js -->
 			<div id="map" class="col-lg-8" style="height: 500px;" data-address-start="{{ carpool.addressStart|e('html_attr') }}" data-address-end="{{ carpool.addressEnd|e('html_attr') }}"></div>
 			<div id="route-info"></div>
 		</section>

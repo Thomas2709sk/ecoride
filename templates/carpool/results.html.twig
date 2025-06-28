@@ -3,136 +3,156 @@
 {% block title %}Résultats de votre recherche
 {% endblock %}
 
-{% block body %}
-	<main class="wrapper">
-		<section class="container mb-5">
-			<h1 class="ms-3 text-center mt-5">Résultats de recherche</h1>
-			<div
-				class="row">
-				{# Filtres #}
-				<div class="d-lg-none mb-3">
-					<button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse" aria-expanded="false" aria-controls="filtersCollapse">
-						Filtres
-					</button>
-				</div>
-				<div class="col-12 col-lg-3 mb-3 mb-lg-0 border-end border-2">
-					<div class="collapse d-lg-block" id="filtersCollapse">
-						<h2>Filtres</h2>
-						{% if carpools is not empty %}
-							{% include '_partials/_search_filters.html.twig' %}
-						{% else %}
-							<p class="fs-5">Aucun filtre disponible</p>
-						{% endif %}
-					</div>
-				</div>
-				{# Résultats #}
-				<div id="results" class="col-12 col-lg-9">
-					{% if carpools is not empty %}
-						<div class="row justify-content-center">
-							{% for carpool in carpools %}
-								<div class="mt-5 col-lg-8 col-md-9 col-sm-10">
-									<div class="card shadow-lg card-guide">
-										<a href="{{ path('app_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" target="_blank">
-											<div class="card-body">
-												<div class="row mb-2 border-bottom pb-2">
-													<div class="col-lg-4">
-														<strong>Date :</strong>
-														{{ carpool.day|date('d/m/Y') }}
-													</div>
-													<div class="col-lg-4">
-														<strong>Départ :</strong>
-														<span>{{ carpool.begin|date('H:i') }}</span>
-													</div>
-													<div class="col-lg-4">
-														<strong>Fin :</strong>
-														<span>{{ carpool.end|date('H:i') }}</span>
-													</div>
-													<div class="col-lg-4">
-														<strong>Ecologique :</strong>
-														{% if carpool.isEcological %}
-															Oui
-														{% else %}
-															Non
-														{% endif %}
-													</div>
-													<div class="col-lg-4">
-														<strong>Place restante(s) :</strong>
-														{{ carpool.placesAvailable }}
-													</div>
-													<div class="col-lg-4">
-														<b>Durée :</b>
-														{% if carpool.duration is not null %}
-															{% set hours = (carpool.duration / 3600)|round(0, 'floor') %}
-															{% set minutes = ((carpool.duration % 3600) / 60)|round(0, 'floor') %}
-															{% if hours > 0 %}
-																{{ hours }}h
-															{% endif %}
-															{{ minutes }}min
-														{% else %}
-															non renseigné
-														{% endif %}
-													</div>
-												</div>
-											</div>
-											<div class=" ms-2 mb-2 d-flex align-items-center">
-												{% if carpool.driver.user.photo %}
-													<img src="{{ asset('uploads/users/mini/40x40-' ~ carpool.driver.user.photo) }}" class="rounded-circle" alt="Photo de profil" class="profile-picture">
-												{% else %}
-													<i class="fa fa-user-circle fs-2"></i>
-												{% endif %}
-												<div class="ms-1">
-													<strong>
-														{{ carpool.driver.user.pseudo }}
-													</strong>
-												</div>
-												<div class="ms-2">
-													<span
-														class="fw-bold me-2" id="guide-note">
-														{# if guides has no rate #}
-														{% if carpool.averageRating is not null %}
-															{{ carpool.averageRating|number_format(1) }}/5
-														{% else %}
-															-/5
-														{% endif %}
-													</span>
-												</div>
+{% block importmap %}
+	{{ importmap(['app', 'listMap']) }}
+{% endblock %}
+{% block javascripts %}
+	{# base.html.twig JS block #}
+	{{ parent() }}
+	<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap&loading=async" async></script>
+{% endblock %}
 
-												<div class="ms-3">
-													<strong>Prix :</strong>
-													{{ carpool.price }}
-													Crédits
-												</div>
-											</div>
-										</a>
-									</div>
-								</div>
-							{% endfor %}
-						</div>
-					{% else %}
-						<div class="fs-5 text-center pt-5 row">
-							{% if carpools is empty %}
-								<div class="fs-5 text-center pt-5 row">
-									{% if nearestDay is defined and nearestDay is not null %}
-										<p>Nous n'avons aucun covoiturage disponible pour la date choisie.</p>
-										<p>Date la plus proche disponible&nbsp;:</p>
-										<a class="text-warning fw-bold" href="{{ path('app_carpool_results', app.request.query.all | merge({ day: nearestDay|date('Y-m-d') }) ) }}">
-											{{ nearestDay|date('d/m/Y') }}
-										</a>
-									{% else %}
-										Nous n'avons aucun covoiturage disponible avec vos critères de recherche.
-									{% endif %}
-								</div>
-							{% endif %}
-						</div>
-					{% endif %}
-				</div>
-			</div>
-		</section>
-	</main>
-	<style>
-		a {
-			text-decoration: none;
-			color: inherit;
-		}
-	</style>
+{% block body %}
+<main class="wrapper">
+    <section class="container mb-5">
+        <h1 class="ms-3 text-center mt-5">Résultats de recherche</h1>
+        <div class="d-flex justify-content-end mb-3">
+            <button id="tabList" class="btn btn-outline-primary me-2 active">Liste</button>
+            <button id="tabMap" class="btn btn-outline-success">Carte</button>
+        </div>
+
+        <div id="listView">
+            <div class="row">
+                {# Filtres #}
+                <div class="d-lg-none mb-3">
+                    <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse" aria-expanded="false" aria-controls="filtersCollapse">
+                        Filtres
+                    </button>
+                </div>
+                <div class="col-12 col-lg-3 mb-3 mb-lg-0 border-end border-2">
+                    <div class="collapse d-lg-block" id="filtersCollapse">
+                        <h2>Filtres</h2>
+                        {% if carpools is not empty %}
+                            {% include '_partials/_search_filters.html.twig' %}
+                        {% else %}
+                            <p class="fs-5">Aucun filtre disponible</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {# Résultats #}
+                <div id="results" class="col-12 col-lg-9">
+                    {% if carpools is not empty %}
+                        <div class="row justify-content-center">
+                            {% for carpool in carpools %}
+                                <div class="mt-5 col-lg-8 col-md-9 col-sm-10">
+                                    <div class="card shadow-lg card-guide">
+                                        <a href="{{ path('app_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" target="_blank">
+                                            <div class="card-body">
+                                                <div class="row mb-2 border-bottom pb-2">
+                                                    <div class="col-lg-4">
+                                                        <strong>Date :</strong>
+                                                        {{ carpool.day|date('d/m/Y') }}
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <strong>Départ :</strong>
+                                                        <span>{{ carpool.begin|date('H:i') }}</span>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <strong>Fin :</strong>
+                                                        <span>{{ carpool.end|date('H:i') }}</span>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <strong>Ecologique :</strong>
+                                                        {% if carpool.isEcological %}
+                                                            Oui
+                                                        {% else %}
+                                                            Non
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <strong>Place restante(s) :</strong>
+                                                        {{ carpool.placesAvailable }}
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <b>Durée :</b>
+                                                        {% if carpool.duration is not null %}
+                                                            {% set hours = (carpool.duration / 3600)|round(0, 'floor') %}
+                                                            {% set minutes = ((carpool.duration % 3600) / 60)|round(0, 'floor') %}
+                                                            {% if hours > 0 %}
+                                                                {{ hours }}h
+                                                            {% endif %}
+                                                            {{ minutes }}min
+                                                        {% else %}
+                                                            non renseigné
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" ms-2 mb-2 d-flex align-items-center">
+                                                {% if carpool.driver.user.photo %}
+                                                    <img src="{{ asset('uploads/users/mini/40x40-' ~ carpool.driver.user.photo) }}" class="rounded-circle" alt="Photo de profil" class="profile-picture">
+                                                {% else %}
+                                                    <i class="fa fa-user-circle fs-2"></i>
+                                                {% endif %}
+                                                <div class="ms-1">
+                                                    <strong>
+                                                        {{ carpool.driver.user.pseudo }}
+                                                    </strong>
+                                                </div>
+                                                <div class="ms-2">
+                                                    <span class="fw-bold me-2" id="guide-note">
+                                                        {% if carpool.averageRating is not null %}
+                                                            {{ carpool.averageRating|number_format(1) }}/5
+                                                        {% else %}
+                                                            -/5
+                                                        {% endif %}
+                                                    </span>
+                                                </div>
+
+                                                <div class="ms-3">
+                                                    <strong>Prix :</strong>
+                                                    {{ carpool.price }}
+                                                    Crédits
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="fs-5 text-center pt-5 row">
+                            {% if carpools is empty %}
+                                <div class="fs-5 text-center pt-5 row">
+                                    {% if nearestDay is defined and nearestDay is not null %}
+                                        <p>Nous n'avons aucun covoiturage disponible pour la date choisie.</p>
+                                        <p>Date la plus proche disponible&nbsp;:</p>
+                                        <a class="text-warning fw-bold" href="{{ path('app_carpool_results', app.request.query.all | merge({ day: nearestDay|date('Y-m-d') }) ) }}">
+                                            {{ nearestDay|date('d/m/Y') }}
+                                        </a>
+                                    {% else %}
+                                        Nous n'avons aucun covoiturage disponible avec vos critères de recherche.
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div id="mapView" style="height: 500px; display: none;">
+        </div>
+    </section>
+</main>
+
+<style>
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+    #tabList.active, #tabMap.active {
+        font-weight: bold;
+        background-color: #e9ecef;
+    }
+</style>
 {% endblock %}
