@@ -16,7 +16,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(Request $request, DocumentManager $dm): Response
     {
-           $searchForm = $this->createForm(SearchCarpoolForm::class);
+        $searchForm = $this->createForm(SearchCarpoolForm::class);
 
         $searchForm->handleRequest($request);
 

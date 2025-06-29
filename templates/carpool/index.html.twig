@@ -3,88 +3,120 @@
 {% block title %}Covoiturages
 {% endblock %}
 
+{% block importmap %}
+	{{ importmap(['app', 'getGeolocation', 'searchDate' ]) }}
+{% endblock %}
+
 {% block body %}
-	<section>
-		<h1>Covoiturages/recherche</h1>
-		<div class="container">
-			<p>Cliquer sur le covoiturage pour voir les détails</p>
-			{% for carpool in carpools %}
-				{% if carpool.status == 'A venir' and carpool.placesAvailable > 0 %}
-					<div class=" mt-5 col-lg-8 col-md-9 col-sm-10">
-						<div class="card shadow-lg card-guide">
-							<a href="{{ path('app_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" target="_blank">
-								<div class="card-body">
-									<div class="row mb-2 border-bottom pb-2">
-										<div class="col-lg-4">
-											<strong>Date :</strong>
-											{{ carpool.day.format('d/m/Y') }}
-										</div>
-										<div class="col-lg-4">
-											<strong>Départ :</strong>
-											<span>{{ carpool.begin|date('H:i') }}</span>
-										</div>
-										<div class="col-lg-4">
-											<strong>Fin :</strong>
-											<span>{{ carpool.end|date('H:i') }}</span>
-										</div>
-										<div class="col-lg-4">
-											<strong>Ecologique :</strong>
-											{% if carpool.isEcological %}
-												Oui
-											{% else %}
-												Non
-											{% endif %}
-										</div>
-										<div class="col-lg-4">
-											<strong>Place restante(s) :</strong>
-											{{ carpool.PlacesAvailable}}
-										</div>
-										<div class="col-lg-4">
-											<b>Durée :</b>
-											{% if carpool.duration is not null %}
-												{% set hours = (carpool.duration / 3600)|round(0, 'floor') %}
-												{% set minutes = ((carpool.duration % 3600) / 60)|round(0, 'floor') %}
-												{% if hours > 0 %}
-													{{ hours }}h
-												{% endif %}
-												{{ minutes }}min
-											{% else %}
-												non renseigné
-											{% endif %}
-										</div>
-									</div>
-								</div>
-								<div class="mb-2 d-flex align-items-center">
-									<div
-										class="ms-3">
-										{# if no user pictures #}
-										<img src="{{ carpool.driver.user.photo ? asset('uploads/users/mini/40x40-' ~ carpool.driver.user.photo) : asset('/images/favicon.png') }}" class="rounded-circle" alt="Photo de profil de {{ carpool.driver.user.pseudo }}"/>
-									</div>
-									<div class="ms-1">
-										<strong>{{ carpool.driver.user.pseudo }}</strong>
-									</div>
-									<div class="ms-2">
-										<span class="fw-bold me-2" id="guide-note">
-											-/5
-										</span>
-									</div>
-									<div class="ms-3">
-										<strong>Prix :</strong>
-										{{ carpool.price }}
-										Crédits
-									</div>
-								</div>
-							</a>
+	<main>
+		<section class="hero_home text-center d-flex align-items-center justify-content-center container-fluid">
+			<h1 class="text-white title title text-center">Le covoiturage éco-responsable<br>
+				à portée de main</h1>
+		</section>
+		<section class="flux">
+			<h2 class="text-secondary text-center mt-3">Comment ça marche</h2>
+			<div class="container my-5">
+				<div class="row justify-content-center text-center">
+					<div class="col-12 col-md-6 col-lg-3 mb-4">
+						<div class="bg-warning steps d-flex flex-column align-items-center justify-content-center rounded-circle shadow mx-auto text-dark">
+							<i class="fas fa-search mb-2"></i>
+							<div class="fs-3">Etape 1</div>
+							<div class="fs-4">Rechercher</div>
 						</div>
 					</div>
-				{% endif %}
-			{% endfor %}
-		</div>
-	</section>
-	<style>
-		a {
-			text-decoration: none;
-			color: inherit;
-		}
-	</style>
+					<div class="col-12 col-md-6 col-lg-3 mb-4">
+						<div class="steps d-flex flex-column align-items-center justify-content-center rounded-circle shadow mx-auto text-dark bg-primary">
+							<i class="fas fa-calendar-alt mb-2"></i>
+							<div class="fs-3">Etape 2</div>
+							<div class="fs-4">Réserver</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 col-lg-3 mb-4">
+						<div class="bg-info steps d-flex flex-column align-items-center justify-content-center rounded-circle shadow mx-auto text-dark">
+							<i class="fas fa-smile mb-2"></i>
+							<div class="fs-3">Etape 3</div>
+							<div class="fs-4">Rencontrer</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 col-lg-3 mb-4">
+						<div class="bg-secondary steps d-flex flex-column align-items-center justify-content-center rounded-circle shadow mx-auto text-dark">
+							<i class="fas fa-map-marker-alt mb-2"></i>
+							<div class="fs-3">Etape 4</div>
+							<div class="fs-4">Voyager</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="home-reserv position-relative text-center d-flex align-items-center justify-content-center container-fluid">
+			<h2 class="text-white position-absolute title title text-center">Réservez votre trajet des maintenant</h2>
+		</section>
+		<section class="container-fluid bg-info py-5">
+			<div class="d-flex justify-content-center align-items-center">
+				<div class="search-form p-4 rounded shadow">
+					<div>
+						<h3 class="text-center mb-4">Planifiez votre prochain covoiturage</h3>
+					</div>
+					{{ form_start(searchForm) }}
+					<div>
+						{{ form_row(searchForm.date) }}
+					</div>
+					{{ form_label(searchForm.address_start) }}
+					<div class="input-group">
+						{{ form_widget(searchForm.address_start, {'attr': {'class': 'form-control'}}) }}
+						<button onclick="getLocation()" type="button" class="btn btn-outline-secondary">
+							<i class="fa-solid fa-location-dot"></i>
+						</button>
+						<div id="geo-output"></div>
+					</div>
+					<p>Cliquez sur l'icone si vous souhaiter être géolocaliser</p>
+					<div>
+						{{ form_row(searchForm.address_end) }}
+					</div>
+					<button type="submit" class="btn btn-secondary w-100">Rechercher</button>
+					{{ form_end(searchForm) }}
+				</div>
+			</div>
+		</section>
+		<section class="flux">
+			<h2 class="text-secondary text-center mt-4">Nos trajets populaires</h2>
+			<div class="container my-5">
+				<div class="row justify-content-center">
+					<div class="col-12 col-md-4 d-flex justify-content-center mb-4">
+						<div class="bg-info route-card d-flex align-items-center justify-content-center w-100">
+							<span class="fs-4">Paris &rarr; Lille</span>
+						</div>
+					</div>
+					<div class="col-12 col-md-4 d-flex justify-content-center mb-4">
+						<div class="bg-info route-card d-flex align-items-center justify-content-center w-100">
+							<span class="fs-4">Rennes &rarr; Paris</span>
+						</div>
+					</div>
+					<div class="col-12 col-md-4 d-flex justify-content-center mb-4">
+						<div class="bg-info route-card d-flex align-items-center justify-content-center w-100">
+							<span class="fs-4">Paris &rarr; Lyon</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="container-fluid bg-info py-5">
+			<div class="flux container">
+				<div class="row align-items-center">
+					<div class="col-lg-6 d-flex justify-content-center align-items-center mb-4 mb-lg-0 min-vh-25">
+						<div class="image-size d-flex align-items-center justify-content-center overflow-hidden">
+							<img src="{{ asset('/images/car.webp') }}" alt="Description" class="rounded shadow w-100 h-100 object-fit-cover">
+						</div>
+					</div>
+					<div class="col-lg-6 d-flex flex-column justify-content-center align-items-center text-center">
+						<h2 class="text-white">Prenez le volant avec nous</h2>
+						<p>
+							Rejoignez notre communauté de conducteurs engagés pour un covoiturage écologique. Partagez vos trajets, gagnez des crédits et contribuez à réduire votre empreinte carbone tout en rencontrant de nouvelles personnes.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
 {% endblock %}

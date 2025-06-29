@@ -6,14 +6,17 @@
 
 // Base
 @import "./scss/base/_text-style";
+@import "./scss/base/_reset";
 
 // Pages
 @import "./scss/pages/_account";
 @import "./scss/pages/_home";
+@import "./scss/pages/_carpool";
 
 // Components
 @import "./scss/components/_header";
 @import "./scss/components/_hero";
+@import "./scss/components/_steps";
 
 // Layout
 @import "./scss/layout/_flux";

@@ -52,6 +52,10 @@ return [
         'path' => './assets/js/dateSearch.js',
         'entrypoint' => true,
     ],
+    'searchDate' => [
+        'path' => './assets/js/searchDate.js',
+        'entrypoint' => true,
+    ],
     'reviewStar' => [
         'path' => './assets/js/reviewStar.js',
         'entrypoint' => true,

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\SearchCarpoolForm;
 use App\Form\SearchFiltersForm;
 use App\Repository\CarpoolsRepository;
 use App\Repository\ReviewsRepository;
@@ -14,14 +15,25 @@ use Symfony\Component\Routing\Attribute\Route;
 class CarpoolController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(CarpoolsRepository $carpoolsRepository): Response
+    public function index(Request $request): Response
     {
-        // Here search form for carpools later
+         $searchForm = $this->createForm(SearchCarpoolForm::class);
 
-        $carpools = $carpoolsRepository->findAll();
+        $searchForm->handleRequest($request);
+
+         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            $data = $searchForm->getData();
+
+            // Redirect to results page with the date and address in the URL from the method 'GET'
+            return $this->redirectToRoute('app_carpool_results', [
+                'day' => $data['date'] ? $data['date']->format('Y-m-d') : null,
+                'address_start' => $data['address_start'],
+                'address_end' => $data['address_end'],
+            ]);
+        }
 
         return $this->render('carpool/index.html.twig', [
-            'carpools' => $carpools,
+            'searchForm' => $searchForm->createView(),
         ]);
     }
 
