@@ -1,6 +1,6 @@
 @use "../_mixins" as mixins;
 
 .hero_home{
-    @include mixins.bigtitle($url: '/images/road.jpg');
+    @include mixins.bigtitle($url: '/images/road.webp');
     background-position: center;
 }

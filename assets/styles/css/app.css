@@ -11877,7 +11877,7 @@ textarea.form-control-lg {
   width: 100%;
   height: 20rem;
   padding: 2rem;
-  background-image: url("/images/mirror.jpg");
+  background-image: url("/images/mirror.webp");
   filter: brightness(0.9);
   background-size: cover;
   background-position: center;
@@ -11934,7 +11934,7 @@ textarea.form-control-lg {
   width: 100%;
   height: 20rem;
   padding: 2rem;
-  background-image: url(/images/road.jpg);
+  background-image: url(/images/road.webp);
   background-size: cover;
   background-position: bottom;
   text-shadow: 2px 2px 8px black;
