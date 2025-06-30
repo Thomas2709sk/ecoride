@@ -11874,6 +11874,22 @@ a {
   color: inherit;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  flex: 1;
+}
+
 .preview {
   display: none;
 }
@@ -11940,6 +11956,16 @@ a {
   height: 19rem;
 }
 
+.map-list {
+  height: 31rem;
+}
+
+#tabList.active, #tabMap.active {
+  font-weight: bold;
+  background-color: #e9ecef;
+  color: black;
+}
+
 .navbar {
   height: 6rem;
   width: auto;
@@ -11962,6 +11988,10 @@ a {
 }
 .steps i {
   font-size: 3rem;
+}
+
+.map-all {
+  height: 31rem;
 }
 
 .flux {

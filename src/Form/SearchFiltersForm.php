@@ -20,13 +20,22 @@ class SearchFiltersForm extends AbstractType
                 'widget' => 'single_text',
                 'required' => true,
                 'label' => 'Date',
+                'label_attr' => [
+                    'class' => 'fw-bold',
+                ],
 
             ])
             ->add('address_start', TextType::class, [
                 'label' => 'adresse de départ :',
+                'label_attr' => [
+                    'class' => 'fw-bold',
+                ],
             ])
             ->add('address_end', TextType::class, [
                 'label' => 'adresse d\'arrivée :',
+                'label_attr' => [
+                    'class' => 'fw-bold',
+                ],
             ])
             ->add('price', NumberType::class, [
                 'label' => 'Prix',
@@ -34,9 +43,15 @@ class SearchFiltersForm extends AbstractType
                 'attr' => [
                     'placeholder' => 'Entrez un prix',
                 ],
+                'label_attr' => [
+                    'class' => 'fw-bold',
+                ],
             ])
             ->add('isEcological', ChoiceType::class, [
                 'label' => 'Trajet écologique ?',
+                'label_attr' => [
+                    'class' => 'fw-bold',
+                ],
                 'required' => false,
                 'choices' => [
                     'Oui' => true,
@@ -49,6 +64,9 @@ class SearchFiltersForm extends AbstractType
             ])
             ->add('rate', ChoiceType::class, [
                 'label' => 'Note',
+                'label_attr' => [
+                    'class' => 'fw-bold',
+                ],
                 'required' => false,
                 'choices' => [
                     '1 étoile' => 1,
@@ -62,11 +80,17 @@ class SearchFiltersForm extends AbstractType
             ])
             ->add('begin', TimeType::class, [
                 'label' => 'Heure de début',
+                'label_attr' => [
+                    'class' => 'fw-bold',
+                ],
                 'required' => false,
                 'widget' => 'single_text',
             ])
             ->add('duration', ChoiceType::class, [
                 'label' => 'Durée',
+                'label_attr' => [
+                    'class' => 'fw-bold',
+                ],
                 'required' => false,
                 'choices' => [
                     'Plus court' => 'plus_court',

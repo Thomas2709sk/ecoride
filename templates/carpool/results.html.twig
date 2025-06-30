@@ -16,16 +16,17 @@
 <main class="wrapper">
     <section class="container mb-5">
         <h1 class="ms-3 text-center mt-5">Résultats de recherche</h1>
+        <p class="text-center">Cliquez sur le vovoiturage pour plus de détails</p>
         <div class="d-flex justify-content-end mb-3">
-            <button id="tabList" class="btn btn-outline-primary me-2 active">Liste</button>
-            <button id="tabMap" class="btn btn-outline-success">Carte</button>
+            <button id="tabList" class="btn btn-info me-2 active">Liste</button>
+            <button id="tabMap" class="btn btn-success">Carte</button>
         </div>
 
         <div id="listView">
             <div class="row">
-                {# Filtres #}
+                <!-- Filtres -->
                 <div class="d-lg-none mb-3">
-                    <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse" aria-expanded="false" aria-controls="filtersCollapse">
+                    <button class="btn btn-info w-100" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse" aria-expanded="false" aria-controls="filtersCollapse">
                         Filtres
                     </button>
                 </div>
@@ -39,7 +40,7 @@
                         {% endif %}
                     </div>
                 </div>
-                {# Résultats #}
+                <!-- Results -->
                 <div id="results" class="col-12 col-lg-9">
                     {% if carpools is not empty %}
                         <div class="row justify-content-center">
@@ -127,7 +128,7 @@
                                     {% if nearestDay is defined and nearestDay is not null %}
                                         <p>Nous n'avons aucun covoiturage disponible pour la date choisie.</p>
                                         <p>Date la plus proche disponible&nbsp;:</p>
-                                        <a class="text-warning fw-bold" href="{{ path('app_carpool_results', app.request.query.all | merge({ day: nearestDay|date('Y-m-d') }) ) }}">
+                                        <a class="text-secondary fw-bold" href="{{ path('app_carpool_results', app.request.query.all | merge({ day: nearestDay|date('Y-m-d') }) ) }}">
                                             {{ nearestDay|date('d/m/Y') }}
                                         </a>
                                     {% else %}
@@ -140,19 +141,8 @@
                 </div>
             </div>
         </div>
-        <div id="mapView" style="height: 500px; display: none;">
+        <div id="mapView" class="map-list">
         </div>
     </section>
 </main>
-
-<style>
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
-    #tabList.active, #tabMap.active {
-        font-weight: bold;
-        background-color: #e9ecef;
-    }
-</style>
 {% endblock %}
