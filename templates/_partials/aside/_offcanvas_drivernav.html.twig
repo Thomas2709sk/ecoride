@@ -1,0 +1,46 @@
+{# Mobile offcanvas for driver account #}
+
+<div class="offcanvas offcanvas-start bg-info" tabindex="-1" id="driverOffcanvas" aria-labelledby="driverOffcanvasLabel">
+	<div class="offcanvas-header bg-info">
+		<h5 class="offcanvas-title text-dark" id="driverOffcanvasLabel">Menu chauffeur</h5>
+		<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+	</div>
+	<div class="offcanvas-body bg-info p-0">
+		<nav class="navbar navbar-info">
+		    <ul class=" navbar-nav w-100 justify-content-between">
+                	<li class="nav-item ms-2">
+					<a class="nav-account nav-link pl-0" href="{{ path('app_driver_account_index') }}">
+						<i class="fa-solid fa-house text-dark fs-5"></i>
+						<span class="fw-bold fs-5 text-dark">Accueil Chauffeur</span>
+					</a>
+				</li>
+				<li class="nav-item ms-2">
+					<a class="nav-account nav-link pl-0" href="{{ path('app_driver_review_index') }}">
+						<i class="fa-solid fa-comment text-dark fs-5"></i>
+						<span class="fs-5 text-dark fw-bold">Avis reçus</span>
+					</a>
+				</li>
+				<li class="ms-3">
+					<i class="fa-solid fa-calendar text-dark fs-5"></i>
+					<span class=" fs-5 text-dark fw-bold">Covoiturages</span>
+				</li>
+				<li class="nav-item ms-5">
+					<a class="nav-link text-dark" href="{{ path('app_driver_carpool_index') }}">Voir</a>
+				</li>
+				<li class="nav-item ms-5">
+					<a class="nav-link text-dark" href="{{ path('app_driver_carpool_create') }}">Créer</a>
+				</li>
+                <li class="ms-3">
+					<i class="fa-solid fa-calendar text-dark fs-5"></i>
+					<span class=" fs-5 text-dark fw-bold">Véhicules</span>
+				</li>
+				<li class="nav-item ms-5">
+					<a class="nav-link text-dark" href="{{ path('app_driver_car_list') }}">Voir</a>
+				</li>
+				<li class="nav-item ms-5">
+					<a class="nav-link text-dark" href="{{ path('app_driver_car_index') }}">Créer</a>
+				</li>
+            </ul>
+		</nav>
+	</div>
+</div>

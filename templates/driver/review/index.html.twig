@@ -1,74 +1,119 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	avis reçus
+    avis reçus par {{ driver.user.pseudo }}
 {% endblock %}
 
 {% block body %}
-<main>
-    <h1 class="text-center">Vos avis reçus</h1>
-    <section class="container">
-        {% if totalReviews > 0 %}
-            <div class="border-bottom">
-                <p class="fs-1">
-                {# Average rating #}
-                    {# if no rating #}
-                    <strong>{{ averageRating ? averageRating|number_format(1) : 'Aucune note' }} / 5</strong>
-                    <i class="fa-solid fa-star star fs-1 text-warning"></i>
-                </p>
-                <p>
-                    <strong>{{ totalReviews }} Avis</strong>
-                </p>
-            </div>
-            <div class="ratings-distribution mt-3">
-                {#   Displays the review distribution by star rating from 5 to 1 #}
-                {% for rating in 5..1 %}
-                    <div class="mb-2">
-                        <span class="d-flex justify-content-between">
-                            {# Shows the star count and the number of reviews for this rating  #}
-                            <span>{{ rating }} étoile{{ rating > 1 ? 's' : '' }}</span>
-                            <span>{{ ratingCount[rating] ?? 0 }} avis</span>
-                        </span>
-                        <div class="progress">
-                            <div 
-                                class="progress-bar" 
-                                role="progressbar" 
-                                {#   Dynamically sets the width of the progress bar according to the share of reviews for this rating. #}
-                                style="width: {{ (ratingCount[rating] / totalReviews) * 100 }}%;" 
-                                aria-valuenow="{{ (ratingCount[rating] / totalReviews) * 100 }}" 
-                                aria-valuemin="0" 
-                                aria-valuemax="100">
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+<main class="wrapper container-fluid">
+    <div class="row">
+        {# Aside visible uniquement à partir de md #}
+        <aside class="col-md-3 col-lg-2 p-0 bg-info min-vh-100 d-none d-md-block">
+            <nav class="navbar navbar-expand navbar-info bg-info bg-gradient flex-md-column flex-row align-items-start py-2">
+                <div class="collapse navbar-collapse show">
+                    <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+                        <li class="nav-item ms-2">
+                            <a class="nav-account nav-link pl-0" href="{{ path('app_driver_account_index') }}">
+                                <i class="fa-solid fa-house text-dark fs-5"></i>
+                                <span class="fw-bold fs-5 text-dark">Accueil Chauffeur</span>
+                            </a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a class="nav-account nav-link pl-0" href="{{ path('app_driver_review_index') }}">
+                                <i class="fa-solid fa-comment text-dark fs-5"></i>
+                                <span class="fs-5 text-dark fw-bold">Avis reçus</span>
+                            </a>
+                        </li>
+                        <li class="ms-3">
+                            <i class="fa-solid fa-calendar text-dark fs-5"></i>
+                            <span class="fs-5 text-dark fw-bold">Covoiturages</span>
+                        </li>
+                        <li class="nav-item ms-5">
+                            <a class="nav-link text-dark" href="{{ path('app_driver_carpool_index') }}">Voir</a>
+                        </li>
+                        <li class="nav-item ms-5">
+                            <a class="nav-link text-dark" href="{{ path('app_driver_carpool_create') }}">Créer</a>
+                        </li>
+                        <li class="ms-3">
+                            <i class="fa-solid fa-calendar text-dark fs-5"></i>
+                            <span class="fs-5 text-dark fw-bold">Véhicules</span>
+                        </li>
+                        <li class="nav-item ms-5">
+                            <a class="nav-link text-dark" href="{{ path('app_driver_car_list') }}">Voir</a>
+                        </li>
+                        <li class="nav-item ms-5">
+                            <a class="nav-link text-dark" href="{{ path('app_driver_car_index') }}">Créer</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
 
-            <!-- User reviews section -->
-            <section class="container mt-5">
-                <div class="row">
-                    {% for review in reviews %}
-                        <div class="col-md-4">
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Note : {{ review.rate }}/5
-                                        <i class="fa-solid fa-star star fs-5 text-warning"></i>
-                                    </h5>
-                                    <p class="card-text">{{ review.commentary }}</p>
-                                    <p class="card-text">
-                                        <span class="text-muted">
-                                            Publié le : {{ review.carpool.day|date('d/m/Y') }}
-                                        </span>
-                                    </p>
+        {# Menu mobile, visible uniquement sur mobile #}
+        <div class="col-12 d-flex d-md-none align-items-center bg-info py-2">
+            <button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#driverOffcanvas" aria-controls="driverOffcanvas">
+                <i class="fa fa-bars text-dark fs-4"></i>
+            </button>
+            <span class="text-dark fw-bold ms-3 fs-5">Menu chauffeur</span>
+        </div>
+        {% include "_partials/aside/_offcanvas_drivernav.html.twig" %}
+
+        {# Contenu principal #}
+        <div class="col-12 col-md-9 col-lg-10">
+            <h1 class="text-center mt-3">Vos avis reçus</h1>
+            <section class="container flux">
+                {% if totalReviews > 0 %}
+                    <div class="border-bottom">
+                        <p class="fs-1">
+                            <strong>{{ averageRating ? averageRating|number_format(1) : 'Aucune note' }} / 5</strong>
+                            <i class="fa-solid fa-star star fs-1 text-warning"></i>
+                        </p>
+                        <p>
+                            <strong>{{ totalReviews }} Avis</strong>
+                        </p>
+                    </div>
+                    <div class="ratings-distribution mt-3">
+                        {% for rating in 5..1 %}
+                            <div class="mb-2">
+                                <span class="d-flex justify-content-between">
+                                    <span>{{ rating }} étoile{{ rating > 1 ? 's' : '' }}</span>
+                                    <span>{{ ratingCount[rating] ?? 0 }} avis</span>
+                                </span>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: {{ (ratingCount[rating] / totalReviews) * 100 }}%;" aria-valuenow="{{ (ratingCount[rating] / totalReviews) * 100 }}" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- User reviews section -->
+                    <section class="container mt-5 mb-5">
+                        <div class="row">
+                            {% for review in reviews %}
+                                <div class="d-flex align-items-start py-3 border-bottom">
+                                    {% if review.user.photo %}
+                                        <img src="{{ asset('uploads/users/mini/40x40-' ~ review.user.photo) }}" class="rounded-circle" alt="Photo de profil" class="profile-picture">
+                                    {% else %}
+                                        <i class="fa fa-user-circle fs-2"></i>
+                                    {% endif %}
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center mb-1">
+                                            <span class="fw-bold fs-5 ms-2 me-2">{{ review.user.pseudo }}</span>
+                                        </div>
+                                        <div class="mb-2">{{ review.commentary }}</div>
+                                        <div class="text-muted small">
+                                            {{ review.carpool.day|date('d/m/Y') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                    {% endfor %}
-                </div>
+                    </section>
+                {% else %}
+                    <p class="text-center mt-4 fs-4">Aucun avis reçus.</p>
+                {% endif %}
             </section>
-        {% else %}
-            <p class="text-center mt-4 fs-4">Aucun avis reçus.</p>
-        {% endif %}
-    </section>
+        </div>
+    </div>
 </main>
 {% endblock %}

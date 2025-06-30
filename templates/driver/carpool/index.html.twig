@@ -4,160 +4,216 @@
 {% endblock %}
 
 {% block body %}
+	<main class="wrapper container-fluid">
+		<div
+			class="row">
 
-	<section>
-		<h1>Vos covoiturages</h1>
-		<div class="container">
-			<h2>Covoiturage à venir</h2>
-			<div class="table-responsive">
-				<table class="table table-striped table-success">
-					<thead>
-						<tr>
-							<th>Jour</th>
-							<th>Heure</th>
-							<th>Départ</th>
-							<th>Places restante</th>
-							<th>Statut</th>
-							<th>Détails</th>
-							<th>Actions</th>
-							<th>Débuter</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for carpool in carpools %}
-							{% if carpool.status == 'A venir' %}
-								<tr>
-									<td>{{ carpool.day|date('d/m/Y') }}</td>
-									<td>{{ carpool.begin|date('H:i') }}</td>
-									<td>
-										{% if carpool.day|date('U') > "now"|date('U') %}
-											<span>Dans
-												{{ (carpool.day|date('U') - "now"|date('U'))//86400 }}
-												jours</span>
+			<aside class="col-md-3 col-lg-2 p-0 bg-info min-vh-100 d-none d-md-block">
+				<nav class="navbar navbar-expand navbar-info bg-info bg-gradient flex-md-column flex-row align-items-start py-2">
+					<div class="collapse navbar-collapse show">
+						<ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+							<li class="nav-item ms-2">
+								<a class="nav-account nav-link pl-0" href="{{ path('app_driver_account_index') }}">
+									<i class="fa-solid fa-house text-dark fs-5"></i>
+									<span class="fw-bold fs-5 text-dark">Accueil Chauffeur</span>
+								</a>
+							</li>
+							<li class="nav-item ms-2">
+								<a class="nav-account nav-link pl-0" href="{{ path('app_driver_review_index') }}">
+									<i class="fa-solid fa-comment text-dark fs-5"></i>
+									<span class="fs-5 text-dark fw-bold">Avis reçus</span>
+								</a>
+							</li>
+							<li class="ms-3">
+								<i class="fa-solid fa-calendar text-dark fs-5"></i>
+								<span class="fs-5 text-dark fw-bold">Covoiturages</span>
+							</li>
+							<li class="nav-item ms-5">
+								<a class="nav-link text-dark" href="{{ path('app_driver_carpool_index') }}">Voir</a>
+							</li>
+							<li class="nav-item ms-5">
+								<a class="nav-link text-dark" href="{{ path('app_driver_carpool_create') }}">Créer</a>
+							</li>
+							<li class="ms-3">
+								<i class="fa-solid fa-car text-dark fs-5"></i>
+								<span class="fs-5 text-dark fw-bold">Véhicules</span>
+							</li>
+							<li class="nav-item ms-5">
+								<a class="nav-link text-dark" href="{{ path('app_driver_car_list') }}">Voir</a>
+							</li>
+							<li class="nav-item ms-5">
+								<a class="nav-link text-dark" href="{{ path('app_driver_car_index') }}">Créer</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</aside>
+
+			<div class="col-12 d-flex d-md-none align-items-center bg-info py-2">
+				<button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#driverOffcanvas" aria-controls="driverOffcanvas">
+					<i class="fa fa-bars text-dark fs-4"></i>
+				</button>
+				<span class="text-dark fw-bold ms-3 fs-5">Menu chauffeur</span>
+			</div>
+
+			{% include "_partials/aside/_offcanvas_drivernav.html.twig" %}
+
+			<div class="col-12 col-md-9 col-lg-10">
+					<section><h1>Vos covoiturages
+					</h1>
+						<div class="container"> <h2>Covoiturage à venir</h2>
+						<div class="table-responsive">
+							<table class="table table-striped table-success">
+								<thead>
+									<tr>
+										<th>Jour</th>
+										<th>Heure</th>
+										<th>Départ</th>
+										<th>Places restante</th>
+										<th>Statut</th>
+										<th>Détails</th>
+										<th>Actions</th>
+										<th>Débuter</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for carpool in carpools %}
+										{% if carpool.status == 'A venir' %}
+											<tr>
+												<td>{{ carpool.day|date('d/m/Y') }}</td>
+												<td>{{ carpool.begin|date('H:i') }}</td>
+												<td>
+													{% if carpool.day|date('U') > "now"|date('U') %}
+														<span>Dans
+															{{ (carpool.day|date('U') - "now"|date('U'))//86400 }}
+															jours</span>
+													{% else %}
+														<span class="text-danger">Aujourd'hui</span>
+													{% endif %}
+												</td>
+												<td>{{ carpool.PlacesAvailable }}</td>
+												<td>{{ carpool.status }}</td>
+												<td>
+													<button class="btn btn-info btn-sm">
+														<a class="text-white" href="{{ path('app_driver_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" target="_blank">Détails</a>
+													</button>
+												</td>
+												<td>
+													<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ carpool.id }}">Annuler</button>
+												</td>
+												<td>
+													<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#startModal-{{ carpool.id }}">Début</button>
+												</td>
+											</tr>
 										{% else %}
-											<span class="text-danger">Aujourd'hui</span>
+											<p></p>
 										{% endif %}
-									</td>
-									<td>{{ carpool.PlacesAvailable }}</td>
-									<td>{{ carpool.status }}</td>
-									<td>
-										<button class="btn btn-info btn-sm">
-											<a class="text-white" href="{{ path('app_driver_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}">Détails</a>
-										</button>
-									</td>
-									<td>
-										<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ carpool.id }}">Annuler</button>
-									</td>
-									<td>
-										<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#startModal-{{ carpool.id }}">Début</button>
-									</td>
-								</tr>
-							{% else %}
-								<p>Pas encore de covoiturages</p>
-							{% endif %}
-							<!-- Modals -->
-								<!-- Confirm start -->
-							{% include "_partials/modals/driver/driver_confirm_start_modals.html.twig" %}
-								<!-- cancel carpools -->
-							{% include "_partials/modals/driver/driver_cancel_carpools_modals.html.twig" %}
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="container">
-			<h2>Covoiturage en cours</h2>
-			<div class="table-responsive">
-				<table class="table table-striped table-success">
-					<thead>
-						<tr>
-							<th>Heure d'arrivée</th>
-							<th>Adresse d'arrivée</th>
-							<th>Statut</th>
-							<th>Détails</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% set enCours = false %}
-
-						{% for carpool in carpools %}
-							{% if carpool.status == 'En cours' %}
-								{% set enCours = true %}
-							{% endif %}
-						{% endfor %}
-
-						{% if enCours %}
-							{% for carpool in carpools %}
-								{% if carpool.status == 'En cours' %}
+										<!-- Modals -->
+										<!-- Confirm start -->
+										{% include "_partials/modals/driver/driver_confirm_start_modals.html.twig" %}
+										<!-- cancel carpools -->
+										{% include "_partials/modals/driver/driver_cancel_carpools_modals.html.twig" %}
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="container">
+						<h2>Covoiturage en cours</h2>
+						<div class="table-responsive">
+							<table class="table table-striped table-success">
+								<thead>
 									<tr>
-										<td>{{ carpool.end|date('H:i') }}</td>
-										<td>{{ carpool.AddressEnd }}</td>
-										<td>{{ carpool.status }}</td>
-										<td>
-											<a href="{{ path('app_driver_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm">Détails</a>
-										</td>
-										<td>
-										<button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#endModal-{{ carpool.id }}">Terminer</button>
-									</td>
+										<th>Heure d'arrivée</th>
+										<th>Adresse d'arrivée</th>
+										<th>Statut</th>
+										<th>Détails</th>
+										<th>Actions</th>
 									</tr>
-								{% endif %}
-								<!-- Modals -->
-								<!-- Confirm end -->
-							{% include "_partials/modals/driver/driver_confirm_end_modals.html.twig" %}
-							{% endfor %}
-						{% else %}
-							<tr>
-								<td colspan="5" class="text-center">Pas de covoiturage en cours</td>
-							</tr>
-						{% endif %}
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="container">
-			<h2>Covoiturages terminé</h2>
-			<div class="table-responsive">
-				<table class="table table-striped table-success">
-					<thead>
-						<tr>
-							<th>Jour</th>
-							<th>Heure d'arrivée</th>
-							<th>Adresse d'arrivée</th>
-							<th>Statut</th>
-							<th>Détails</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% set ended = false %}
-						{% for carpool in carpools %}
-							{% if carpool.status in ['Terminé', 'Confirmé', 'Vérification par la plateforme'] %}
-								{% set ended = true %}
-							{% endif %}
-						{% endfor %}
+								</thead>
+								<tbody>
+									{% set enCours = false %}
 
-						{% if ended %}
-							{% for carpool in carpools %}
-								{% if carpool.status in ['Terminé', 'Confirmé', 'Vérification par la plateforme'] %}
+									{% for carpool in carpools %}
+										{% if carpool.status == 'En cours' %}
+											{% set enCours = true %}
+										{% endif %}
+									{% endfor %}
+
+									{% if enCours %}
+										{% for carpool in carpools %}
+											{% if carpool.status == 'En cours' %}
+												<tr>
+													<td>{{ carpool.end|date('H:i') }}</td>
+													<td>{{ carpool.AddressEnd }}</td>
+													<td>{{ carpool.status }}</td>
+													<td>
+														<a href="{{ path('app_driver_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm" target="_blank">Détails</a>
+													</td>
+													<td>
+														<button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#endModal-{{ carpool.id }}">Terminer</button>
+													</td>
+												</tr>
+											{% endif %}
+											<!-- Modals -->
+											<!-- Confirm end -->
+											{% include "_partials/modals/driver/driver_confirm_end_modals.html.twig" %}
+										{% endfor %}
+									{% else %}
+										<tr>
+											<td colspan="5" class="text-center">Pas de covoiturage en cours</td>
+										</tr>
+									{% endif %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="container">
+						<h2>Covoiturages terminé</h2>
+						<div class="table-responsive">
+							<table class="table table-striped table-success">
+								<thead>
 									<tr>
-										<td>{{ carpool.day|date('d/m/Y') }}</td>
-										<td>{{ carpool.end|date('H:i') }}</td>
-										<td>{{ carpool.AddressEnd }}</td>
-										<td>{{ carpool.status }}</td>
-										<td>
-											<a href="{{ path('app_driver_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm">Détails</a>
-										</td>
+										<th>Jour</th>
+										<th>Heure d'arrivée</th>
+										<th>Adresse d'arrivée</th>
+										<th>Statut</th>
+										<th>Détails</th>
 									</tr>
-								{% endif %}
-							{% endfor %}
-						{% else %}
-							<tr>
-								<td colspan="5" class="text-center">Pas de covoiturages terminés</td>
-							</tr>
-						{% endif %}
-					</tbody>
-				</table>
+								</thead>
+								<tbody>
+									{% set ended = false %}
+									{% for carpool in carpools %}
+										{% if carpool.status in ['Terminé', 'Confirmé', 'Vérification par la plateforme'] %}
+											{% set ended = true %}
+										{% endif %}
+									{% endfor %}
+
+									{% if ended %}
+										{% for carpool in carpools %}
+											{% if carpool.status in ['Terminé', 'Confirmé', 'Vérification par la plateforme'] %}
+												<tr>
+													<td>{{ carpool.day|date('d/m/Y') }}</td>
+													<td>{{ carpool.end|date('H:i') }}</td>
+													<td>{{ carpool.AddressEnd }}</td>
+													<td>{{ carpool.status }}</td>
+													<td>
+														<a href="{{ path('app_driver_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm" target="_blank">Détails</a>
+													</td>
+												</tr>
+											{% endif %}
+										{% endfor %}
+									{% else %}
+										<tr>
+											<td colspan="5" class="text-center">Pas de covoiturages terminés</td>
+										</tr>
+									{% endif %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</section>
 			</div>
 		</div>
-	</section>
+	</main>
 {% endblock %}

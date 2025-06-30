@@ -3,48 +3,42 @@
 {% block title %}Votre compte chauffeur{% endblock %}
 
 {% block body %}
-<section>
-    <h1>Votre Compte chauffeur</h1>
-    {# DriverPreferences form #}
-   <div>
-		{{ form_start(driverForm) }}
-		<div class="mb-5">
-			<label class="form-label">Animaux autorisés :</label>
-			<div class="form-check">
-				{{ form_widget(driverForm.animals, {'attr': {'class': 'form-check-input'}}) }}
-			</div>
-		</div>
+<main class="container-fluid">
+    <div class="row">
+        {% include "_partials/aside/_drivernav.html.twig" %}
 
-		<div class="mb-5">
-			<label class="form-label">Fumeurs autorisés :</label>
-			<div class="form-check">
-				{{ form_widget(driverForm.smoking, {'attr': {'class': 'form-check-input'}}) }}
-			</div>
-		</div>
-		{{ form_row(driverForm.preferences) }}
+        <div class="col-12 d-flex d-md-none align-items-center bg-info py-2">
+            <button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#driverOffcanvas" aria-controls="driverOffcanvas">
+                <i class="fa fa-bars text-dark fs-4"></i>
+            </button>
+            <span class="text-dark fw-bold ms-3 fs-5">Menu chauffeur</span>
+        </div>
 
-		<div class="mt-3">
-			<button class="btn btn-primary" type="submit">Envoyer</button>
-		</div>
-		{{ form_end(driverForm) }}
-	</div>
-        <h2 class="ms-3 mt-3 pb-3 border-bottom border-dark">Vos covoiturages</h2>
-        <div>
-            <a href="{{ path('app_driver_carpool_create') }}">Créer covoiturages</a>
-        </div>
-        <div>
-            <a href="{{ path('app_driver_carpool_index') }}">Voir vos covoiturages</a>
-        </div>
-          <h2 class="ms-3 mt-3 pb-3 border-bottom border-dark">Vos véhicules</h2>
-        <div>
-            <a href="{{ path('app_driver_car_index') }}">Ajouter véhicules</a>
-        </div>
-        <div>
-            <a href="{{ path('app_driver_car_list') }}">Voir vos véhicules</a>
-        </div>
-          <h2 class="ms-3 mt-3 pb-3 border-bottom border-dark">Avis reçus</h2>
-        <div>
-            <a href="{{ path('app_driver_review_index') }}">Voir les avis reçus</a>
-        </div>
-</section>
+        {% include "_partials/aside/_offcanvas_drivernav.html.twig" %}
+        <!-- DriverPreferences Form -->
+        <section class="col-12 col-lg-10 col-md-9 pe-4 ps-3 border border-light bg-light p-2">
+            <h1 class="ms-3 pb-3 border-bottom border-dark">Votre Compte chauffeur</h1>
+            <div>
+                {{ form_start(driverForm) }}
+                <div class="mb-5">
+                    <label class="form-label">Animaux autorisés :</label>
+                    <div class="form-check">
+                        {{ form_widget(driverForm.animals, {'attr': {'class': 'form-check-input'}}) }}
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <label class="form-label">Fumeurs autorisés :</label>
+                    <div class="form-check">
+                        {{ form_widget(driverForm.smoking, {'attr': {'class': 'form-check-input'}}) }}
+                    </div>
+                </div>
+                {{ form_row(driverForm.preferences) }}
+                <div class="mt-3">
+                    <button class="btn btn-secondary" type="submit">Envoyer</button>
+                </div>
+                {{ form_end(driverForm) }}
+            </div>
+        </section>
+    </div>
+</main>
 {% endblock %}

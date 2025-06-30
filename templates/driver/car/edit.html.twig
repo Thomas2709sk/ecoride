@@ -3,26 +3,80 @@
 {% block title %}Modifier votre véhicule{% endblock %}
 
 {% block body %}
-<section>
-    <h1>Modifier votre véhicule</h1>
-    {# DriverCar form #}
-   <div>
-		<div>
-		{{ form_start(carForm) }}
+<main class="wrapper container-fluid">
+    <div class="row">
 
-        {{ form_row(carForm.brand) }}
-        {{ form_row(carForm.model) }}
-        {{ form_row(carForm.color) }}
-        {{ form_row(carForm.seats) }}
-        {{ form_row(carForm.plate_number) }}
-        {{ form_row(carForm.first_registration) }}
-        {{ form_row(carForm.energy) }}
+        <aside class="col-md-3 col-lg-2 p-0 bg-info min-vh-100 d-none d-md-block">
+            <nav class="navbar navbar-expand navbar-info bg-info bg-gradient flex-md-column flex-row align-items-start py-2">
+                <div class="collapse navbar-collapse show">
+                    <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+                        <li class="nav-item ms-2">
+                            <a class="nav-account nav-link pl-0" href="{{ path('app_driver_account_index') }}">
+                                <i class="fa-solid fa-house text-dark fs-5"></i>
+                                <span class="fw-bold fs-5 text-dark">Accueil Chauffeur</span>
+                            </a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <a class="nav-account nav-link pl-0" href="{{ path('app_driver_review_index') }}">
+                                <i class="fa-solid fa-comment text-dark fs-5"></i>
+                                <span class="fs-5 text-dark fw-bold">Avis reçus</span>
+                            </a>
+                        </li>
+                        <li class="ms-3">
+                            <i class="fa-solid fa-calendar text-dark fs-5"></i>
+                            <span class="fs-5 text-dark fw-bold">Covoiturages</span>
+                        </li>
+                        <li class="nav-item ms-5">
+                            <a class="nav-link text-dark" href="{{ path('app_driver_carpool_index') }}">Voir</a>
+                        </li>
+                        <li class="nav-item ms-5">
+                            <a class="nav-link text-dark" href="{{ path('app_driver_carpool_create') }}">Créer</a>
+                        </li>
+                        <li class="ms-3">
+                            <i class="fa-solid fa-car text-dark fs-5"></i>
+                            <span class="fs-5 text-dark fw-bold">Véhicules</span>
+                        </li>
+                        <li class="nav-item ms-5">
+                            <a class="nav-link text-dark" href="{{ path('app_driver_car_list') }}">Voir</a>
+                        </li>
+                        <li class="nav-item ms-5">
+                            <a class="nav-link text-dark" href="{{ path('app_driver_car_index') }}">Créer</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
 
-		<div class="mt-3">
-			<button class="btn btn-primary" type="submit">Modifier</button>
-		</div>
-		{{ form_end(carForm) }}
-	</div>
+        <div class="col-12 d-flex d-md-none align-items-center bg-info py-2">
+            <button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#driverOffcanvas" aria-controls="driverOffcanvas">
+                <i class="fa fa-bars text-dark fs-4"></i>
+            </button>
+            <span class="text-dark fw-bold ms-3 fs-5">Menu chauffeur</span>
+        </div>
+        {% include "_partials/aside/_offcanvas_drivernav.html.twig" %}
 
-</section>
+        <!-- Drivercar Form -->
+        <div class="col-12 col-md-9 col-lg-10">
+            <section>
+                <h1>Modifier votre véhicule</h1>
+                <div>
+                    {{ form_start(carForm) }}
+
+                    {{ form_row(carForm.brand) }}
+                    {{ form_row(carForm.model) }}
+                    {{ form_row(carForm.color) }}
+                    {{ form_row(carForm.seats) }}
+                    {{ form_row(carForm.plate_number) }}
+                    {{ form_row(carForm.first_registration) }}
+                    {{ form_row(carForm.energy) }}
+
+                    <div class="mt-3">
+                        <button class="btn btn-secondary" type="submit">Modifier</button>
+                    </div>
+                    {{ form_end(carForm) }}
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
 {% endblock %}

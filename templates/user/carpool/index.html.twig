@@ -50,7 +50,7 @@
 										</td>
 										<td>{{ carpool.status }}</td>
 										<td>
-											<a class="btn btn-info btn-sm text-white" href="{{ path('app_user_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}">Détails</a>
+											<a class="btn btn-info btn-sm text-white" href="{{ path('app_user_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" target="_blank">Détails</a>
 										</td>
 										<td>
 											<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancelModal-{{ carpool.id }}">Annuler</button>
@@ -96,7 +96,7 @@
 											<td>{{ carpool.AddressEnd }}</td>
 											<td>{{ carpool.status }}</td>
 											<td>
-												<a href="{{ path('app_user_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm">Détails</a>
+												<a href="{{ path('app_user_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm" target="_blank">Détails</a>
 											</td>
 										</tr>
 									{% endif %}
@@ -140,7 +140,7 @@
 										<td>{{ carpool.end|date('H:i') }}</td>
 										<td>{{ carpool.status }}</td>
 										<td>
-											<a href="{{ path('app_user_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm">Détails</a>
+											<a href="{{ path('app_user_carpool_details', {carpoolNumber: carpool.carpoolNumber}) }}" class="btn btn-info btn-sm" target="_blank">Détails</a>
 										</td>
 										{% if carpoolUser and not carpoolUser.isEnded %}
 											<td>
