@@ -4,25 +4,48 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Inscription en tant que chauffeur</h1>
-	<p>Etape 2 sur 2</p>
-	<p>Enregistrer votre premier véhicule</p>
-    <p>Vous pourrez ajouter d'autres véhicules depuis votre compte une fois votre inscription terminée.</p>
+	<main class="container my-5">
+		<div class="row justify-content-center">
+			<div class="col-lg-6 col-md-8 col-12">
+				<div class="card shadow-lg p-4 px-sm-5 border border-2 bg-info">
+					<h1 class="text-center text-white mb-2">Inscription en tant que chauffeur</h1>
+					<p class="text-center text-white fs-5 mb-1">Etape 2 sur 2</p>
+					<p class="text-center text-white fs-5 mb-1">Enregistrer votre premier véhicule</p>
+					<p class="text-center text-white fs-5 mb-4">
+						Vous pourrez ajouter d'autres véhicules depuis votre compte une fois votre inscription terminée.
+					</p>
 
-	<div>
-		{{ form_start(carForm) }}
+					<div class="text-white">
+						{{ form_start(carForm) }}
+						<div class="text-white">
+							{{ form_row(carForm.brand) }}
+						</div>
+						<div class="text-white">
+							{{ form_row(carForm.model) }}
+						</div>
+						<div class="text-white">
+							{{ form_row(carForm.color) }}
+						</div>
+						<div class="text-white">
+							{{ form_row(carForm.seats) }}
+						</div>
+						<div class="text-white">
+							{{ form_row(carForm.plate_number) }}
+						</div>
+						<div class="text-white">
+							{{ form_row(carForm.first_registration) }}
+						</div>
+						<div class="text-white">
+							{{ form_row(carForm.energy) }}
+						</div>
 
-        {{ form_row(carForm.brand) }}
-        {{ form_row(carForm.model) }}
-        {{ form_row(carForm.color) }}
-        {{ form_row(carForm.seats) }}
-        {{ form_row(carForm.plate_number) }}
-        {{ form_row(carForm.first_registration) }}
-		{{ form_row(carForm.energy) }}
-
-		<div class="mt-3">
-			<button class="btn btn-primary" type="submit">Valider</button>
+						<div class="mt-3">
+							<button class="btn btn-secondary rounded w-100" type="submit">Valider</button>
+						</div>
+						{{ form_end(carForm) }}
+					</div>
+				</div>
+			</div>
 		</div>
-		{{ form_end(carForm) }}
-	</div>
+	</main>
 {% endblock %}

@@ -1,0 +1,26 @@
+{# offcanvas for mobile user account #}
+
+<div class="offcanvas offcanvas-start bg-info" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel">
+	<div class="offcanvas-header bg-info">
+		<h5 class="offcanvas-title text-dark" id="userOffcanvasLabel">Menu Utilisateur</h5>
+		<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+	</div>
+	<div class="offcanvas-body bg-info p-0">
+		<nav class="navbar navbar-info">
+		    <ul class=" navbar-nav w-100 justify-content-between">
+               <li class="nav-item ms-2">
+                    <a class="nav-account nav-link pl-0" href="{{ path('app_user_account_index') }}">
+                        <i class="fa-solid fa-house text-dark fs-5"></i>
+                        <span class="fw-bold fs-5 text-dark">Accueil</span>
+                    </a>
+                </li>
+                <li class="nav-item ms-2">
+                    <a class="nav-account nav-link pl-0" href="{{ path('app_user_carpool_index') }}">
+                        <i class="fa-solid fa-calendar text-dark fs-5"></i>
+                        <span class="fw-bold fs-5 text-dark">Covoiturages</span>
+                    </a>
+                </li>
+            </ul>
+		</nav>
+	</div>
+</div>

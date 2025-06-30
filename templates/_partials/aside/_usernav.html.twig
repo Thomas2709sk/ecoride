@@ -1,0 +1,22 @@
+{# Aside nav for user account #}
+
+<aside class="col-12 col-md-3 col-lg-2 p-0 bg-info flex-shrink-1 d-none d-md-block">
+	<nav class="navbar navbar-expand navbar-dark bg-info bg-gradient flex-md-column flex-row align-items-start py-2">
+		<div class="collapse navbar-collapse show">
+			<ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+				<li class="nav-item ms-2">
+					<a class="nav-account nav-link pl-0" href="{{ path('app_user_account_index') }}">
+						<i class="fa-solid fa-house text-dark fs-5"></i>
+						<span class="fw-bold fs-5 text-dark">Accueil</span>
+					</a>
+				</li>
+				<li class="nav-item ms-2">
+					<a class="nav-account nav-link pl-0" href="{{ path('app_user_carpool_index') }}">
+						<i class="fa-solid fa-calendar text-dark fs-5"></i>
+						<span class="fw-bold fs-5 text-dark">Covoiturages</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</aside>
