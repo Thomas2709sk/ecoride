@@ -1,31 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}Contact
+{% endblock %}
 
 {% block body %}
-    <h1>Contactez-nous</h1>
+	<main>
 
-    {{ form_start(contactForm) }}
-        <div class="mb-3">
-            {{ form_label(contactForm.pseudo) }}
-            {{ form_widget(contactForm.pseudo, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(contactForm.pseudo) }}
-        </div>
-        <div class="mb-3">
-            {{ form_label(contactForm.email) }}
-            {{ form_widget(contactForm.email, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(contactForm.email) }}
-        </div>
-        <div class="mb-3">
-            {{ form_label(contactForm.subject) }}
-            {{ form_widget(contactForm.subject, {'attr': {'class': 'form-select'}}) }}
-            {{ form_errors(contactForm.subject) }}
-        </div>
-        <div class="mb-3">
-            {{ form_label(contactForm.message) }}
-            {{ form_widget(contactForm.message, {'attr': {'class': 'form-control', 'rows': 6}}) }}
-            {{ form_errors(contactForm.message) }}
-        </div>
-        <button class="btn btn-primary">Envoyer</button>
-    {{ form_end(contactForm) }}
+		<section class="row justify-content-center">
+			<div class="col-12 col-md-8 col-lg-6">
+				<div class="bg-info bg-opacity-75 rounded-3 shadow p-4 my-4 border border-2 border-light">
+					<h1 class="text-center">Contactez-nous</h1>
+					{{ form_start(contactForm) }}
+					<div class="mb-3">
+						{{ form_label(contactForm.pseudo, null, {'label_attr': {'class': 'form-label text-dark'}}) }}
+						{{ form_widget(contactForm.pseudo) }}
+						{{ form_errors(contactForm.pseudo) }}
+					</div>
+					<div class="mb-3">
+						{{ form_label(contactForm.email, null, {'label_attr': {'class': 'form-label text-dark'}}) }}
+						{{ form_widget(contactForm.email) }}
+						{{ form_errors(contactForm.email) }}
+					</div>
+					<div class="mb-3">
+						{{ form_label(contactForm.subject, null, {'label_attr': {'class': 'form-label text-dark'}}) }}
+						{{ form_widget(contactForm.subject, {'attr': {'class': 'form-select'}}) }}
+						{{ form_errors(contactForm.subject) }}
+					</div>
+					<div class="mb-3">
+						{{ form_label(contactForm.message, null, {'label_attr': {'class': 'form-label text-dark'}}) }}
+						{{ form_widget(contactForm.message, {'attr': {'class': 'form-control', 'rows': 6}}) }}
+						{{ form_errors(contactForm.message) }}
+					</div>
+					<div class="text-center">
+						<button class="w-100 btn btn-secondary">Envoyer</button>
+					</div>
+					{{ form_end(contactForm) }}
+				</div>
+			</div>
+		</div>
+	</main>
 {% endblock %}

@@ -1,49 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Administration{% endblock %}
+{% block title %}Administration
+{% endblock %}
 
 {% block body %}
-<main class="container-fluid">
-    <div class="row">
-        {# Aside admin à gauche #}
-        {% include "_partials/aside/_adminav.html.twig" %}
+	<main class="container-fluid">
+		<div
+			class="row">
+			{# Aside admin #}
+			{% include "_partials/aside/_adminav.html.twig" %}
 
-        {# Burger offcanvas mobile #}
+			{# Burger offcanvas mobile #}
 			<div class="col-12 d-flex d-md-none align-items-center bg-info py-2">
 				<button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas" aria-controls="adminOffcanvas">
 					<i class="fa fa-bars fs-4"></i>
 				</button>
-				<span class="text-dark ms-3 fs-5">Menu admin</span>
+				<span class="text-dark fw-bold ms-3 fs-5">Menu admin</span>
 			</div>
 
 			{# Offcanvas menu mobile #}
 			{% include "_partials/aside/_offcanvas_adminav.html.twig" %}
 
-        <section class="col-12 col-md-9 col-lg-10 py-4">
-            <h1 class="mb-4">Administration</h1>
-            <div class="mb-4">
-                <h2>Employés</h2>
-                <a href="{{ path('app_admin_staff_index') }}" class="btn btn-info btn-sm mb-2">Liste des employés</a>
-                <a href="{{ path('app_admin_staff_create') }}" class="btn btn-info btn-sm">Créer employé</a>
-            </div>
-            <div class="mb-4">
-                <h2>Utilisateurs</h2>
-                <a href="{{ path('app_admin_user_index') }}" class="btn btn-info btn-sm">Liste des utilisateurs</a>
-            </div>
-            <div class="mb-4">
-                <h2>Covoiturages</h2>
-                <a href="{{ path('app_admin_carpool_index') }}" class="btn btn-info btn-sm">Liste des covoiturages</a>
-            </div>
-            <div class="mb-4">
-                <h2>Avis</h2>
-                <a href="{{ path('app_admin_review_index') }}" class="btn btn-info btn-sm">Avis à valider</a>
-            </div>
-            <div class="mb-4">
-                <h2>Graphique</h2>
-                <a href="{{ path('app_admin_graph_index') }}" class="btn btn-info btn-sm mb-2">Total covoiturages</a>
-                <a href="{{ path('app_admin_credits_graph_index') }}" class="btn btn-info btn-sm">Total crédits</a>
-            </div>
-        </section>
-    </div>
-</main>
+			<section class="col-12 col-lg-10 col-md-9 pe-4 ps-3 border border-light bg-light p-2">
+				<h1 class="ms-3 pb-3 border-bottom border-dark">Administration</h1>
+				<div class="mb-4">
+					<h2>Employés</h2>
+					<div class="d-flex gap-2 flex-wrap">
+						<a href="{{ path('app_admin_staff_index') }}" class="btn btn-info">Liste des employés</a>
+						<a href="{{ path('app_admin_staff_create') }}" class="btn btn-info">Créer employé</a>
+					</div>
+				</div>
+				<div class="mb-4">
+					<h2>Utilisateurs</h2>
+					<a href="{{ path('app_admin_user_index') }}" class="btn btn-info">Liste des utilisateurs</a>
+				</div>
+				<div class="mb-4">
+					<h2>Covoiturages</h2>
+					<a href="{{ path('app_admin_carpool_index') }}" class="btn btn-info">Liste des covoiturages</a>
+				</div>
+				<div class="mb-4">
+					<h2>Avis</h2>
+					<a href="{{ path('app_admin_review_index') }}" class="btn btn-info">Avis à valider</a>
+				</div>
+				<div class="mb-4">
+					<h2>Graphique</h2>
+					<div class="d-flex gap-2 flex-wrap">
+						<a href="{{ path('app_admin_graph_index') }}" class="btn btn-info">Covoiturages</a>
+						<a href="{{ path('app_admin_credits_graph_index') }}" class="btn btn-info">Crédits</a>
+					</div>
+				</div>
+			</section>
+		</div>
+	</main>
 {% endblock %}
