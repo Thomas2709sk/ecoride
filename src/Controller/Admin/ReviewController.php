@@ -28,11 +28,14 @@ class ReviewController extends AbstractController
             throw $this->createAccessDeniedException('Seuls un administrateur ou un employé peuvent accéder aux avis.');
         }
 
+        $reviewsValidateCount = $reviewsRepository->countReviewsValidate();
+
         // get All the reviews
         $reviews = $reviewsRepository->findAll();
 
         return $this->render('admin/review/index.html.twig', [
-            "reviews" => $reviews
+            "reviews" => $reviews,
+            'reviewsValidateCount' => $reviewsValidateCount,
         ]);
     }
 
@@ -89,7 +92,7 @@ class ReviewController extends AbstractController
 
         $this->addFlash('success', 'L\'avis a été supprimer avec succès.');
 
-        return $this->redirectToRoute('app_admin_reviews_index');
+        return $this->redirectToRoute('app_admin_review_index');
     }
 
     // Confirm review < 3 stars

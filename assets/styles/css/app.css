@@ -11937,11 +11937,6 @@ body {
   margin-bottom: 1.2em;
 }
 
-.stars .fa-star {
-  color: #D9D916;
-  opacity: 0.35;
-}
-
 .stars .fa-star.filled {
   opacity: 1;
 }
@@ -11992,6 +11987,11 @@ body {
 
 .map-all {
   height: 31rem;
+}
+
+canvas {
+  width: 100% !important;
+  height: auto !important;
 }
 
 .flux {

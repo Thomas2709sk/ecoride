@@ -1,0 +1,59 @@
+{# Offcanvas mobile for admin account #}
+
+<div class="offcanvas offcanvas-start bg-info" tabindex="-1" id="adminOffcanvas" aria-labelledby="adminOffcanvasLabel">
+	<div class="offcanvas-header bg-info">
+		<h5 class="offcanvas-title text-dark" id="adminOffcanvasLabel">Menu admin</h5>
+		<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+	</div>
+	<div class="offcanvas-body bg-info p-0">
+		<nav class="navbar navbar-info">
+			<ul class=" navbar-nav w-100 justify-content-between">
+				<li class="nav-item ms-2">
+					<a class="nav-account nav-link pl-0" href="{{ path('app_admin_account') }}">
+						<i class="fa-solid fa-house text-dark fs-5"></i>
+						<span class="fw-bold fs-5 text-dark">Accueil Admin</span>
+					</a>
+				</li>
+				<li class="nav-item ms-2">
+					<a class="nav-account nav-link pl-0" href="{{ path('app_admin_user_index') }}">
+						<i class="fa-solid fa-map text-dark fs-5"></i>
+						<span class="fw-bold fs-5 text-dark">Utilisateurs</span>
+					</a>
+				</li>
+				<li class="nav-item ms-2">
+					<a class="nav-account nav-link pl-0" href="{{ path('app_admin_review_index') }}">
+						<i class="fa-solid fa-comment text-dark fs-5"></i>
+						<span class="fw-bold fs-5 text-dark">Avis</span>
+					</a>
+				</li>
+                <li class="nav-item ms-2">
+					<a class="nav-account nav-link pl-0" href="{{ path('app_admin_carpool_index') }}">
+						<i class="fa-solid fa-car text-dark fs-5"></i>
+						<span class="fw-bold fs-5 text-dark">Covoiturages</span>
+					</a>
+				</li>
+				<li class="ms-3">
+					<i class="fa-solid fa-clipboard-user fs-5 text-dark"></i>
+					<span class="fw-bold fs-5 text-dark">Employés</span>
+				</li>
+				<li class="nav-item ms-5">
+					<a class="nav-link" href="{{ path('app_admin_staff_index') }}">Liste</a>
+				</li>
+				<li class="nav-item ms-5">
+					<a class="nav-link" href="{{ path('app_admin_staff_create') }}">Ajouter</a>
+				</li>
+
+				<li class="ms-3">
+					<i class="fa-solid fa-chart-line fs-5 text-dark"></i>
+					<span class="fw-bold fs-5 text-dark">Graphiques</span>
+				</li>
+				<li class="nav-item ms-5">
+					<a class="nav-link" href="{{ path('app_admin_graph_index') }}">Réservations</a>
+				</li>
+				<li class="nav-item ms-5">
+						<a class="nav-link" href="{{ path('app_admin_credits_graph_index') }}">Crédits</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>

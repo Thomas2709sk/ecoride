@@ -17,7 +17,8 @@
 
 {% block body %}
 	<main>
-		<h1 class="text-center mt-3">Détails du covoiturage - {{ carpool.carpoolNumber }}</h1>
+		<h1 class="text-center mt-3">Détails du covoiturage -
+			{{ carpool.carpoolNumber }}</h1>
 		<section class="container flux mt-5">
 			<h2 class="mb-3">Votre véhicule</h2>
 			<div class="table-responsive">
@@ -90,7 +91,11 @@
 					<div class="card-body">
 						<div class="border-bottom pb-3 mb-2 d-flex align-items-center">
 							<div class="ms-3">
-								<img id="guide-image" src="{{ carpool.driver.user.photo ? asset('uploads/users/mini/40x40-' ~ carpool.driver.user.photo) : asset('/images/favicon.png') }}" alt="Photo du guide" class=" rounded-circle" width="100" height="100">
+								{% if carpool.driver.user.photo %}
+									<img id="guide-image" src="{{ carpool.driver.user.photo ? asset('uploads/users/mini/40x40-' ~ carpool.driver.user.photo) : asset('/images/favicon.png') }}" alt="Photo du chauffeur" class=" rounded-circle" width="100" height="100">
+								{% else %}
+									<i class="fa fa-user-circle fs-2"></i>
+								{% endif %}
 							</div>
 							<div class="ms-4">
 								<span class="fw-bold">{{ carpool.driver.user.pseudo }}</span>

@@ -1,13 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Compte employé{% endblock %}
+{% block title %}Compte employé
+{% endblock %}
+
+{% block importmap %}
+	{{ importmap(['app']) }}
+{% endblock %}
 
 {% block body %}
-<section>
-    <h1>Votre compte employé</h1>
+	<main class="wrapper container-fluid">
+		<div class="row">
 
-        <h2>Avis</h2>
-        <a href="{{ path('app_admin_review_index') }}">Avis à valider</a>
-    </div>
-</section>
+			{% include "_partials/aside/_staffnav.html.twig" %}
+
+			<div class="col-12 d-flex d-md-none align-items-center bg-info py-2">
+				<button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#staffOffcanvas" aria-controls="staffOffcanvas">
+					<i class="fa fa-bars text-dark fs-4"></i>
+				</button>
+				<span class="text-dark fw-bold ms-3 fs-5">Menu Employé</span>
+			</div>
+			{% include "_partials/aside/_offcanvas_staffnav.html.twig" %}
+
+			<section class="col-12 col-lg-10 col-md-9 pe-4 ps-3 border border-light bg-light p-2">
+				<h1 class="ms-3 pb-3 border-bottom border-dark">Votre compte employé</h1>
+
+
+			</section>
+		</div>
+	</main>
 {% endblock %}

@@ -58,6 +58,16 @@ public function countTotalReviewsByNote(int $driverId): array
     return $ratingCount;
 }
 
+public function countReviewsValidate(): int
+{
+    return $this->createQueryBuilder('r')
+        ->select('COUNT(r.id)')
+        ->where('r.validate = :val')
+        ->setParameter('val', false)
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
     //    /**
     //     * @return Reviews[] Returns an array of Reviews objects
     //     */

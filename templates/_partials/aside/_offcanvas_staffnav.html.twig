@@ -1,0 +1,31 @@
+{# offcanvas for mobile staff account #}
+
+<div class="offcanvas offcanvas-start bg-info" tabindex="-1" id="staffOffcanvas" aria-labelledby="staffOffcanvasLabel">
+	<div class="offcanvas-header bg-info">
+		<h5 class="offcanvas-title text-dark" id="staffOffcanvasLabel">Menu Employé</h5>
+		<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+	</div>
+	<div class="offcanvas-body bg-info p-0">
+		<nav class="navbar navbar-info">
+			<ul class=" navbar-nav w-100 justify-content-between">
+				<li class="nav-item ms-2">
+					<a class="nav-account nav-link pl-0" href="{{ path('app_staff_account') }}">
+						<i class="fa-solid fa-house text-dark fs-5"></i>
+						<span class="fw-bold fs-5 text-dark">Accueil</span>
+					</a>
+				</li>
+				<li class="nav-item ms-2">
+					<a class="nav-account nav-link pl-0" href="{{ path('app_admin_review_index') }}">
+						<i class="fa-solid fa-calendar text-dark fs-5"></i>
+						<span class="fw-bold fs-5 text-dark">Avis à valider</span>
+						{% if reviewsValidateCount > 0 %}
+							<span class="badge rounded-pill bg-danger ms-1">
+								{{ reviewsValidateCount }}
+							</span>
+						{% endif %}
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>

@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Covoiturages
-{% endblock %}
+{% block title %}Covoiturages{% endblock %}
 
 {% block importmap %}
 	{{ importmap(['app', 'carpoolsGraph', 'carpoolsGraphSelect']) }}
@@ -13,33 +12,29 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container-fluid wrapper">
-		<div class="row">
-			{# {% include "_partials/_adminav.html.twig" %} #}
-			{# Burger offcanvas mobile #}
-				<div class="col-12 d-flex d-md-none align-items-center bg-dark py-2"> <button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas" aria-controls="adminOffcanvas">
-					<i class="fa fa-bars fs-4"></i>
-				</button>
-				<span class="text-white ms-3 fs-5">Menu admin</span>
-			</div>
+<div class="container-fluid">
+	<div class="row min-vh-100">
+		{# Aside admin (desktop) #}
+		{% include "_partials/aside/_adminav.html.twig" %}
 
-			{# Offcanvas menu mobile #}
-			{# {% include "_partials/_offcanvas_adminav.html.twig" %} #}
-			<main class="col-12 col-lg-10 col-md-9 pe-4 ps-3 border border-light bg-light p-2">
-				<h1>Nombre de covoiturages</h1>
-				{# GraphSelect.js #}
-				<select id="monthSelect"></select>
-				{# reservGraph.js #}
-				<div id="chartsContainer"></div>
-
-			</main>
+		{# Burger offcanvas mobile #}
+		<div class="col-12 d-flex d-md-none align-items-center bg-info py-2">
+			<button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas" aria-controls="adminOffcanvas">
+				<i class="fa fa-bars fs-4"></i>
+			</button>
+			<span class="text-dark ms-3 fs-5">Menu admin</span>
 		</div>
-	</div>
-	<style>
-		canvas {
-			width: 100% !important;
-			height: auto !important;
 
-		}
-	</style>
+		{# Offcanvas menu mobile #}
+		{% include "_partials/aside/_offcanvas_adminav.html.twig" %}
+
+		<section class="col-12 col-lg-10 col-md-9 pe-4 ps-3 border border-light bg-light p-2">
+			<h1>Nombre de covoiturages</h1>
+			{# GraphSelect.js #}
+			<select id="monthSelect"></select>
+			{# reservGraph.js #}
+			<div id="chartsContainer"></div>
+		</section>
+	</div>
+</div>
 {% endblock %}

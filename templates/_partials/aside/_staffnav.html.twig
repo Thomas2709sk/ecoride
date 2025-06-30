@@ -1,0 +1,28 @@
+{# Aside nav for staff account #}
+
+<aside class="col-md-3 col-lg-2 p-0 bg-info min-vh-100 d-none d-md-block">
+	<nav class="navbar navbar-expand navbar-info bg-info bg-gradient flex-md-column flex-row align-items-start py-2">
+		<div class="collapse navbar-collapse show">
+			<ul class="flex-md-column flex-row navbar-nav w-100">
+				<li class="nav-item ms-2">
+					<a class="nav-account nav-link pl-0" href="{{ path('app_staff_account') }}">
+						<i class="fa-solid fa-house text-dark fs-5"></i>
+						<span class="fw-bold fs-5 text-dark">Accueil</span>
+					</a>
+				</li>
+				<li class="nav-item ms-2">
+					<a class="nav-account nav-link pl-0" href="{{ path('app_admin_review_index') }}">
+						<i class="fa-solid fa-calendar text-dark fs-5"></i>
+						<span class="fw-bold fs-5 text-dark">Avis à valider</span>
+						{% if reviewsValidateCount > 0 %}
+						<span class="badge rounded-pill bg-danger ms-1">
+							{{ reviewsValidateCount }}
+						</span>
+						{% endif %}
+					</a>
+				</li>
+				{# Ajoute d'autres liens au besoin #}
+			</ul>
+		</div>
+	</nav>
+</aside>
