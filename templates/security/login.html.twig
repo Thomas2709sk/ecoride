@@ -1,41 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion
-{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block importmap %}
-	{{ importmap(['app', 'login']) }}
+    {{ importmap(['app', 'login']) }}
 {% endblock %}
 
 {% block body %}
-	<main class="wrapper">
-		<form method="post">
-			{% if error and not app.user %}
-				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			{% endif %}
+<main>
+    <section class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-8 col-12">
+                <div class="card shadow-lg p-4 px-sm-5 border border-2 bg-info">
+                    <h1 class="text-center text-white mb-4">Connexion</h1>
+                    <form method="post" autocomplete="on">
+                        {% if error and not app.user %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
 
-			{% if app.user %}
-				<div class="mb-3">
-					Vous êtes déjà connecter en tant que
-					{{ app.user.userIdentifier }},
-					<a href="{{ path('app_logout') }}">Me déconnecter</a>
-				</div>
-			{% endif %}
+                        {% if app.user %}
+                            <div class="mb-3 text-white">
+                                Vous êtes déjà connecté en tant que
+                                <strong>{{ app.user.userIdentifier }}</strong>,
+                                <a href="{{ path('app_logout') }}" class="link-light fw-bold">Me déconnecter</a>
+                            </div>
+                        {% endif %}
 
-			<h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
-			<label for="username">Email</label>
-			<input type="email" value="{{ last_username }}" name="_username" id="email" class="form-control" autocomplete="email" required autofocus>
-			<label for="password">Mot de passe</label>
-			<input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-			<input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
-			<button class="btn btn-lg btn-primary" id="login-button" type="submit" disabled>
-				Connexion
-			</button>
-		</form>
-		<a href="{{ path('forgotten_password') }}" class="a-link fw-bold text-decoration-none small">Mot de passe oublié ?</a>
-		<div class="text-center">
-			<span class="text-muted">Pas encore de compte ?</span>
-			<a href="{{ path('app_register') }}" class="text-secondary fw-bold">S'inscrire</a>
-		</div>
-	</main>
+                        <div class="form-floating mb-3">
+                            <input type="email" value="{{ last_username }}" name="_username" id="email" class="form-control" autocomplete="email" required autofocus placeholder=" ">
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required placeholder=" ">
+                            <label for="password">Mot de passe</label>
+                        </div>
+                        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+                        <button class="btn btn-secondary rounded w-100 mb-2" id="login-button" type="submit" disabled>
+                            <i class="fas fa-sign-in-alt me-2"></i>Connexion
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a href="{{ path('forgotten_password') }}" class="a-link fw-bold text-decoration-none small text-white">Mot de passe oublié ?</a>
+                    </div>
+                    <div class="text-center mt-2">
+                        <span class="text-white">Pas encore de compte ?</span>
+                        <a href="{{ path('app_register') }}" class="text-secondary fw-bold">S'inscrire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 {% endblock %}
