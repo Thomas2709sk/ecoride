@@ -1,98 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vos véhicule{% endblock %}
+{% block title %}Vos véhicule
+{% endblock %}
 
 {% block body %}
-<main class="wrapper container-fluid">
-    <div class="row">
-        {# Aside visible uniquement à partir de md #}
-        <aside class="col-md-3 col-lg-2 p-0 bg-info min-vh-100 d-none d-md-block">
-            <nav class="navbar navbar-expand navbar-info bg-info bg-gradient flex-md-column flex-row align-items-start py-2">
-                <div class="collapse navbar-collapse show">
-                    <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
-                        <li class="nav-item ms-2">
-                            <a class="nav-account nav-link pl-0" href="{{ path('app_driver_account_index') }}">
-                                <i class="fa-solid fa-house text-dark fs-5"></i>
-                                <span class="fw-bold fs-5 text-dark">Accueil Chauffeur</span>
-                            </a>
-                        </li>
-                        <li class="nav-item ms-2">
-                            <a class="nav-account nav-link pl-0" href="{{ path('app_driver_review_index') }}">
-                                <i class="fa-solid fa-comment text-dark fs-5"></i>
-                                <span class="fs-5 text-dark fw-bold">Avis reçus</span>
-                            </a>
-                        </li>
-                        <li class="ms-3">
-                            <i class="fa-solid fa-calendar text-dark fs-5"></i>
-                            <span class="fs-5 text-dark fw-bold">Covoiturages</span>
-                        </li>
-                        <li class="nav-item ms-5">
-                            <a class="nav-link text-dark" href="{{ path('app_driver_carpool_index') }}">Voir</a>
-                        </li>
-                        <li class="nav-item ms-5">
-                            <a class="nav-link text-dark" href="{{ path('app_driver_carpool_create') }}">Créer</a>
-                        </li>
-                        <li class="ms-3">
-                            <i class="fa-solid fa-car text-dark fs-5"></i>
-                            <span class="fs-5 text-dark fw-bold">Véhicules</span>
-                        </li>
-                        <li class="nav-item ms-5">
-                            <a class="nav-link text-dark" href="{{ path('app_driver_car_list') }}">Voir</a>
-                        </li>
-                        <li class="nav-item ms-5">
-                            <a class="nav-link text-dark" href="{{ path('app_driver_car_index') }}">Créer</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </aside>
+	<main class="wrapper container-fluid">
+		<div class="row">
 
-        {# Menu mobile, visible uniquement sur mobile #}
-        <div class="col-12 d-flex d-md-none align-items-center bg-info py-2">
-            <button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#driverOffcanvas" aria-controls="driverOffcanvas">
-                <i class="fa fa-bars text-dark fs-4"></i>
-            </button>
-            <span class="text-dark fw-bold ms-3 fs-5">Menu chauffeur</span>
-        </div>
-        {% include "_partials/aside/_offcanvas_drivernav.html.twig" %}
+			{% include "_partials/aside/_drivernav.html.twig" %}
 
-        {# Contenu principal #}
-        <div class="col-12 col-md-9 col-lg-10">
-            <h1 class="text-center mt-3">Vos véhicules</h1>
-            <div class="table-responsive">
-                <table class="table table-striped table-success">
-                    <thead>
-                        <tr>
-                            <th>Marque</th>
-                            <th>Modèle</th>
-                            <th>Places</th>
-                            <th>Plaque</th>
-                            <th>Date Immat.</th>
-                            <th>Energie</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for car in cars %}
-                            <tr>
-                                <td>{{ car.brand }}</td>
-                                <td>{{ car.model }}</td>
-                                <td>{{ car.seats }}</td>
-                                <td>{{ car.plateNumber}}</td>
-                                <td>{{ car.firstRegistration|date('d/m/Y') }}</td>
-                                <td>{{ car.energy }}</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ car.id }}">Supprimer</button>
-                                    <a class="btn btn-warning btn-sm" href="{{ path('app_driver_car_edit', {id: car.id}) }}">Modifier</a>
-                                </td>
-                            </tr>
-                            <!-- Modals -->
-                            {% include "_partials/modals/driver/delete_cars_modals.html.twig" %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</main>
+			<div class="col-12 d-flex d-md-none align-items-center bg-info py-2">
+				<button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#driverOffcanvas" aria-controls="driverOffcanvas">
+					<i class="fa fa-bars text-dark fs-4"></i>
+				</button>
+				<span class="text-dark fw-bold ms-3 fs-5">Menu chauffeur</span>
+			</div>
+			{% include "_partials/aside/_offcanvas_drivernav.html.twig" %}
+
+			<div class="col-12 col-md-9 col-lg-10">
+				<h1 class="text-center mt-3">Vos véhicules</h1>
+				<div class="table-responsive">
+					<table class="table table-striped table-success">
+						<thead>
+							<tr>
+								<th>Marque</th>
+								<th>Modèle</th>
+								<th>Places</th>
+								<th>Plaque</th>
+								<th>Date Immat.</th>
+								<th>Energie</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for car in cars %}
+								<tr>
+									<td>{{ car.brand }}</td>
+									<td>{{ car.model }}</td>
+									<td>{{ car.seats }}</td>
+									<td>{{ car.plateNumber}}</td>
+									<td>{{ car.firstRegistration|date('d/m/Y') }}</td>
+									<td>{{ car.energy }}</td>
+									<td>
+										<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ car.id }}">Supprimer</button>
+										<a class="btn btn-warning btn-sm" href="{{ path('app_driver_car_edit', {id: car.id}) }}">Modifier</a>
+									</td>
+								</tr>
+								<!-- Modals -->
+								{% include "_partials/modals/driver/delete_cars_modals.html.twig" %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</main>
 {% endblock %}
