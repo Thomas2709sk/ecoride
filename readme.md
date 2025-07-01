@@ -1,6 +1,6 @@
 # Ecoride
 
-**Ecoride** is my exam project ! It's a carpooling website focused on ecology. You can become a driver, be a passenger or why not both ? "The website is only available in Frecnh but most of my commentary are in English ".
+**Ecoride** is my exam project ! It's a carpooling website focused on ecology. You can become a driver, be a passenger or why not both ? "The website is only available in French but most of my commentary are in English ".
 
 ---
 
@@ -56,6 +56,7 @@
 
 ### Tools
 
+- Google maps API
 - **Docker**(  to containerize the application, making it easy to deploy and run in any environment. )
 
 ---
