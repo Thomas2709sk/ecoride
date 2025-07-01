@@ -79,7 +79,7 @@ Here are all the documents and tools used throughout the development of Ecoride 
 
 - [Trello board](https://trello.com/b/OZKjROh0/ecoride)
 - [Style guide (PDF)](documents/charte_graphique_ecoride.pdf)
-- [Mobile Wireframe (PDF)](documents/Wireframe_mobile.pdf)
+- [Mobile Wireframe (PDF)](documents/wireframe_mobile.pdf)
 - [Desktop Wireframe (PDF)](documents/Wireframe_Desktop.pdf)
 - [Mobile Mockup (PDF)](documents/mockup_mobile.pdf)
 - [Desktop Mockup (PDF)](documents/mockup_desktop.pdf)
