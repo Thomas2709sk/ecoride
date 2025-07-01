@@ -22,7 +22,7 @@ class Drivers
     private ?bool $smoking = null;
 
     #[ORM\OneToOne(inversedBy: 'drivers')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Users $user = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -37,13 +37,13 @@ class Drivers
     /**
      * @var Collection<int, Carpools>
      */
-    #[ORM\OneToMany(targetEntity: Carpools::class, mappedBy: 'driver', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Carpools::class, mappedBy: 'driver', orphanRemoval: true,  cascade: ['remove'])]
     private Collection $carpools;
 
     /**
      * @var Collection<int, Reviews>
      */
-    #[ORM\OneToMany(targetEntity: Reviews::class, mappedBy: 'driver', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Reviews::class, mappedBy: 'driver', orphanRemoval: true, cascade: ['remove'])]
     private Collection $reviews;
 
     public function __construct()
