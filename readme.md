@@ -86,4 +86,4 @@ Here are all the documents and tools used throughout the development of Ecoride 
 - [Use Case Diagram (PDF)](documents/diagramme_utilisation.pdf)
 - [Sequence Diagram Carpool (PDF)](documents/diagramme_sequence_covoit.pdf)
 - [Sequence Diagram Review (PDF)](documents/diagramme-sequence-avis.pdf)
-- [Conceptual Data Model (PDF)](documents_projet/MCD.pdf)
+- [Conceptual Data Model (PDF)](documents/MCD.pdf)
