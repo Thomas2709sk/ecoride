@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ReviewDriverForm extends AbstractType
 {
@@ -23,6 +24,9 @@ class ReviewDriverForm extends AbstractType
                 ])
             ->add('commentary', TextareaType::class, [
                 'label' => 'Votre avis',
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez entrer votre message.']),
+                ],
             ]);
            
     }

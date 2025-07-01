@@ -1,7 +1,12 @@
 // Results page
-    .map-list{
-        height: 31rem;       
-    }
+    .map-list {
+  display: none;
+  height: 0;
+}
+.map-list.active {
+  display: block;
+  height: 31rem;
+}
     #tabList.active, #tabMap.active {
         font-weight: bold;
         background-color: #e9ecef;

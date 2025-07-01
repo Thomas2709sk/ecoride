@@ -39,51 +39,50 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-      #[Route('/mot-de-passe-oublie', name: 'forgotten_password')]
+    #[Route('/mot-de-passe-oublie', name: 'forgotten_password')]
     public function forgottenPassword(Request $request, UsersRepository $usersRepository, JWTService $jwt, SendEmailService $mail): Response
     {
         $form = $this->createForm(ResetPasswordRequestForm::class);
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             // Get User with its mail
             $user = $usersRepository->findOneByEmail($form->get('email')->getData());
 
             // if user exist
-            if($user){
+            if ($user) {
 
-            // Generate token
-            // Header
-            $header = [
-                'typ' => 'JWT',
-                'alg' => 'HS256'
-            ];
+                // Generate token
+                // Header
+                $header = [
+                    'typ' => 'JWT',
+                    'alg' => 'HS256'
+                ];
 
-            // Payload
-            $payload = [
-                'user_id' => $user->getId()
-            ];
+                // Payload
+                $payload = [
+                    'user_id' => $user->getId()
+                ];
 
-            // Generate token
-            $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
+                // Generate token
+                $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
-            // Generate url for reset_password
-            $url = $this->generateUrl('reset_password', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
+                // Generate url for reset_password
+                $url = $this->generateUrl('reset_password', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
 
-            // Send mail
-            $mail->send(
-                'no-reply@ecoride.fr',
-                $user->getEmail(),
-                'Changement de mot de passe',
-                'password_reset',
-                compact('user', 'url') // ['user'=> $user, 'url'=>$url]
-            );
+                // Send mail
+                $mail->send(
+                    'no-reply@ecoride.fr',
+                    $user->getEmail(),
+                    'Changement de mot de passe',
+                    'password_reset',
+                    compact('user', 'url') // ['user'=> $user, 'url'=>$url]
+                );
 
-            $this->addFlash('success', 'Email envoyé avec success');
-            return $this->redirectToRoute('app_login');
-
+                $this->addFlash('success', 'Email envoyé avec success');
+                return $this->redirectToRoute('app_login');
             }
             // $user is null
             $this->addFlash('danger', 'Un problème est survenu');
@@ -91,14 +90,15 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/reset_password_request.html.twig', [
-            'requestPassForm' => $form->createView()]);
+            'requestPassForm' => $form->createView()
+        ]);
     }
 
-     #[Route('/mot-de-passe-oublie/{token}', name: 'reset_password')]
+    #[Route('/mot-de-passe-oublie/{token}', name: 'reset_password')]
     public function resetPassword($token, JWTService $jwt, UsersRepository $usersRepository, Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em): Response
     {
-         // If token is valid
-         if($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))){
+        // If token is valid
+        if ($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))) {
 
             // get data (payload)
             $payload = $jwt->getPayload($token);
@@ -106,17 +106,20 @@ class SecurityController extends AbstractController
             // get User
             $user = $usersRepository->find($payload['user_id']);
 
-            if($user){
+            if ($user) {
                 $form = $this->createForm(ResetPasswordForm::class);
 
                 $form->handleRequest($request);
 
-                if($form->isSubmitted() && $form-> isValid()){
-                    // Hash password
-                    $user->setPassword($passwordHasher->hashPassword($user, $form->get('password')->getData()));
-              
+                if ($form->isSubmitted() && $form->isValid()) {
+                    /** @var string $plainPassword */
+                    $plainPassword = $form->get('plainPassword')->getData();
+
+                    // encode the plain password
+                    $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
+
                     $em->flush();
-              
+
                     $this->addFlash('success', 'Mot de passe changé avec success');
                     return $this->redirectToRoute('app_login');
                 }

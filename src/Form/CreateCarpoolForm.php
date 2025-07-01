@@ -16,6 +16,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Time;
 
 class CreateCarpoolForm extends AbstractType
 {
@@ -26,21 +30,48 @@ class CreateCarpoolForm extends AbstractType
         $builder
             ->add('day', DateType::class, [
                 'widget' => 'single_text',
-                'label' => 'Jour :'
+                'label' => 'Jour :',
+                'constraints' => [
+                    new NotBlank(['message' => 'Le jour est obligatoire.']),
+                    new Date(['message' => 'La date n\'est pas valide.']),
+                ],
             ])
             ->add('begin', TimeType::class, [
                 'widget' => 'single_text',
-                'label' => 'Début :'
+                'label' => 'Début :',
+                'constraints' => [
+                    new NotBlank(['message' => 'L\'heure de début est obligatoire.']),
+                    new Time(['message' => 'L\'heure de début n\'est pas valide.']),
+                ],
             ])
             ->add('end', TimeType::class, [
                 'widget' => 'single_text',
-                'label' => 'Fin :'
+                'label' => 'Fin :',
+                'constraints' => [
+                    new NotBlank(['message' => 'L\'heure de fin est obligatoire.']),
+                    new Time(['message' => 'L\'heure de fin n\'est pas valide.']),
+                  
+                ],
             ])
             ->add('address_start', TextType::class, [
                 'label' => 'adresse de départ :',
+                'constraints' => [
+                    new NotBlank(['message' => 'L\'adresse de départ est obligatoire.']),
+                    new Length([
+                        'max' => 255,
+                        'maxMessage' => 'L\'adresse de départ ne peut pas dépasser {{ limit }} caractères.'
+                    ]),
+                ],
             ])
             ->add('address_end', TextType::class, [
                 'label' => 'adresse d\'arrivée :',
+                'constraints' => [
+                    new NotBlank(['message' => 'L\'adresse d\'arrivée est obligatoire.']),
+                    new Length([
+                        'max' => 255,
+                        'maxMessage' => 'L\'adresse d\'arrivée ne peut pas dépasser {{ limit }} caractères.'
+                    ]),
+                ],
             ])
             ->add('duration', HiddenType::class)
             ->add('price', IntegerType::class, [

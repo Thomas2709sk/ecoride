@@ -24,6 +24,10 @@ return [
         'path' => './assets/js/login.js',
         'entrypoint' => true,
     ],
+    'changePassword' => [
+        'path' => './assets/js/changePassword.js',
+        'entrypoint' => true,
+    ],
     'addPhoto' => [
         'path' => './assets/js/addPhoto.js',
         'entrypoint' => true,

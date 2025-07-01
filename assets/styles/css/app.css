@@ -11952,6 +11952,12 @@ body {
 }
 
 .map-list {
+  display: none;
+  height: 0;
+}
+
+.map-list.active {
+  display: block;
   height: 31rem;
 }
 

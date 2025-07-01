@@ -18,8 +18,6 @@ class EditUserAccountForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('roles')
-            // ->add('password')
             ->add('pseudo', TextType::class, [
                 'required' => false,
             ])

@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ReviewsWebsiteForm extends AbstractType
 {
@@ -20,6 +21,9 @@ class ReviewsWebsiteForm extends AbstractType
             ])
         ->add('commentary', TextareaType::class, [
             'label' => 'Votre avis',
+            'constraints' => [
+                    new NotBlank(['message' => 'Veuillez entrer votre message.']),
+                ],
         ])
          ->add('pseudo', TextType::class, [
             'label' => 'Pseudo',

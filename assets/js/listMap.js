@@ -10,14 +10,14 @@ document.addEventListener('DOMContentLoaded', function () {
         tabList.classList.add('active');
         tabMap.classList.remove('active');
         listView.style.display = '';
-        mapView.style.display = 'none';
+          mapView.classList.remove('active');
     });
 
     tabMap.addEventListener('click', function() {
         tabMap.classList.add('active');
         tabList.classList.remove('active');
         listView.style.display = 'none';
-        mapView.style.display = '';
+        mapView.classList.add('active'); 
         if (!mapInstance) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
