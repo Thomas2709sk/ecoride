@@ -44,7 +44,8 @@
 ### Front-end
 
 - **HTML**
-- **CSS / SCSS**
+- **CSS**
+- **SCSS**
 - **Javascript (vanilla)**
 
 ### Back-end
