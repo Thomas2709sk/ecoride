@@ -69,6 +69,7 @@ class CarpoolController extends AbstractController
             'carpoolForm' => $carpoolForm->createView(),
             'carpools' => $carpools,
             'driver_car' => $driverCars,
+                        'google_maps_api_key' => $_SERVER['GOOGLE_MAPS_API_KEY'] ?? $_ENV['GOOGLE_MAPS_API_KEY'] ?? null,
         ]);
     }
 }

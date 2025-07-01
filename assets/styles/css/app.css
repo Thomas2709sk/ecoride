@@ -11994,6 +11994,34 @@ canvas {
   height: auto !important;
 }
 
+.nav-link {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
+  text-decoration: none;
+  color: black;
+}
+.nav-link:not(.dropdown-toggle)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background-color: black;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.nav-link:not(.dropdown-toggle):hover::after {
+  transform: scaleX(1);
+}
+@media (max-width: 768px) {
+  .nav-link:not(.dropdown-toggle)::after {
+    display: none;
+  }
+}
+
 .flux {
   max-width: 1100px;
   margin-left: auto;
