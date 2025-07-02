@@ -71,7 +71,7 @@
    ```
 
 2. **Using Docker**
-   - Make sure you have [Docker](https://www.docker.com/products/docker-desktop) installed.
+   - Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop) installed.
    - Start the containers:
      ```bash
      docker-compose up --build -d
