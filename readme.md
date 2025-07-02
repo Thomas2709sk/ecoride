@@ -64,6 +64,18 @@
 
 ## Installation
 
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Thomas2709sk/ecoride.git
+   cd ecoride
+   ```
+
+2. **Using Docker**
+   - Make sure you have [Docker](https://www.docker.com/products/docker-desktop) installed.
+   - Start the containers:
+     ```bash
+     docker-compose up --build -d
+     ```
 
 ---
 
