@@ -1,96 +1,91 @@
 # Ecoride
 
-**Ecoride** is my exam project ! It's a carpooling website focused on ecology. You can become a driver, be a passenger or why not both ? "The website is only available in French but most of my commentary are in English ".
+Ecoride is my exam project! It's a carpooling website focused on ecology. You can become a driver, a passenger, or even both!  
+**The website is only available in French, but most of my comments are in English.**
 
 ---
 
-## What can you do ?
+## What can you do?
 
 ### Visitor
-
-- Can check informative pages, search for carpools and see the details (with maps ) but cannot make a reservation
+- Can view informative pages, search for carpools, and see details (with maps), but cannot make a reservation.
 
 ### User
-
-- After registration, earn 20 ccredits to make a reservation.( all your reservations history appears in your account)
+- After registration, you receive 20 credits to make reservations (your reservation history appears in your account).
 - Receive an email at each step of the reservation process.
-- After the carpool, the user can leave a review for the driver (mandatory if the user say the driver was not good ).
-- Users can register as a driver in their User account.
+- After a carpool, users can leave a review for the driver (leaving a review is mandatory if the user reports that the driver was not good).
+- Users can register as drivers in their account.
 
 ### Driver
-
-- To become a driver, users need to fill mandatory informations like their preferences and a a first car ( they can add more cars after registration in their driver account ).
-- When creating a carpool, the guide provides the day, starting time , address start and end , choose a car or add a new one ( driver don't need to put end time , JS will do the calculation )
+- To become a driver, users need to fill in mandatory information such as their preferences and add a first car (they can add more cars after registering as a driver).
+- When creating a carpool, the driver specifies the day, starting time, start and end addresses, and selects a car or adds a new one (the driver does not need to set an end time; JavaScript will calculate it).
 - The driver can view the reviews left by users directly on their account.
-- The driver receives their credits after the user confirms the end of the reservation, and 2 credits are allocated to the platform.
+- The driver receives credits after the user confirms the end of the reservation, and 2 credits are allocated to the platform.
 
 ### Administrator
-
 - The administrator can edit all upcoming carpools.
 - User and employee lists are accessible from the admin dashboard.
 - New employee accounts can be created by the administrator.
-- The admin dashboard includes statistics on reservations by day and accumulated credits.
-- He can manage user reviews.
+- The admin dashboard includes statistics on reservations per day and accumulated credits.
+- The administrator can manage user reviews.
 
 ### Staff
-
 - Can manage user reviews.
-- Can contact driver and passenger with their emails.
+- Can contact drivers and passengers by email.
 
 ---
 
 ## Technologies Used
 
 ### Front-end
-
-- **HTML**
-- **CSS**
-- **SCSS**
-- **Javascript (vanilla)**
+- HTML
+- CSS
+- SCSS
+- JavaScript (vanilla)
 
 ### Back-end
-
-- **PHP**
-- **Symfony**
-- **SQL (MariaDB)**
-- **NoSQL (MongoDB)**
+- PHP
+- Symfony
+- SQL (MariaDB)
+- NoSQL (MongoDB)
 
 ### Tools
-
-- Google maps API
-- **Docker**(  to containerize the application, making it easy to deploy and run in any environment. )
+- Google Maps API
+- Docker (to containerize the application, making it easy to deploy and run in any environment)
 
 ---
 
 ## Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Thomas2709sk/ecoride.git
-   cd ecoride
-   ```
+Clone the repository
 
-2. **Using Docker**
-   - Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop) installed.
-   - Start the containers:
-     ```bash
-     docker-compose up --build -d
-     ```
+```bash
+git clone https://github.com/Thomas2709sk/ecoride.git
+cd ecoride
+```
+
+Using Docker
+
+- Make sure you have Docker Desktop installed.
+- Start the containers:
+
+```bash
+docker-compose up --build -d
+```
 
 ---
 
 ## Work in Progress
 
-- More Refactor needed.
-- Map to show search results near you with geolocation ( only show a list at the moment ).
-- More advantage if driver use electric car
+- More refactoring needed.
+- Map to show search results near you with geolocation (currently only a list is shown).
+- More advantages if the driver uses an electric car.
 
 ---
 
 ## Project Resources
 
-Here are all the documents and tools used throughout the development of Ecoride :
-
+Here are all the documents and tools used throughout the development of Ecoride:
 - [Trello board](https://trello.com/b/OZKjROh0/ecoride)
 - [Style guide (PDF)](documents/charte_graphique_ecoride.pdf)
 - [Mobile Wireframe (PDF)](documents/wireframe_mobile.pdf)
