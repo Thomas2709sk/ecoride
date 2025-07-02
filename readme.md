@@ -55,24 +55,18 @@ Ecoride is my exam project! It's a carpooling website focused on ecology. You ca
 
 ---
 
-## Installation
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Thomas2709sk/ecoride.git
+   cd ecoride
+   ```
 
-Clone the repository
-
-```bash
-git clone https://github.com/Thomas2709sk/ecoride.git
-cd ecoride
-```
-
-Using Docker
-
-- Make sure you have Docker Desktop installed.
-- Start the containers:
-
-```bash
-docker-compose up --build -d
-```
-
+2. **Using Docker**
+   - Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop) installed.
+   - Start the containers:
+     ```bash
+     docker-compose up --build -d
+     ```
 ---
 
 ## Work in Progress
