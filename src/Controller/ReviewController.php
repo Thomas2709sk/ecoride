@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Document\Review;
-use App\Form\ReviewsWebsiteForm;
+use App\Form\ReviewWebsiteForm;
 use App\Repository\DriversRepository;
 use App\Repository\ReviewsRepository;
 use App\Repository\UsersRepository;
@@ -25,7 +25,7 @@ class ReviewController extends AbstractController
      $review->setCreatedAt(new \DateTime());
 
     //  Create form and link with Document review
-    $reviewWebForm = $this->createForm(ReviewsWebsiteForm::class, $review);
+    $reviewWebForm = $this->createForm(ReviewWebsiteForm::class, $review);
     $reviewWebForm->handleRequest($request);
 
     if ($reviewWebForm->isSubmitted() && $reviewWebForm->isValid()) {
