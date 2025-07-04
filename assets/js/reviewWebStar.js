@@ -1,7 +1,7 @@
 // Get the element by its ID or class
 document.addEventListener("DOMContentLoaded", function () {
     const stars = document.querySelectorAll(".star");
-    const ratingInput = document.getElementById("reviews_website_form_rate");
+    const ratingInput = document.getElementById("review_website_form_rate");
     const noteText = document.getElementById("note-text");
 
     // Highlights the stars on hover
