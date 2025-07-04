@@ -53,6 +53,7 @@ Ecoride is my exam project! It's a carpooling website focused on ecology. You ca
 - Google Maps API
 - Docker (to containerize the application, making it easy to deploy and run in any environment)
 
+### Installatiion
 ---
 
 1. **Clone the repository**
@@ -90,3 +91,5 @@ Here are all the documents and tools used throughout the development of Ecoride:
 - [Sequence Diagram Carpool (PDF)](documents/diagramme_sequence_covoit.pdf)
 - [Sequence Diagram Review (PDF)](documents/diagramme-sequence-avis.pdf)
 - [Conceptual Data Model (PDF)](documents/MCD.pdf)
+
+https://ecoride.japaneedsyou.fr/
