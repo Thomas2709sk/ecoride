@@ -1,4 +1,4 @@
-// Place ce code dans un fichier importé par ton importmap
+
 
 function getLocation() {
     const x = document.getElementById("geo-output");
@@ -14,7 +14,6 @@ function getLocation() {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
 
-        // Utilisation du service Geocoder de Google
         const geocoder = new google.maps.Geocoder();
         const latlng = { lat: lat, lng: lon };
 
@@ -36,8 +35,6 @@ function getLocation() {
     }
 }
 
-// Pour l'appel inline depuis le bouton HTML
 window.getLocation = getLocation;
 
-// Optionnel : fonction d'init vide, requise par Google Maps si tu ne fais pas de carte
 window.initMap = function() {};
