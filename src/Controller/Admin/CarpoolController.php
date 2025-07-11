@@ -44,7 +44,7 @@ class CarpoolController extends AbstractController
         if (!$carpools) {
             throw $this->createNotFoundException('Covoiturage non trouvé.');
         }
-        $driver = $carpools->getDriver(); // Supposons que cette méthode te donne le chauffeur, qui a une relation avec User ou Driver
+        $driver = $carpools->getDriver();
 
         $driverCars = $driver ? $driver->getCars() : [];
 

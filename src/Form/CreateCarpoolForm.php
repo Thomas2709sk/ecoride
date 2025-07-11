@@ -33,7 +33,6 @@ class CreateCarpoolForm extends AbstractType
                 'label' => 'Jour :',
                 'constraints' => [
                     new NotBlank(['message' => 'Le jour est obligatoire.']),
-                    new Date(['message' => 'La date n\'est pas valide.']),
                 ],
             ])
             ->add('begin', TimeType::class, [
@@ -41,7 +40,6 @@ class CreateCarpoolForm extends AbstractType
                 'label' => 'Début :',
                 'constraints' => [
                     new NotBlank(['message' => 'L\'heure de début est obligatoire.']),
-                    new Time(['message' => 'L\'heure de début n\'est pas valide.']),
                 ],
             ])
             ->add('end', TimeType::class, [
@@ -49,7 +47,6 @@ class CreateCarpoolForm extends AbstractType
                 'label' => 'Fin :',
                 'constraints' => [
                     new NotBlank(['message' => 'L\'heure de fin est obligatoire.']),
-                    new Time(['message' => 'L\'heure de fin n\'est pas valide.']),
                   
                 ],
             ])
