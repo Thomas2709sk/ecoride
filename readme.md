@@ -68,6 +68,23 @@ Ecoride is my exam project! It's a carpooling website focused on ecology. You ca
      ```bash
      docker-compose up --build -d
      ```
+3. **Configure the Database**
+
+     ```
+   - Edit `.env.local` and set your database credentials, e.g.:
+     ```
+     DATABASE_URL="mysql://name:pass@localhost:3306/yourdb"
+     ```
+
+4. **Create the Database**
+   ```bash
+   php bin/console doctrine:database:create
+   ```
+
+5. **Run the Migrations**
+   ```bash
+   php bin/console doctrine:migrations:migrate
+   ```
 ---
 
 ## Work in Progress
