@@ -88,6 +88,9 @@ Ecoride is my exam project! It's a carpooling website focused on ecology. You ca
    ```
 ---
 
+Or you can use the SQL folder if you don't want use command line
+- You have SQL files to create the database
+
 ## Work in Progress
 
 - More refactoring needed.
