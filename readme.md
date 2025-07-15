@@ -73,6 +73,7 @@ Ecoride is my exam project! It's a carpooling website focused on ecology. You ca
      ```
    - Edit `.env.local` and set your database credentials, e.g.:
      ```
+     ```
      DATABASE_URL="mysql://name:pass@localhost:3306/yourdb"
      ```
 
