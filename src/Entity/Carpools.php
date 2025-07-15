@@ -49,11 +49,11 @@ class Carpools
     #[ORM\JoinColumn(nullable: false)]
     private ?Cars $car = null;
 
-    /**
-     * @var Collection<int, Users>
-     */
-    #[ORM\ManyToMany(targetEntity: Users::class, inversedBy: 'carpools')]
-    private Collection $user;
+    // /**
+    //  * @var Collection<int, Users>
+    //  */
+    // #[ORM\ManyToMany(targetEntity: Users::class, inversedBy: 'carpools')]
+    // private Collection $user;
 
     #[ORM\Column(length: 255)]
     private ?string $carpool_number = null;
@@ -90,7 +90,7 @@ class Carpools
 
     public function __construct()
     {
-        $this->user = new ArrayCollection();
+        // $this->user = new ArrayCollection();
         $this->reviews = new ArrayCollection();
         $this->carpoolsUsers = new ArrayCollection();
     }
@@ -221,28 +221,28 @@ class Carpools
     }
 
     /**
-     * @return Collection<int, Users>
-     */
-    public function getUser(): Collection
-    {
-        return $this->user;
-    }
+    //  * @return Collection<int, Users>
+    //  */
+    // public function getUser(): Collection
+    // {
+    //     return $this->user;
+    // }
 
-    public function addUser(Users $user): static
-    {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
-        }
+    // public function addUser(Users $user): static
+    // {
+    //     if (!$this->user->contains($user)) {
+    //         $this->user->add($user);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeUser(Users $user): static
-    {
-        $this->user->removeElement($user);
+    // public function removeUser(Users $user): static
+    // {
+    //     $this->user->removeElement($user);
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getCarpoolNumber(): ?string
     {

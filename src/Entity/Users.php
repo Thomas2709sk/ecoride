@@ -70,11 +70,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user')]
     private ?Drivers $drivers = null;
 
-    /**
-     * @var Collection<int, Carpools>
-     */
-    #[ORM\ManyToMany(targetEntity: Carpools::class, mappedBy: 'user')]
-    private Collection $carpools;
+    // /**
+    //  * @var Collection<int, Carpools>
+    //  */
+    // #[ORM\ManyToMany(targetEntity: Carpools::class, mappedBy: 'user')]
+    // private Collection $carpools;
 
     /**
      * @var Collection<int, Reviews>
@@ -90,7 +90,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->carpools = new ArrayCollection();
+        // $this->carpools = new ArrayCollection();
         $this->reviews = new ArrayCollection();
         $this->carpoolsUsers = new ArrayCollection();
     }
@@ -233,32 +233,32 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Carpools>
-     */
-    public function getCarpools(): Collection
-    {
-        return $this->carpools;
-    }
+    // /**
+    //  * @return Collection<int, Carpools>
+    //  */
+    // public function getCarpools(): Collection
+    // {
+    //     return $this->carpools;
+    // }
 
-    public function addCarpool(Carpools $carpool): static
-    {
-        if (!$this->carpools->contains($carpool)) {
-            $this->carpools->add($carpool);
-            $carpool->addUser($this);
-        }
+    // public function addCarpool(Carpools $carpool): static
+    // {
+    //     if (!$this->carpools->contains($carpool)) {
+    //         $this->carpools->add($carpool);
+    //         $carpool->addUser($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeCarpool(Carpools $carpool): static
-    {
-        if ($this->carpools->removeElement($carpool)) {
-            $carpool->removeUser($this);
-        }
+    // public function removeCarpool(Carpools $carpool): static
+    // {
+    //     if ($this->carpools->removeElement($carpool)) {
+    //         $carpool->removeUser($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, Reviews>
