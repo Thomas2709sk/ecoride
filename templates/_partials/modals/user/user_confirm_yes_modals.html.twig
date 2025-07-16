@@ -16,7 +16,6 @@
 					<strong>Nom du chauffeur :</strong>
 					{{ carpool.driver.user.pseudo }}
 				</p>
-			</p>
 		</div>
 		<div class="d-flex justify-content-between modal-footer">
 			<form method="POST" action="{{ path('app_user_carpool_confirm', { id: carpool.id }) }}">

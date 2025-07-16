@@ -47,8 +47,7 @@ class StaffController extends AbstractController
 
             $plainPassword = $form->get('plainPassword')->getData();
 
-            // $user->setRoles(['ROLE_STAFF']);
-            $user->setRoles($form->get('roles')->getData());
+            $user->setRoles(['ROLE_STAFF']);
 
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));

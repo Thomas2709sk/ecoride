@@ -53,15 +53,6 @@ class AddStaffForm extends AbstractType
                         minScore: PasswordStrength::STRENGTH_STRONG
                     )
                 ],
-            ])
-            ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'Employé' => 'ROLE_STAFF',
-                    'Administrateur' => 'ROLE_ADMIN',
-                ],
-                'expanded' => false,
-                'multiple' => true,
-                'label' => 'Rôles',
             ]);
         
     }

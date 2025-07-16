@@ -18,7 +18,6 @@
 				<p>
 					<strong>Place restante(s):</strong>
 					{{ carpool.placesAvailable }}</p>
-				<p></p>
 				<p>
 					<strong>Nom voyageur(s) :</strong>
 					{% for user in carpool.user %}
@@ -27,7 +26,6 @@
 						<span>Aucune réservation</span>
 					{% endfor %}
 				</p>
-			</p>
 		</div>
 		<div class="modal-footer">
 			<form method="POST" action="{{ path('app_driver_carpool_cancel', { id: carpool.id }) }}">
