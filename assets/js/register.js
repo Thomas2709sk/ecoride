@@ -74,32 +74,32 @@ function checkPass(){
     // On évalue la force du mot de passe
     let entropy = evaluatePasswordStrength(mdp);
 
-    entropyElement.classList.remove("text-red", "text-orange", "text-green");
+    entropyElement.classList.remove("text-danger", "text-warning", "text-success");
 
     // On attribue la couleur en fonction de l'entropie
     switch(entropy){
         case 'Très faible' :
-            entropyElement.classList.add("text-red");
+            entropyElement.classList.add("text-danger");
             pass = false;
             break;
         case 'Faible' :
-            entropyElement.classList.add("text-red");
+            entropyElement.classList.add("text-danger");
             pass = false;
             break;
         case 'Moyen' :
-            entropyElement.classList.add("text-orange");
+            entropyElement.classList.add("text-warning");
             pass = false;
             break;
         case 'Fort' :
-            entropyElement.classList.add("text-green");
+            entropyElement.classList.add("text-success");
             pass = true;
             break;
         case 'Très fort' :
-            entropyElement.classList.add("text-green");
+            entropyElement.classList.add("text-success");
             pass = true;
             break;
         default:
-            entropyElement.classList.add("text-red");
+            entropyElement.classList.add("text-danger");
             pass = false;
             break;
     }

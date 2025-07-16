@@ -74,7 +74,7 @@ Ecoride is my exam project! It's a carpooling website focused on ecology. You ca
    - Edit `.env.local` and set your database credentials, e.g.:
      ```
      ```
-     DATABASE_URL="mysql://name:pass@localhost:3306/yourdb"
+     DATABASE_URL="mysql://name:pass@localhostordocker:3306/yourdb"
      ```
 
 4. **Create the Database**
@@ -88,7 +88,7 @@ Ecoride is my exam project! It's a carpooling website focused on ecology. You ca
    ```
 ---
 
-Or you can use the SQL folder if you don't want use command line
+Or you can use the SQL folder if you don't want to the use command line
 - You have SQL files to create the database
 
 ## Work in Progress
