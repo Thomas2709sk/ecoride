@@ -1,82 +1,88 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Liste des Utilisateurs{% endblock %}
+{% block title %}Liste des Utilisateurs
+{% endblock %}
 
 {% block body %}
-<main class="container-fluid">
-	<div class="row min-vh-100">
-		{# Aside admin (desktop) #}
-		{% include "_partials/aside/_adminav.html.twig" %}
+	<main class="container-fluid">
+		<div
+			class="row min-vh-100">
+			{# Aside admin (desktop) #}
+			{% include "_partials/aside/_adminav.html.twig" %}
 
-		{# Burger offcanvas mobile #}
-		<div class="col-12 d-flex d-md-none align-items-center bg-info py-2">
-			<button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas" aria-controls="adminOffcanvas">
-				<i class="fa fa-bars fs-4"></i>
-			</button>
-			<span class="text-dark ms-3 fs-5">Menu admin</span>
-		</div>
-
-		{# Offcanvas menu mobile #}
-		{% include "_partials/aside/_offcanvas_adminav.html.twig" %}
-
-		<section class="col-12 col-lg-10 col-md-9 pe-4 ps-3 border border-light bg-light p-2">
-			<h1>Liste des Utilisateurs</h1>
-			<div class="table-responsive">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Pseudo</th>
-							<th>Email</th>
-							<th>Role</th>
-							<th>Vérifié</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for user in users %}
-							{% if 'ROLE_USER' in user.roles %}
-								<tr>
-									<td>{{ user.id }}</td>
-									<td>{{ user.pseudo }}</td>
-									<td>{{ user.email}}</td>
-									<td>
-										{# Change name and colors dependings of roles #}
-										{% for role in user.roles %}
-											{% if role == "ROLE_ADMIN" %}
-												{% set name = "Administrateur" %}
-												{% set color = "danger" %}
-											{% elseif role == "ROLE_STAFF" %}
-												{% set name = "Employé" %}
-												{% set color = "warning" %}
-											{% elseif role == "ROLE_DRIVER" %}
-												{% set name = "Chauffeur" %}
-												{% set color = "info" %}
-											{% else %}
-												{% set name = "Membre" %}
-												{% set color = "success" %}
-											{% endif %}
-											<span class="badge bg-{{ color }}">{{ name }}</span>
-										{% endfor %}
-									</td>
-									<td>
-										<div class="form-check form-switch">
-											<input type="checkbox" class="form-check-input" role="switch" id="switch{{ user.id }}" {{ user.isVerified ? "checked" : "" }} disabled>
-											<label for="switch{{ user.id }}" class="form-check-label"></label>
-										</div>
-									</td>
-									<td>
-										<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#removeModal-{{ user.id }}">Supprimer</button>
-									</td>
-								</tr>
-								<!-- Modale suppression-->
-								{% include "_partials/modals/admin/admin_remove_users_modals.html.twig" %} 
-							{% endif %}
-						{% endfor %}
-					</tbody>
-				</table>
+			{# Burger offcanvas mobile #}
+			<div class="col-12 d-flex d-md-none align-items-center bg-info py-2">
+				<button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas" aria-controls="adminOffcanvas">
+					<i class="fa fa-bars fs-4"></i>
+				</button>
+				<span class="text-dark ms-3 fs-5">Menu admin</span>
 			</div>
-		</section>
-	</div>
-</main>
+
+			{# Offcanvas menu mobile #}
+			{% include "_partials/aside/_offcanvas_adminav.html.twig" %}
+
+			<section class="col-12 col-lg-10 col-md-9 pe-4 ps-3 border border-light bg-light p-2">
+				<h1>Liste des Utilisateurs</h1>
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Pseudo</th>
+								<th>Email</th>
+								<th>Role</th>
+								<th>Vérifié</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for user in users %}
+								{% if 'ROLE_USER' in user.roles %}
+									<tr>
+										<td>{{ user.id }}</td>
+										<td>{{ user.pseudo }}</td>
+										<td>{{ user.email}}</td>
+										<td>
+											{# Change name and colors dependings of roles #}
+											{% for role in user.roles %}
+												{% if role == "ROLE_ADMIN" %}
+													{% set name = "Administrateur" %}
+													{% set color = "danger" %}
+												{% elseif role == "ROLE_STAFF" %}
+													{% set name = "Employé" %}
+													{% set color = "warning" %}
+												{% elseif role == "ROLE_DRIVER" %}
+													{% set name = "Chauffeur" %}
+													{% set color = "info" %}
+												{% else %}
+													{% set name = "Membre" %}
+													{% set color = "success" %}
+												{% endif %}
+												<span class="badge bg-{{ color }}">{{ name }}</span>
+											{% endfor %}
+										</td>
+										<td>
+											<div class="form-check form-switch">
+												<input type="checkbox" class="form-check-input" role="switch" id="switch{{ user.id }}" {{ user.isVerified ? "checked" : "" }} disabled>
+												<label for="switch{{ user.id }}" class="form-check-label"></label>
+											</div>
+										</td>
+										<td>
+											<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#removeModal-{{ user.id }}">Supprimer</button>
+										</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</section>
+		</div>
+		<!-- Modale suppression-->
+		{% for user in users %}
+			{% if 'ROLE_USER' in user.roles %}
+				{% include "_partials/modals/admin/admin_remove_users_modals.html.twig" %}
+			{% endif %}
+		{% endfor %}
+	</main>
 {% endblock %}

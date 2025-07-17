@@ -70,11 +70,6 @@
 										{% else %}
 											<p></p>
 										{% endif %}
-										<!-- Modals -->
-										<!-- Confirm start -->
-										{% include "_partials/modals/driver/driver_confirm_start_modals.html.twig" %}
-										<!-- cancel carpools -->
-										{% include "_partials/modals/driver/driver_cancel_carpools_modals.html.twig" %}
 									{% endfor %}
 								</tbody>
 							</table>
@@ -116,7 +111,6 @@
 														<button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#endModal-{{ carpool.id }}">Terminer</button>
 													</td>
 												</tr>
-												{% include "_partials/modals/driver/driver_confirm_end_modals.html.twig" %}
 											{% endif %}
 										{% endfor %}
 									{% else %}
@@ -175,5 +169,17 @@
 				</section>
 			</div>
 		</div>
+		<!-- Modals -->
+		{% for carpool in carpools %}
+			{% if carpool.status == 'A venir' %}
+				{% include "_partials/modals/driver/driver_confirm_start_modals.html.twig" %}
+				{% include "_partials/modals/driver/driver_cancel_carpools_modals.html.twig" %}
+			{% endif %}
+		{% endfor %}
+		{% for carpool in carpools %}
+			{% if carpool.status == 'En cours' %}
+				{% include "_partials/modals/driver/driver_confirm_end_modals.html.twig" %}
+			{% endif %}
+		{% endfor %}
 	</main>
 {% endblock %}

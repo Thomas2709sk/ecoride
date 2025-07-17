@@ -46,13 +46,15 @@
 										<a class="btn btn-warning btn-sm" href="{{ path('app_driver_car_edit', {id: car.id}) }}">Modifier</a>
 									</td>
 								</tr>
-								<!-- Modals -->
-								{% include "_partials/modals/driver/delete_cars_modals.html.twig" %}
 							{% endfor %}
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
+		<!-- Modals -->
+		{% for car in cars %}
+			{% include "_partials/modals/driver/delete_cars_modals.html.twig" %}
+		{% endfor %}
 	</main>
 {% endblock %}
