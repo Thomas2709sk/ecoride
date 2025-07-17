@@ -22,10 +22,10 @@ class ReviewController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        // get the guide ID associate with the user ID
+        // get the driver ID associate with the user ID
         $driver = $driversRepository->findOneBy(['user' => $user]);
 
-        // if guide exist
+        // if driver exist
         if (!$driver) {
             $this->addFlash('error', 'Vous devez être un chauffeur pour voir les avis.');
             return $this->redirectToRoute('app_driver_account_index');

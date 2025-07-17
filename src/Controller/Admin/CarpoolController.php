@@ -48,7 +48,7 @@ class CarpoolController extends AbstractController
 
         $driverCars = $driver ? $driver->getCars() : [];
 
-        // Vérify if the Driver is the owner
+        // Vérify if Admin can Edit
         if (!$authChecker->isGranted(CarpoolsVoter::EDIT, $carpools)) {
             throw $this->createAccessDeniedException('Vous n\'avez pas le droit de modifier ce covoiturage.');
         }

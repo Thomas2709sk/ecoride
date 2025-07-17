@@ -44,7 +44,7 @@ class CarpoolsGraphController extends AbstractController
             $aggregatedData = [];
             foreach ($carpools as $carpool) {
                 if ($carpool['date'] instanceof \DateTime) {
-                    $monthYear = $carpool['date']->format('Y-m'); // "2025-03"
+                    $monthYear = $carpool['date']->format('Y-m');
                     $day = $carpool['date']->format('d');
                     
                     // if month don't exist
@@ -59,7 +59,7 @@ class CarpoolsGraphController extends AbstractController
             // set the data
             $data = [];
             foreach ($aggregatedData as $monthYear => $days) {
-                // Create a new date
+                // Create a new date object
                 $date = new \DateTime($monthYear . "-01"); 
                 // number of day for each month
                 $daysInMonth = $date->format('t'); 
