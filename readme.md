@@ -86,10 +86,11 @@ Ecoride is my exam project! It's a carpooling website focused on ecology. You ca
    ```bash
    php bin/console doctrine:migrations:migrate
    ```
----
 
-Or you can use the SQL folder if you don't want to the use command line
+Or you can use the SQL folder if you don't want to use the command line
 - You have SQL files to create the database
+
+---
 
 ## Work in Progress
 

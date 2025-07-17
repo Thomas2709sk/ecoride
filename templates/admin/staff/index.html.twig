@@ -5,10 +5,10 @@
 {% block body %}
 <main class="container-fluid">
     <div class="row min-vh-100">
-        {# Aside admin à gauche (desktop) #}
+        {# Aside admin Desktop #}
         {% include "_partials/aside/_adminav.html.twig" %}
 
-        {# Burger menu mobile (affiché seulement sur mobile) #}
+        {# burger mobile #}
         <div class="col-12 d-flex d-md-none align-items-center bg-info py-2">
             <button class="btn btn-outline-light ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas" aria-controls="adminOffcanvas">
                 <i class="fa fa-bars fs-4"></i>
@@ -16,7 +16,7 @@
             <span class="text-dark ms-3 fs-5">Menu admin</span>
         </div>
 
-        {# Offcanvas menu mobile (menu mobile réutilisable) #}
+        {# Offcanvas mobile #}
         {% include "_partials/aside/_offcanvas_adminav.html.twig" %}
 
         <section class="col-12 col-md-9 col-lg-10 pe-4 ps-3 border border-light bg-light p-2">
@@ -34,7 +34,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {# Only show admin and staff #}
                         {% for user in users %}
                             <tr>
                                 <td>{{ user.id }}</td>

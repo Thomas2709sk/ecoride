@@ -78,7 +78,7 @@
 				</div>
 			</section>
 		</div>
-		<!-- Modale suppression-->
+		<!-- Modal-->
 		{% for user in users %}
 			{% if 'ROLE_USER' in user.roles %}
 				{% include "_partials/modals/admin/admin_remove_users_modals.html.twig" %}

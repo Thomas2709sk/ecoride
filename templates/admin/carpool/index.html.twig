@@ -73,6 +73,7 @@
 				</div>
 			</section>
 		</div>
+		<!-- Modal -->
 		{% for carpool in carpools %}
 			{% if carpool.status == 'A venir' %}
 				{% include "_partials/modals/user/cancel_reservation_modals.html.twig" %}

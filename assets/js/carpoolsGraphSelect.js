@@ -8,24 +8,23 @@ document.addEventListener("DOMContentLoaded", function () {
   
         const data = await response.json();
   
-        // Remplir le menu de sélection avec les mois disponibles
         const monthSelector = document.getElementById('monthSelect');
         data.forEach((monthData, index) => {
           const option = document.createElement('option');
-          option.value = index; // Utiliser l'index comme identifiant unique
-          option.textContent = monthData.month; // Nom du mois
+          option.value = index;
+          option.textContent = monthData.month;
           monthSelector.appendChild(option);
         });
   
-        // Afficher le graphique du premier mois par défaut
+        // Show chart of the the first month available
         if (data.length > 0) {
-          renderGraph(data[0]); // Appelle la fonction du fichier `reservGraph.js`
+          renderGraph(data[0]); // Call function renderGraph grom `reservGraph.js`
         }
   
-        // Mettre à jour le graphique lorsque l'utilisateur change de mois
+        // Update chart when admin change month
         monthSelector.addEventListener('change', (event) => {
           const selectedIndex = parseInt(event.target.value, 10);
-          renderGraph(data[selectedIndex]); // Appelle la fonction du fichier `reservGraph.js`
+          renderGraph(data[selectedIndex]); // Call function renderGraph from `reservGraph.js`
         });
       } catch (error) {
         console.error('Erreur lors de la récupération des données:', error);

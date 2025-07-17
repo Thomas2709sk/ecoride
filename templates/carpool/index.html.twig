@@ -57,7 +57,9 @@
 					<div>
 						<h3 class="text-center mb-4">Planifiez votre prochain covoiturage</h3>
 					</div>
+					<!-- SearchCarpool Form -->
 					{{ form_start(searchForm) }}
+					<!-- SearchDate.js -->
 					<div>
 						{{ form_row(searchForm.date) }}
 					</div>
@@ -105,7 +107,7 @@
 				<div class="row align-items-center">
 					<div class="col-lg-6 d-flex justify-content-center align-items-center mb-4 mb-lg-0 min-vh-25">
 						<div class="image-size d-flex align-items-center justify-content-center overflow-hidden">
-							<img src="{{ asset('/images/car.webp') }}" alt="Description" class="rounded shadow w-100 h-100 object-fit-cover">
+							<img src="{{ asset('/images/car.webp') }}" alt="2 personnes dans une voiture" class="rounded shadow w-100 h-100 object-fit-cover">
 						</div>
 					</div>
 					<div class="col-lg-6 d-flex flex-column justify-content-center align-items-center text-center">
@@ -118,5 +120,4 @@
 			</div>
 		</section>
 	</main>
-
 {% endblock %}

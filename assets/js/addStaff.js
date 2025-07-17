@@ -4,7 +4,6 @@ let email = false;
 let rgpd = false;
 let pass = false;
 
-// On charge les éléments du formulaire
 document.querySelector("#add_staff_form_pseudo").addEventListener('input', checkPseudo);
 document.querySelector("#add_staff_form_email").addEventListener('input', checkEmail);
 document.querySelector("#add_staff_form_plainPassword").addEventListener('input', checkPass);
