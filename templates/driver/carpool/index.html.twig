@@ -64,7 +64,13 @@
 													<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ carpool.id }}">Annuler</button>
 												</td>
 												<td>
-													<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#startModal-{{ carpool.id }}">Début</button>
+													{% if carpool.PlacesAvailable < carpool.car.seats and carpool.day|date('U') <= "now"|date('U') %}
+														<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#startModal-{{ carpool.id }}" data-bs-toggle="tooltip" title="Démarrer le covoiturage">Début</button>
+													{% else %}
+														<span data-bs-toggle="tooltip" data-bs-placement="top" title="Impossible de démarrer : pas de passager ou trop tôt">
+															<button class="btn btn-success btn-sm" disabled>Début</button>
+														</span>
+													{% endif %}
 												</td>
 											</tr>
 										{% else %}

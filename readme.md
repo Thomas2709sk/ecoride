@@ -70,9 +70,8 @@ Ecoride is my exam project! It's a carpooling website focused on ecology. You ca
      ```
 3. **Configure the Database**
 
-     ```
-   - Edit `.env.local` and set your database credentials, e.g.:
-     ```
+   - Edit your `.env.local` and set your database credentials :
+
      ```
      DATABASE_URL="mysql://name:pass@localhostordocker:3306/yourdb"
      ```
