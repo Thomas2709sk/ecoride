@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : mar. 01 juil. 2025 à 14:14
--- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.4.5
+-- Hôte : db
+-- Généré le : lun. 21 juil. 2025 à 17:06
+-- Version du serveur : 10.11.13-MariaDB-ubu2204
+-- Version de PHP : 8.2.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -54,12 +54,12 @@ CREATE TABLE `carpools` (
 
 INSERT INTO `carpools` (`id`, `driver_id`, `car_id`, `day`, `begin`, `end`, `address_start`, `address_end`, `places_available`, `price`, `status`, `carpool_number`, `is_ecological`, `startLat`, `startLon`, `endLat`, `endLon`, `duration`) VALUES
 (3, 13, 15, '2025-06-30', '08:00:00', '11:45:00', '7 rue d\'Estienne d\'Orves 94381 Bonneuil-sur-Marne', '263 avenue Général Leclerc 35042 RENNES', 2, 15, 'Confirmé', 'COV#eed700c8', 0, NULL, NULL, NULL, NULL, NULL),
-(4, 13, 14, '2025-07-05', '09:00:00', '12:45:00', '263 avenue Général Leclerc 35042 RENNES', '7 rue d\'Estienne d\'Orves 94381 Bonneuil-sur-Marne', 2, 20, 'A venir', 'COV#fb8ce3d9', 1, 48.1026, -1.67842, 48.7623, 2.49397, NULL),
-(5, 14, 16, '2025-07-05', '06:00:00', '10:10:00', '263 avenue Général Leclerc 35042 RENNES', '95700 Roissy-en-France', 3, 20, 'A venir', 'COV#82b11272', 1, 48.1026, -1.67842, 49.0037, 2.51736, NULL),
+(4, 13, 14, '2025-07-05', '09:00:00', '12:45:00', '263 avenue Général Leclerc 35042 RENNES', '7 rue d\'Estienne d\'Orves 94381 Bonneuil-sur-Marne', 4, 20, 'A venir', 'COV#fb8ce3d9', 1, 48.1026, -1.67842, 48.7623, 2.49397, NULL),
 (6, 13, 15, '2025-06-23', '14:00:00', '15:40:00', 'Porte Maillot, 75017 Paris', 'Gare de Rouen  76000 Rouen', 2, 12, 'Confirmé', 'COV#153462b6', 0, NULL, NULL, NULL, NULL, NULL),
-(7, 13, 15, '2025-07-10', '07:00:00', '12:00:00', '7 rue d\'Estienne d\'Orves 94381 Bonneuil-sur-Marne', 'Place Bellecour, 69002 Lyon', 3, 15, 'A venir', 'COV#49cca486', 0, 48.7743, 2.48776, 45.7577, 4.83243, 15900),
-(8, 14, 16, '2025-07-10', '06:00:00', '11:00:00', '10 Rue Jean Gabin, 94000 Créteil', 'Gare de covoiturage – Quai Docteur Gailleton', 3, 20, 'A venir', 'COV#713c5e07', 1, 48.7819, 2.44697, 45.7512, 4.83244, 15540),
-(9, 13, 14, '2025-07-10', '05:30:00', '09:59:00', '2 avenue Georges Pompidou, 94370 Sucy‑en‑Brie', 'Place de la Comédie, 69001 Lyon', 2, 20, 'A venir', 'COV#b6efed3c', 1, 48.7709, 2.52383, 45.7677, 4.83602, 16199);
+(11, 14, 16, '2025-07-16', '18:00:00', '18:38:00', '7 rue d\'Estienne d\'Orves 94381 Bonneuil-sur-Marne', '95700 Roissy-en-France', 3, 5, 'Terminé', 'COV#30439e17', 1, 48.7743, 2.4875, 49.0036, 2.51698, 2285),
+(12, 13, 14, '2025-07-16', '19:00:00', '23:37:00', '7 rue d\'Estienne d\'Orves 94381 Bonneuil-sur-Marne', 'Place Bellecour, 69002 Lyon', 1, 4, 'Confirmé', 'COV#702aa067', 1, 48.7743, 2.4875, 45.7568, 4.83152, 16662),
+(14, 13, 14, '2025-08-07', '07:00:00', '09:50:00', '34 bis Rue des Bouchers, 59800, Lille France', '8 rue Beaurepaire 75010 Paris', 2, 10, 'A venir', 'COV#eb083937', 1, 50.6379, 3.05827, 48.8695, 2.36363, 10215),
+(15, 14, 16, '2025-08-07', '10:00:00', '12:45:00', 'Lille', 'Paris', 3, 10, 'A venir', 'COV#d6ab80d7', 1, 50.6244, 3.06786, 48.8575, 2.35138, 9917);
 
 -- --------------------------------------------------------
 
@@ -81,7 +81,8 @@ CREATE TABLE `carpools_users` (
 
 INSERT INTO `carpools_users` (`carpools_id`, `users_id`, `is_confirmed`, `is_ended`, `is_answered`) VALUES
 (3, 3, 1, 1, 1),
-(6, 7, 1, 1, 1);
+(6, 7, 1, 1, 1),
+(12, 3, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -120,7 +121,7 @@ CREATE TABLE `doctrine_migration_versions` (
   `version` varchar(191) NOT NULL,
   `executed_at` datetime DEFAULT NULL,
   `execution_time` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Déchargement des données de la table `doctrine_migration_versions`
@@ -189,7 +190,8 @@ CREATE TABLE `reviews` (
 
 INSERT INTO `reviews` (`id`, `user_id`, `driver_id`, `carpool_id`, `rate`, `commentary`, `validate`) VALUES
 (1, 3, 13, 3, 5, 'Bon chauffeur , conduite calme', 1),
-(3, 7, 13, 6, 2, 'Le chauffeur n\'a pas voulu faire un détour de quelques mètres pour me déposer', 1);
+(3, 7, 13, 6, 2, 'Le chauffeur n\'a pas voulu faire un détour de quelques mètres pour me déposer', 1),
+(9, 3, 13, 12, 2, 'bof', 1);
 
 -- --------------------------------------------------------
 
@@ -214,9 +216,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `roles`, `password`, `pseudo`, `photo`, `credits`, `is_verified`, `is_passenger`) VALUES
-(1, 'admin@mail.fr', '[\"ROLE_ADMIN\"]', '$2y$13$QC31qzvsuWBpHjkad.mvvem7bW7sP9okWpf0yrBqwdtI4LtrA7aNm', 'Jose', NULL, 26, 1, 1),
-(3, 'passager@mail.fr', '[]', '$2y$13$2KxgxdKY88CKfuJdfFhaHuqWoD/70kDJnIpbzN9.fMbFVuvOsWosu', 'passager', NULL, 15, 0, 1),
-(4, 'chauffeur@mail.fr', '[\"ROLE_USER\",\"ROLE_DRIVER\"]', '$2y$13$6mTnzrMAsVgJU6/Evw7jS.olFbrqzFIbyEWrjXBUXvg3iKqPwzZuS', 'chauffeur', '21714d9db526de60889fc1050e0fb8f4.webp', 43, 0, 0),
+(1, 'admin@mail.fr', '[\"ROLE_ADMIN\"]', '$2y$13$QC31qzvsuWBpHjkad.mvvem7bW7sP9okWpf0yrBqwdtI4LtrA7aNm', 'Jose', NULL, 72, 1, 1),
+(3, 'passager@mail.fr', '[]', '$2y$13$2KxgxdKY88CKfuJdfFhaHuqWoD/70kDJnIpbzN9.fMbFVuvOsWosu', 'passager', NULL, 11, 0, 1),
+(4, 'chauffeur@mail.fr', '[\"ROLE_USER\",\"ROLE_DRIVER\"]', '$2y$13$6mTnzrMAsVgJU6/Evw7jS.olFbrqzFIbyEWrjXBUXvg3iKqPwzZuS', 'chauffeur', '21714d9db526de60889fc1050e0fb8f4.webp', 49, 0, 0),
 (7, 'chaufpass@mail.fr', '[\"ROLE_USER\",\"ROLE_DRIVER\"]', '$2y$13$Vj7fFWt.sCqGLY5M.6QzGO2v61CjxnR544HWLNOWSMVrzc4e7Wh5O', 'chaufpass', '9547f59f5a1e91149472621353ddf38e.webp', 8, 1, 1),
 (8, 'employe@mail.fr', '[\"ROLE_STAFF\"]', '$2y$13$goNJ6lT8/38Ii96n59UMt.YNhxTscv4GoMuDd2JzEz6iw7W7f6KRe', 'employe', NULL, 20, 1, 1);
 
@@ -293,13 +295,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `carpools`
 --
 ALTER TABLE `carpools`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT pour la table `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT pour la table `drivers`
@@ -317,13 +319,13 @@ ALTER TABLE `messenger_messages`
 -- AUTO_INCREMENT pour la table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Contraintes pour les tables déchargées
