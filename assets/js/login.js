@@ -22,7 +22,7 @@ function checkLoginEmail() {
 
 function checkLoginPass() {
     const input = this;
-    loginPass = input.value.length > 5;
+    loginPass = input.value.length > 12;
 
     if (loginPass) {
         input.classList.add("is-valid");
